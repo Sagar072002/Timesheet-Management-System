@@ -1,11 +1,8 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const Register = () => {
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  const handleAdminToggle = () => {
-    setIsAdmin(!isAdmin);
-  };
+ 
   return (
     <section className="bg-gray-50 p-3">
     <div className="flex flex-col items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0">
@@ -178,12 +175,12 @@ const Register = () => {
         </div>
       <p className="text-md font-light text-gray-500 pb-3">
               Already have an account?{" "}
-              <a
-                href="#"
+              <Link
+               to="/login"
                 className="font-medium text-blue-600 hover:underline "
               >
                 Login here
-              </a>
+              </Link>
             </p>
     </div>
 

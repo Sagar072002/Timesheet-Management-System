@@ -3,11 +3,7 @@ import logo from "../assets/user_img.jpg";
 
 
 const Profile = () => {
-  const [isAdmin, setIsAdmin] = useState(false);
 
-  const handleAdminToggle = () => {
-    setIsAdmin(!isAdmin);
-  };
   return (
     <section className="bg-gray-50 p-3">
     <div className="flex flex-col items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0">
@@ -18,7 +14,7 @@ const Profile = () => {
             Edit User Profile
           </h1>
           <form className="space-y-4 md:space-y-2" action="#">
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-5">
   <input
     type="file"
     accept="image/*"
@@ -26,7 +22,7 @@ const Profile = () => {
     id="logoInput"
   />
   <label htmlFor="logoInput" className="cursor-pointer">
-    <img src={logo} className="h-12 w-12 rounded-full" alt="" />
+    <img src={logo} className="h-16 w-16 rounded-full" alt="" />
   </label>
 </div>
             <div className="flex w-full gap-5">
