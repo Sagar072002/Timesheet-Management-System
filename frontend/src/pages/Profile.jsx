@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import logo from "../assets/user_img.jpg";
 
-const Register = () => {
+
+const Profile = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   const handleAdminToggle = () => {
@@ -13,9 +15,20 @@ const Register = () => {
       <div className="w-full bg-white rounded-md shadow min-w-[650px]  md:mt-0 sm:max-w-md xl:p-0 ">
         <div className="px-2 space-y-4 md:space-y-4 sm:p-8">
           <h1 className="text-xl -mt-5 font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl ">
-            Create an account
+            Edit User Profile
           </h1>
           <form className="space-y-4 md:space-y-2" action="#">
+          <div className="flex justify-center">
+  <input
+    type="file"
+    accept="image/*"
+    className="hidden"
+    id="logoInput"
+  />
+  <label htmlFor="logoInput" className="cursor-pointer">
+    <img src={logo} className="h-12 w-12 rounded-full" alt="" />
+  </label>
+</div>
             <div className="flex w-full gap-5">
            <div className="flex flex-col gap-5 w-full">
            <div className=''>
@@ -68,15 +81,15 @@ const Register = () => {
             
              <div>
               <label
-                htmlFor="password"
+                htmlFor="current-password"
                 className="block mb-2 mt-2 text-sm font-medium text-gray-900 "
               >
-                Password
+                Current Password
               </label>
               <input
                 type="password"
-                name="password"
-                id="password"
+                name="current-password"
+                id="current-password"
                 placeholder="••••••••"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
                 required=""
@@ -84,15 +97,15 @@ const Register = () => {
             </div>
             <div >
               <label
-                htmlFor="confirm-password"
+                htmlFor="new-password"
                 className="block mb-2 text-sm font-medium text-gray-900 "
               >
-                Confirm password
+                New Password
               </label>
               <input
-                type="confirm-password"
-                name="confirm-password"
-                id="confirm-password"
+                type="password"
+                name="new-password"
+                id="new-password"
                 placeholder="••••••••"
                 className="mb-3 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
                 required=""
@@ -171,27 +184,12 @@ const Register = () => {
             </div>
             </div>
             
-            <div className="flex justify-between">
-              <div>
-            <input type="checkbox" name="" id="" />
-        <span className="text-md font-md text-gray-500 pb-3">Register as Admin</span>
-        </div>
-      <p className="text-md font-light text-gray-500 pb-3">
-              Already have an account?{" "}
-              <a
-                href="#"
-                className="font-medium text-blue-600 hover:underline "
-              >
-                Login here
-              </a>
-            </p>
-    </div>
-
+            
             <button
               type="submit"
               className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-3 text-center"
             >
-              Register
+              Save
             </button>
           </form>
         </div>
@@ -202,4 +200,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default Profile
