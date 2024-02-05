@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 const Admin = () => {
  
   return (
-    <div className=" flex ">
-      <div className="w-1/4  bg-gray-500  p-6 pt-10">
+    <div className=" flex h-screen">
+      <div className="w-1/4 h-full  bg-gray-500  p-6 pt-10">
         <div className="pl-20 mb-5">
           <img className="w-24 h-24 rounded-full" src={logo} alt="" />
         </div>
@@ -45,7 +45,7 @@ const Admin = () => {
       </div>
       <div className="p-4 bg-blue-gray-200 h-full w-3/4 bg-gray-300 overflow-auto">
   <h2 className="font-bold text-2xl uppercase text-center">Admin Dashboard</h2>
-  <div className="mt-4 flex justify-center p-4">
+  <div className="mt-4 flex justify-center p-4 ">
     <input
       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-3.5"
       type="search"
@@ -54,7 +54,21 @@ const Admin = () => {
       placeholder="Search Employee here..."
     />
   </div>
-  <div className="max-h-[500px] overflow-auto">
+  <div className=" ">
+  <div className="flex mt-6 bg-slate-200 p-4 justify-between">
+        <p>Sagar Negi</p>
+        <p>GEU-20216976</p>
+        <p>negis2673@gmail.com</p>
+        <p>Timesheet</p>
+      <p>Scorecard</p>  
+       </div>
+  <div className="flex mt-6 bg-slate-200 p-4 justify-between">
+        <p>Sagar Negi</p>
+        <p>GEU-20216976</p>
+        <p>negis2673@gmail.com</p>
+        <p>Timesheet</p>
+      <p>Scorecard</p>  
+       </div>
   <div className="flex mt-6 bg-slate-200 p-4 justify-between">
         <p>Sagar Negi</p>
         <p>GEU-20216976</p>

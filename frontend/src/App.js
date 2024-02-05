@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Contact from './pages/Contact';
 import Profile from './pages/Profile';
+import Timesheet from './pages/Timesheet';
 
 
 
@@ -15,9 +16,7 @@ import Profile from './pages/Profile';
 function App() {
   return (
     <Router>
-        {/* Your navigation can go here if needed */}
-
-        {/* Define your routes */}
+       
         <Routes>
           <Route path="/login" element={<Login/>} />
           <Route path="/employee" element={<Employee/>} />
@@ -25,7 +24,8 @@ function App() {
           <Route path="/register" element={<Register/>} />
           <Route path="/contact" element={<Contact/>} />
           <Route path="/profile" element={<Profile/>} />
-          {/* Add more routes if needed */}
+          <Route path="/timesheet" element={<Timesheet/>} />
+
         </Routes>
     </Router>
   );

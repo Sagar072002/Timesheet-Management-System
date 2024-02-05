@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import {FaUser,FaPhoneAlt,FaBabyCarriage,FaLock,FaSearchLocation} from "react-icons/fa"
+import {MdEmail} from "react-icons/md"
+import {CgGenderMale} from "react-icons/cg"
 
 const Register = () => {
  
@@ -13,7 +16,7 @@ const Register = () => {
             Create an account
           </h1>
           <form className="space-y-4 md:space-y-2" action="#">
-            <div className="flex w-full gap-5">
+            <div className="flex w-full gap-16">
            <div className="flex flex-col gap-5 w-full">
            <div className=''>
               <label
@@ -22,14 +25,17 @@ const Register = () => {
               >
                 Name
               </label>
+              <div className="flex bg-slate-50 border p-3 rounded">
+              <FaUser className='mr-3' />
               <input
                 type="text"
                 name="name"
                 id="name"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
+                className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full  "
                 placeholder="Your Name"
                 required=""
               />
+              </div>
             </div>
             <div>
               <label
@@ -38,14 +44,18 @@ const Register = () => {
               >
                 Employee ID
               </label>
+              <div className="flex bg-slate-50 border p-3 rounded">
+                <FaUser className='mr-3' />
+
               <input
                 type="text"
                 name="employeeid"
                 id="employeeid"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
+                className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full  "
                 placeholder="Employee ID"
                 required=""
               />
+              </div>
             </div>
             <div>
               <label
@@ -54,30 +64,37 @@ const Register = () => {
               >
                 Gender
               </label>
-             
-              <select className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 " name="cars" id="cars">
-  <option className='rounded-none'  value="">Selet a category</option>
-  <option className='rounded-none' value="Male">Male</option>
-  <option className='rounded-none' value="Female">Female</option>
-  <option className='rounded-none' value="Other">Other</option>
+              <div className="flex bg-slate-50 border p-3 rounded">
+             <CgGenderMale className='mr-3 text-xl'/>
+              <select                 className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md 0 outline-none block w-full "
+ name="gender" id="gender">
+  <option className='rounded-none text-gray-900'  value="">Selet a category</option>
+  <option className='rounded-none text-gray-900' value="Male">Male</option>
+  <option className='rounded-none text-gray-900' value="Female">Female</option>
+  <option className='rounded-none text-gray-900' value="Other">Other</option>
 </select>
+   </div>
             </div>
             
              <div>
               <label
                 htmlFor="password"
-                className="block mb-2 mt-2 text-sm font-medium text-gray-900 "
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 Password
               </label>
+              <div className="flex bg-slate-50 border p-3 rounded">
+              <FaLock className='mr-3' />
+
               <input
                 type="password"
                 name="password"
                 id="password"
                 placeholder="••••••••"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
+                className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full "
                 required=""
               />
+              </div>
             </div>
             <div >
               <label
@@ -86,14 +103,18 @@ const Register = () => {
               >
                 Confirm password
               </label>
+              <div className="flex bg-slate-50 border p-3 rounded">
+              <FaLock className='mr-3' />
               <input
                 type="confirm-password"
                 name="confirm-password"
                 id="confirm-password"
                 placeholder="••••••••"
-                className="mb-3 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
+                className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full "
                 required=""
               />
+                            </div>
+
             </div>
            </div>
            
@@ -107,14 +128,19 @@ const Register = () => {
               >
                 Email
               </label>
+              <div className="flex bg-slate-50 border p-3 rounded">
+              <MdEmail className='mr-3' />
+
               <input
                 type="email"
                 name="email"
                 id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
+                className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full "
                 placeholder="Your Email"
                 required=""
               />
+ </div>
+
              </div>
             <div>
               <label
@@ -123,14 +149,19 @@ const Register = () => {
               >
                 Phone
               </label>
+              <div className="flex bg-slate-50 border p-3 rounded">
+              <FaPhoneAlt className='mr-3' />
+
               <input
                 type="number"
                 name="phone"
                 id="phone"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
+                className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full "
                 placeholder="Your Phone"
                 required=""
               />
+                            </div>
+
             </div>
             <div>
                <label
@@ -139,14 +170,19 @@ const Register = () => {
               >
                 Age
               </label>
+              <div className="flex bg-slate-50 border p-3 rounded">
+              <FaBabyCarriage className='mr-3' />
+
               <input
                 type="number"
                 name="age"
                 id="age"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
+                className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full  "
                 placeholder="Your age"
                 required=""
               />
+                            </div>
+
              </div>
             <div >
               <label
@@ -155,23 +191,26 @@ const Register = () => {
               >
                 Address
               </label>
+              <div className="flex bg-slate-50 border p-3 rounded">
+              <FaSearchLocation className="mr-3 mt-2"/>
               <textarea
                 type="text"
                 name="address"
                 id="address"
-                rows={6}
+                rows={4}
                 placeholder="Your address"
-                className=" mb-3 resize-none bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
+                className="mb-3 bg-transparent resize-none border-none border-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full p-2.5 "
                 required=""
-              />
+                />
+                </div>
             </div>
             </div>
             </div>
             
-            <div className="flex justify-between">
+            <div className="flex pt-4 justify-between">
               <div>
             <input type="checkbox" name="" id="" />
-        <span className="text-md font-md text-gray-500 pb-3">Register as Admin</span>
+        <span className="text-md font-md text-gray-500 pl-2 pb-3">Register as Admin</span>
         </div>
       <p className="text-md font-light text-gray-500 pb-3">
               Already have an account?{" "}
