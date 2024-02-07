@@ -24,7 +24,7 @@ const Login = () => {
             Authorization: `Bearer ${accessToken}`,
           },
           body:{
-            token:`${accessToken}`
+            access:`${accessToken}`
 
           }
         });
