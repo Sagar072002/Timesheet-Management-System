@@ -1,132 +1,64 @@
-import React from "react";
+import React, {  useState } from "react";
 import logo from "../assets/user_img.jpg"
-import { Link } from "react-router-dom";
+import Profile from "../components/Profile";
+import EmployeeCard from "../components/EmployeeCard";
 
 const Admin = () => {
- 
+  const [isProfileVisible, setProfileVisible] = useState(false);
+  const toggleProfileVisibility = () => {
+    setProfileVisible(!isProfileVisible);
+  };
+
+  const [isProfileDivVisible, setProfileDivVisible] = useState(false);
+
+  const toggleProfileDivVisibility = () => {
+    setProfileDivVisible(!isProfileDivVisible);
+  };
+  
   return (
-    <div className=" flex h-screen">
-      <div className="w-1/4 h-full  bg-gray-500  p-6 pt-10">
-        <div className="pl-20 mb-5">
-          <img className="w-24 h-24 rounded-full" src={logo} alt="" />
+    <div className="relative flex">
+     
+      <div className="p-4 bg-blue-gray-200 w-full bg-gray-300">
+        <div className="flex justify-between px-5">
+          <p></p>
+  <h2 className="font-bold text-2xl uppercase text-center">Admin Dashboard</h2>
+<img src={logo} onClick={toggleProfileVisibility} className="w-10 h-10 mix-blend-color-burn " alt="" />
         </div>
-        <div className="p-5 text-white font-bold">
-          <h2 className="text-2xl mb-7 uppercase font-bold">Personal Information</h2>
-          <div className=" flex gap-10">
-          <div className="uppercase">
-              <p className="leading-10">Name</p>
-              <p className="leading-10">Employee ID </p>
-              <p className="leading-10">Email</p>
-              <p className="leading-10">Phone</p>
-              <p className="leading-10">Gender </p>
-              <p className="leading-10">Age</p>
-              <p className="leading-10">Address</p>
+        {isProfileVisible && (
+          <div className=" bg-slate-200 border border-slate-400 rounded absolute right-0 top-19 max-w-[500px] p-5 pt-2 h-32">
+            <div className="flex justify-center">
+              <img
+                src={logo}
+                className="w-10 h-10 mix-blend-color-burn"
+                alt=""
+              />
             </div>
-            <div className="right">
-              <p className="leading-10">Sagar</p>
-              <p className="leading-10">GEU-20201076</p>
-              <p className="leading-10">abc@gmail.com</p>
-              <p className="leading-10">9999999999</p>
-              <p className="leading-10">Male</p>
-              <p className="leading-10">22</p>
-              <p className="leading-10">Uttarakhand,India</p>
+            <div className="editprofilediv mt-3 text-lg" >
+              <p className="border-b border-red-700 py-1 px-2 hover:cursor-pointer" onClick={toggleProfileDivVisibility}>Edit Profile</p>
+              <p className="px-4 hover:cursor-pointer">Logout</p>
             </div>
           </div>
-        </div>
-        <div className="buttons flex gap-4 mt-5">
-        <Link to="/profile"> <button className="px-8 py-4 rounded bg-white text-black font-bold border-2 border-white hover:bg-transparent hover:text-white">
-       Edit Profile 
-          </button>
-          </Link>
-          <button className="px-8 py-4 rounded bg-white text-black font-bold border-2 border-white hover:bg-transparent hover:text-white">
-            Logout
-          </button>
-        </div>
-      </div>
-      <div className="p-4 bg-blue-gray-200 h-full w-3/4 bg-gray-300 overflow-auto">
-  <h2 className="font-bold text-2xl uppercase text-center">Admin Dashboard</h2>
+        )}
+        {isProfileDivVisible && (
+          <div className=" bg-transparent absolute left-1/2 -top-8 w-20 z-10">
+            <Profile/>
+          </div>
+        )}
   <div className="mt-4 flex justify-center p-4 ">
     <input
-      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-3.5"
+      className="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-slate-600 focus:border-slate-600 block w-full p-3.5"
       type="search"
       name=""
       id=""
       placeholder="Search Employee here..."
     />
   </div>
-  <div className=" ">
-  <div className="flex mt-6 bg-slate-200 p-4 justify-between">
-        <p>Sagar Negi</p>
-        <p>GEU-20216976</p>
-        <p>negis2673@gmail.com</p>
-        <p>Timesheet</p>
-      <p>Scorecard</p>  
-       </div>
-  <div className="flex mt-6 bg-slate-200 p-4 justify-between">
-        <p>Sagar Negi</p>
-        <p>GEU-20216976</p>
-        <p>negis2673@gmail.com</p>
-        <p>Timesheet</p>
-      <p>Scorecard</p>  
-       </div>
-  <div className="flex mt-6 bg-slate-200 p-4 justify-between">
-        <p>Sagar Negi</p>
-        <p>GEU-20216976</p>
-        <p>negis2673@gmail.com</p>
-        <p>Timesheet</p>
-      <p>Scorecard</p>  
-       </div>
-       <div className="flex mt-6 bg-slate-200 p-4 justify-between">
-        <p>Sagar Negi</p>
-        <p>GEU-20216976</p>
-        <p>negis2673@gmail.com</p>
-        <p>Timesheet</p>
-      <p>Scorecard</p>  
-       </div>
-       <div className="flex mt-6 bg-slate-200 p-4 justify-between">
-        <p>Sagar Negi</p>
-        <p>GEU-20216976</p>
-        <p>negis2673@gmail.com</p>
-        <p>Timesheet</p>
-      <p>Scorecard</p>  
-       </div>
-       <div className="flex mt-6 bg-slate-200 p-4 justify-between">
-        <p>Sagar Negi</p>
-        <p>GEU-20216976</p>
-        <p>negis2673@gmail.com</p>
-        <p>Timesheet</p>
-      <p>Scorecard</p>  
-       </div>
-       <div className="flex mt-6 bg-slate-200 p-4 justify-between">
-        <p>Sagar Negi</p>
-        <p>GEU-20216976</p>
-        <p>negis2673@gmail.com</p>
-        <p>Timesheet</p>
-      <p>Scorecard</p>  
-       </div>
-       <div className="flex mt-6 bg-slate-200 p-4 justify-between">
-        <p>Sagar Negi</p>
-        <p>GEU-20216976</p>
-        <p>negis2673@gmail.com</p>
-        <p>Timesheet</p>
-      <p>Scorecard</p>  
-       </div>
-       <div className="flex mt-6 bg-slate-200 p-4 justify-between">
-        <p>Sagar Negi</p>
-        <p>GEU-20216976</p>
-        <p>negis2673@gmail.com</p>
-        <p>Timesheet</p>
-      <p>Scorecard</p>  
-       </div>
-       <div className="flex mt-6 bg-slate-200 p-4 justify-between">
-        <p>Sagar Negi</p>
-        <p>GEU-20216976</p>
-        <p>negis2673@gmail.com</p>
-        <p>Timesheet</p>
-      <p>Scorecard</p>  
-       </div>
-
-  </div>
+  <div className="py-1 px-5 h-screen flex overflow-auto gap-5">
+          {[1, 2, 3, 4].map((index) => (
+            <EmployeeCard key={index} index={index} />
+          ))}
+         
+        </div>
 </div>
     </div>
   );

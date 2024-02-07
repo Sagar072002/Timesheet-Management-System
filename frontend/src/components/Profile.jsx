@@ -1,18 +1,26 @@
 import React, { useState } from 'react';
 import logo from "../assets/user_img.jpg";
-
+import {RxCross2} from "react-icons/rx"
 
 const Profile = () => {
-
+    const [isVisible, setIsVisible] = useState(true);
+  
+    const handleCrossClick = () => {
+      setIsVisible(false);
+    };
+  
+    if (!isVisible) {
+      return null; // If isVisible is false, return null to render nothing
+    }
   return (
-    <section className="bg-gray-50 p-3">
+    <section className=" p-3">
     <div className="flex flex-col items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0">
     
-      <div className="w-full bg-white rounded-md shadow min-w-[650px]  md:mt-0 sm:max-w-md xl:p-0 ">
+      <div className="w-full bg-white rounded-md shadow min-w-[650px]  md:mt-0 sm:max-w-md xl:p-0 relative">
+          <div className='absolute top-2 right-2 mt-2 mr-2 hover:bg-slate-400 hover:text-white rounded-full p-1'>
+            <RxCross2 className='text-2xl'onClick={handleCrossClick}/>
+          </div>
         <div className="px-2 space-y-4 md:space-y-4 sm:p-8">
-          <h1 className="text-xl -mt-5 font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl ">
-            Edit User Profile
-          </h1>
           <form className="space-y-4 md:space-y-2" action="#">
           <div className="flex justify-center mb-5">
   <input

@@ -16,7 +16,7 @@ const Register = () => {
             Create an account
           </h1>
           <form className="space-y-4 md:space-y-2" action="#">
-            <div className="flex w-full gap-16">
+            <div className="flex w-full gap-8">
            <div className="flex flex-col gap-5 w-full">
            <div className=''>
               <label
