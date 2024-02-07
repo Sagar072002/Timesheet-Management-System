@@ -1,9 +1,69 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React,{useEffect,useState} from 'react';
+import authService from './Auth'
+import { Link,useNavigate } from 'react-router-dom';
 import {FaLock} from "react-icons/fa"
 import {MdEmail} from "react-icons/md"
 
 const Login = () => {
+  const [access1, setAccess1] = useState("");
+  const [data, setData] = useState("");
+
+  const n = useNavigate();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const accessToken = access1;
+        if (localStorage.getItem("auth") === "true" && localStorage.getItem("userName") !=="") {
+          // console.log(localStorage.getItem("userName") !="")
+          n("/Employee");
+        }
+
+        const response = await fetch("dbase/token/verify/", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Request failed");
+        }
+
+        const responseData = await response.json();
+        setData(responseData);
+        // console.log("15");
+        // console.log(responseData);
+        if (responseData.auth === "true") {
+          localStorage.setItem("auth", responseData.auth);
+          n("/Employee");
+        }
+      } catch (error) {
+        console.error("Request failed:", error);
+      }
+    };
+
+    fetchData();
+  }, [access1]);
+
+  const handleLogin = async () => {
+    const username = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    console.log(authService.login(username, password));
+    try {
+      const { access, refresh } = await authService.login(username, password);
+      setAccess1(access);
+      localStorage.setItem("accessToken", access);
+      localStorage.setItem("refreshToken", refresh);
+      localStorage.setItem("userName", username);
+      localStorage.setItem("password", password);
+      console.log("Access Token:", access);
+      console.log("Refresh Token:", refresh);
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
+
+
   
   return (
     <>
@@ -15,7 +75,7 @@ const Login = () => {
         <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl ">
           Sign in to your account
         </h1>
-        <form className="space-y-4 md:space-y-6" action="#">
+        <div className="space-y-4 md:space-y-6" >
         <div>
                <label
                 htmlFor="email"
@@ -86,6 +146,7 @@ const Login = () => {
           </div>
           <button
             type="submit"
+            onClick={handleLogin}
             className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
           >
             Sign in
@@ -99,7 +160,7 @@ const Login = () => {
               Sign up
             </Link>
           </p>
-        </form>
+        </div>
       </div>
     </div>
   </div>

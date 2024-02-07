@@ -1,10 +1,82 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import {FaUser,FaPhoneAlt,FaBabyCarriage,FaLock,FaSearchLocation} from "react-icons/fa"
 import {MdEmail} from "react-icons/md"
 import {CgGenderMale} from "react-icons/cg"
 
 const Register = () => {
+
+  const n=useNavigate()
+
+
+  const handleregister=async ()=>{
+    if(document.getElementById('password').value===""){
+      alert("Name Cannot Be Empty")
+    }
+    if(document.getElementById('employeeid').value===""){
+      alert("Password Cannot Be Empty")
+    }
+    if(document.getElementById('confirm-password').value===""){
+      alert("Confirm Passsword Cannot Be Empty")
+    }
+    // console.log(document.getElementById('name').value)
+    // console.log(document.getElementById('employeeid').value)
+    // console.log(document.getElementById('gender').value)
+    // console.log(document.getElementById('password').value)
+    // console.log(document.getElementById('confirm-password').value)
+    // console.log(document.getElementById('email').value)
+    // console.log(document.getElementById('phone').value)
+    // console.log(document.getElementById('age').value)
+    // console.log(document.getElementById('address').value)
+    const name=document.getElementById('name').value
+    const empid=document.getElementById('employeeid').value
+    const gender=document.getElementById('gender').value
+    const pass1=document.getElementById('password').value
+    const pass2=document.getElementById('confirm-password').value
+    const email=document.getElementById('email').value
+    const ph=document.getElementById('phone').value
+    const age=document.getElementById('age').value
+    const add=document.getElementById('address').value
+    const response = await fetch('dbase/token/register/',
+      {
+        method:'POST',
+        headers: {"Content-type": "application/json; charset=UTF-8"},
+        body: JSON.stringify({
+          'username':empid,
+          'password1':pass1,
+          'password2':pass2,
+        })
+      }     
+    );
+    
+      const data=await response.json()
+      console.log(data)
+      if(!response.ok){
+        // response.status
+        // console.log("*********",response.status,response.statusText,data.message,data.errors)
+        alert(
+          `${response.status}\n${response.statusText}\n${data.message}`
+       )
+      }
+      if(response.ok){
+
+        // response.status
+        alert(
+          `${response.status}\n${response.statusText}\n${data.message}`
+       )
+       
+        n('/')
+      
+      }
+      // console.log(data.errors.username[0])
+      console.log(data.message)
+    
+    // const data=await response.json()
+    // console.log(data)
+    // console.log(data.errors.username[0])
+    // console.log(data.message)
+
+  }
  
   return (
     <section className="bg-gray-50 p-3">
@@ -15,7 +87,7 @@ const Register = () => {
           <h1 className="text-xl -mt-5 font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl ">
             Create an account
           </h1>
-          <form className="space-y-4 md:space-y-2" action="#">
+          <div className="space-y-4 md:space-y-2" action="#">
             <div className="flex w-full gap-8">
            <div className="flex flex-col gap-5 w-full">
            <div className=''>
@@ -215,7 +287,7 @@ const Register = () => {
       <p className="text-md font-light text-gray-500 pb-3">
               Already have an account?{" "}
               <Link
-               to="/login"
+               to="/"
                 className="font-medium text-blue-600 hover:underline "
               >
                 Login here
@@ -225,11 +297,12 @@ const Register = () => {
 
             <button
               type="submit"
+              onClick={handleregister}
               className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-3 text-center"
             >
               Register
             </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>

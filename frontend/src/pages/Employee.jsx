@@ -4,8 +4,20 @@ import Timesheet from "../components/Timesheet";
 import Profile from "../components/Profile";
 import Scorecard from "../components/Scorecard";
 import {FaUser} from "react-icons/fa"
+import {Link,useNavigate} from 'react-router-dom'
 
 const Employee = () => {
+  const n = useNavigate();
+  const handleLogout=()=>{
+    localStorage.setItem('auth',"false")
+    localStorage.setItem("accessToken", "");
+      localStorage.setItem("refreshToken", "");
+      localStorage.setItem("userName", "");
+      localStorage.setItem("password", "");
+      n('/')
+
+  }
+  
   const [isProfileVisible, setProfileVisible] = useState(false);
   const toggleProfileVisibility = () => {
     setProfileVisible(!isProfileVisible);
@@ -34,7 +46,7 @@ const Employee = () => {
             </div>
             <div className="editprofilediv mt-3 text-lg" >
               <p className="border-b border-red-700 py-1 px-2 hover:cursor-pointer" onClick={toggleProfileDivVisibility}>Edit Profile</p>
-              <p className="px-4 hover:cursor-pointer">Logout</p>
+              <button className="px-4 hover:cursor-pointer" onClick={handleLogout}>Logout</button>
             </div>
           </div>
         )}
