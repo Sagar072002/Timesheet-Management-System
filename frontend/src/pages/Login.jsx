@@ -23,6 +23,10 @@ const Login = () => {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
+          body:{
+            token:`${accessToken}`
+
+          }
         });
 
         if (!response.ok) {
