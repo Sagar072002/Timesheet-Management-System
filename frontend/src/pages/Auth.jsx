@@ -1,6 +1,6 @@
 const authService = {
     login: async (username, password) => {
-        const response = await fetch(`dbase/token/login/`, {method: "POST",headers: {
+        const response = await fetch(`api/v1/auth/jwt/create/`, {method: "POST",headers: {
             "Content-type": "application/json; charset=UTF-8",
           },
         body: JSON.stringify({ username, password })});
@@ -16,7 +16,7 @@ const authService = {
     },
 
     refreshToken: async (refreshToken) => {
-        const response = await fetch(`dbase/token/refresh/`, {method: "POST",headers: {
+        const response = await fetch(`api/v1/auth/jwt/refresh/`, {method: "POST",headers: {
             "Content-type": "application/json; charset=UTF-8",
           },
         body: JSON.stringify({ refresh: refreshToken })});

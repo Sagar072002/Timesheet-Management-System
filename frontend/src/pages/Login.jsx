@@ -18,7 +18,7 @@ const Login = () => {
           n("/Employee");
         }
 
-        const response = await fetch("dbase/token/verify/", {
+        const response = await fetch("api/v1/auth/jwt/verify/", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${accessToken}`,

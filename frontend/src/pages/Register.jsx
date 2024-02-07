@@ -37,12 +37,18 @@ const Register = () => {
     const ph=document.getElementById('phone').value
     const age=document.getElementById('age').value
     const add=document.getElementById('address').value
-    const response = await fetch('dbase/token/register/',
+    const response = await fetch('api/v1/auth/users/',
       {
         method:'POST',
         headers: {"Content-type": "application/json; charset=UTF-8"},
         body: JSON.stringify({
-          'username':empid,
+          'employeeid':empid,//"username":empid use this username is a mandatory one 
+          "name":name,
+          "gender":gender,
+          "email":email,
+          "phone_number":ph,
+          "age":age,
+          "address":add,
           'password1':pass1,
           'password2':pass2,
         })
