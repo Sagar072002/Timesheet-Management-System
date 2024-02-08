@@ -19,6 +19,10 @@ const Login = () => {
            //toast.error(sessionStorage.getItem("userName") !="")
            n("/Employee");
          }
+         if (sessionStorage.getItem("auth") === "false") {
+          //toast.error(sessionStorage.getItem("userName") !="")
+          n("/");
+         
         toast.error("Access Token:", `${accessToken}`);
         const response = await fetch("api/v1/auth/jwt/verify/", {
           method: "POST",
@@ -36,7 +40,7 @@ const Login = () => {
           toast.error("Request failed:", errorResponseData);
           throw new Error("Request failed");
         }
-      toast.error("response",response);
+        toast.error("response",response);
         const responseData = await response.json();
         setData(responseData);
         // toast.error("15");
@@ -45,6 +49,7 @@ const Login = () => {
           sessionStorage.setItem("auth", "true");
           n("/Employee");
         }
+      }
       } catch (error) {
         toast.error("Request failed:", error);
       }
