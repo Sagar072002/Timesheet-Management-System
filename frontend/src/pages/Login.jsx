@@ -34,8 +34,8 @@ const Login = () => {
       
         if (!response.ok) {
           const errorResponseData = await response.json();
-          toast.error("Request failed:", errorResponseData);
-          throw new Error("Request failed");
+          console.log("Request failed:", errorResponseData);
+          // throw new Error("Request failed");
         }
         console.log("response",response);
         const responseData = await response.json();
@@ -49,8 +49,9 @@ const Login = () => {
           
         
          
-      } catch (error) {
-        toast.error("Request failed:", error);
+      }
+       catch (error) {
+        console.log("Request failed:", error);
       }
     };
 
