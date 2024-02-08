@@ -1,9 +1,10 @@
 const authService = {
     login: async (username, password) => {
-        const response = await fetch(`api/v1/auth/jwt/create/`, {method: "POST",headers: {
+        console.log({ "employeeid":username, "password":password });
+        const response = await fetch(`http://localhost:8000/api/v1/auth/jwt/create/`, {method: "POST",headers: {
             "Content-type": "application/json; charset=UTF-8",
           },
-        body: JSON.stringify({ username, password })});
+        body: JSON.stringify({ "employeeid":username, "password":password })});
         if (!response.ok) {
             alert(
                 `${response.status}\n${response.statusText}\n${response.json().message}`
@@ -16,7 +17,7 @@ const authService = {
     },
 
     refreshToken: async (refreshToken) => {
-        const response = await fetch(`api/v1/auth/jwt/refresh/`, {method: "POST",headers: {
+        const response = await fetch(`http://localhost:8000/api/v1/auth/jwt/refresh/`, {method: "POST",headers: {
             "Content-type": "application/json; charset=UTF-8",
           },
         body: JSON.stringify({ refresh: refreshToken })});

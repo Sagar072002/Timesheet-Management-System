@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react';
 import authService from './Auth'
-import { Link,useNavigate } from 'react-router-dom';
+import { Link,json,useNavigate } from 'react-router-dom';
 import {FaLock} from "react-icons/fa"
 import {MdEmail} from "react-icons/md"
 
@@ -13,32 +13,34 @@ const Login = () => {
     const fetchData = async () => {
       try {
         const accessToken = access1;
-        if (localStorage.getItem("auth") === "true" && localStorage.getItem("userName") !=="") {
-          // console.log(localStorage.getItem("userName") !="")
-          n("/Employee");
-        }
-
-        const response = await fetch("api/v1/auth/jwt/verify/", {
-          method: "GET",
+         if (localStorage.getItem("auth") === "true" && localStorage.getItem("userName") !=="") {
+           //console.log(localStorage.getItem("userName") !="")
+           n("/Employee");
+         }
+        console.log("Access Token:", `${accessToken}`);
+        const response = await fetch("http://localhost:8000/api/v1/auth/jwt/verify/", {
+          method: "POST",
           headers: {
             Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
           },
-          body:{
-            access:`${accessToken}`
-
-          }
+          body:JSON.stringify({token:`${accessToken}`})
+           
+          
         });
-
+        
         if (!response.ok) {
+          const errorResponseData = await response.json();
+          console.error("Request failed:", errorResponseData);
           throw new Error("Request failed");
         }
-
+      console.log("response",response);
         const responseData = await response.json();
         setData(responseData);
         // console.log("15");
-        // console.log(responseData);
-        if (responseData.auth === "true") {
-          localStorage.setItem("auth", responseData.auth);
+        console.log(responseData);
+        if (response.ok === true) {
+          localStorage.setItem("auth", "true");
           n("/Employee");
         }
       } catch (error) {
@@ -50,12 +52,13 @@ const Login = () => {
   }, [access1]);
 
   const handleLogin = async () => {
-    const username = document.getElementById("email").value;
+    const username = document.getElementById("employeeid").value;
     const password = document.getElementById("password").value;
     console.log(authService.login(username, password));
     try {
       const { access, refresh } = await authService.login(username, password);
       setAccess1(access);
+      console.log("Access Token:", access);
       localStorage.setItem("accessToken", access);
       localStorage.setItem("refreshToken", refresh);
       localStorage.setItem("userName", username);
@@ -82,20 +85,20 @@ const Login = () => {
         <div className="space-y-4 md:space-y-6" >
         <div>
                <label
-                htmlFor="email"
+                htmlFor="employeeid"
                 className="block mb-2 text-sm font-medium text-gray-900 "
               >
-                Email
+                Employee ID
               </label>
               <div className="flex bg-slate-50 border p-3 rounded">
               <MdEmail className='mr-3' />
 
               <input
-                type="email"
-                name="email"
-                id="email"
+                type="text"
+                name="employeeid"
+                id="employeeid"
                 className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full "
-                placeholder="Your Email"
+                placeholder="Your employeeid"
                 required=""
               />
  </div>

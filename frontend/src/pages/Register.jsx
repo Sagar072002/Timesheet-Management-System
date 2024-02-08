@@ -10,6 +10,7 @@ const Register = () => {
 
 
   const handleregister=async ()=>{
+    
     if(document.getElementById('password').value===""){
       alert("Name Cannot Be Empty")
     }
@@ -37,7 +38,7 @@ const Register = () => {
     const ph=document.getElementById('phone').value
     const age=document.getElementById('age').value
     const add=document.getElementById('address').value
-    const response = await fetch('api/v1/auth/users/',
+    const response = await fetch('http://localhost:8000/api/v1/auth/users/',
       {
         method:'POST',
         headers: {"Content-type": "application/json; charset=UTF-8"},
@@ -49,33 +50,33 @@ const Register = () => {
           "phone_number":ph,
           "age":age,
           "address":add,
-          'password1':pass1,
-          'password2':pass2,
+          'password':pass1,
+          're_password':pass2,
         })
       }     
     );
     
-      const data=await response.json()
-      console.log(data)
-      if(!response.ok){
-        // response.status
-        // console.log("*********",response.status,response.statusText,data.message,data.errors)
-        alert(
-          `${response.status}\n${response.statusText}\n${data.message}`
-       )
-      }
-      if(response.ok){
+    const data=await response.json()
+    console.log(data)
+    if(!response.ok){
+      // response.status
+      // console.log("*********",response.status,response.statusText,data.message,data.errors)
+      alert(
+        `${response.status}\n${response.statusText}\n${data.message}`
+     )
+    }
+    if(response.ok){
 
-        // response.status
-        alert(
-          `${response.status}\n${response.statusText}\n${data.message}`
-       )
-       
-        n('/')
-      
-      }
-      // console.log(data.errors.username[0])
-      console.log(data.message)
+      // response.status
+      alert(
+        `${response.status}\n${response.statusText}\n${data.message}`
+     )
+     
+      n('/')
+    
+    }
+    // console.log(data.errors.username[0])
+    console.log(data.message)
     
     // const data=await response.json()
     // console.log(data)
