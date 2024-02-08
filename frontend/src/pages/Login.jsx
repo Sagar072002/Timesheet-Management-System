@@ -18,7 +18,7 @@ const Login = () => {
            n("/Employee");
          }
         console.log("Access Token:", `${accessToken}`);
-        const response = await fetch("http://localhost:8000/api/v1/auth/jwt/verify/", {
+        const response = await fetch("api/v1/auth/jwt/verify/", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${accessToken}`,
