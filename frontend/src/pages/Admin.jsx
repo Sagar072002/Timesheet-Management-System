@@ -18,6 +18,16 @@ const Admin = () => {
 
     },[]
   )
+  const handleLogout=()=>{
+    sessionStorage.setItem('auth',"false")
+    sessionStorage.setItem('admin',"false")
+    sessionStorage.setItem("accessToken", "");
+      sessionStorage.setItem("refreshToken", "");
+      sessionStorage.setItem("userName", "");
+      sessionStorage.setItem("password", "");
+      n('/')
+
+  }
 
   const [isProfileVisible, setProfileVisible] = useState(false);
   const toggleProfileVisibility = () => {
@@ -50,7 +60,7 @@ const Admin = () => {
             </div>
             <div className="editprofilediv mt-3 text-lg" >
               <p className="border-b border-red-700 py-1 px-2 hover:cursor-pointer" onClick={toggleProfileDivVisibility}>Edit Profile</p>
-              <p className="px-4 hover:cursor-pointer">Logout</p>
+              <button onClick={handleLogout} className="px-4 hover:cursor-pointer">Logout</button>
             </div>
           </div>
         )}
