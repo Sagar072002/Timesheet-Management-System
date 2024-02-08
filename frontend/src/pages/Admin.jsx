@@ -1,9 +1,24 @@
-import React, {  useState } from "react";
+import React, {  useState,useEffect } from "react";
 import logo from "../assets/user_img.jpg"
 import Profile from "../components/Profile";
 import EmployeeCard from "../components/EmployeeCard";
+// import React,{useEffect,useState} from 'react';
+import { Link,json,useNavigate } from 'react-router-dom';
 
 const Admin = () => {
+  const n=useNavigate();
+  useEffect(
+    ()=>{
+      if(sessionStorage.getItem('auth')==="false"){
+        n('/')
+      }
+      else if(sessionStorage.getItem('auth')==="true" && sessionStorage.getItem('admin')==="false"){
+        n('/employee')
+      }
+
+    },[]
+  )
+
   const [isProfileVisible, setProfileVisible] = useState(false);
   const toggleProfileVisibility = () => {
     setProfileVisible(!isProfileVisible);

@@ -13,6 +13,9 @@ const Employee = () => {
            if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
              n("/Employee");
            }
+           else{
+            n("/");
+           }
   
     },[]
     )

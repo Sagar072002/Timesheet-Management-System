@@ -1,6 +1,17 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react';
+import { Link,json,useNavigate } from 'react-router-dom';
 
 const Contact = () => {
+  const n=useNavigate();
+  useEffect(
+    ()=>{
+           if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
+             n("/Employee");
+           }
+  
+    },[]
+    )
+
   return (
     <section className="bg-white m-6 mt-10 pt-10">
   <div className="py-3 lg:py-5 px-5 mx-auto max-w-[500px] border rounded-md">

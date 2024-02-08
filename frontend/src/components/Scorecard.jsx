@@ -1,6 +1,16 @@
-import React from 'react'
+import React,{useEffect} from 'react';
+import {useNavigate } from 'react-router-dom';
 
 const Scorecard = () => {
+  const n=useNavigate();
+  useEffect(
+    ()=>{
+      if(sessionStorage.getItem('auth')==="false"){
+        n('/')
+      }
+
+    },[]
+  )
   return (
     <div className="">
     <h2 className="text-center  uppercase text-3xl m-3 font-bold">

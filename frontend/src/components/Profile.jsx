@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React,{useEffect,useState} from 'react';
+import {useNavigate } from 'react-router-dom';
 import logo from "../assets/user_img.jpg";
 import {RxCross2} from "react-icons/rx"
 
 const Profile = () => {
     const [isVisible, setIsVisible] = useState(true);
+    const n=useNavigate();
+    useEffect(
+      ()=>{
+        if(sessionStorage.getItem('auth')==="false"){
+          n('/')
+        }
+      },[]
+    )
   
     const handleCrossClick = () => {
       setIsVisible(false);
