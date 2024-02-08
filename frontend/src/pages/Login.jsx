@@ -13,8 +13,8 @@ const Login = () => {
     const fetchData = async () => {
       try {
         const accessToken = access1;
-         if (localStorage.getItem("auth") === "true" && localStorage.getItem("userName") !=="") {
-           //console.log(localStorage.getItem("userName") !="")
+         if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
+           //console.log(sessionStorage.getItem("userName") !="")
            n("/Employee");
          }
         console.log("Access Token:", `${accessToken}`);
@@ -40,7 +40,7 @@ const Login = () => {
         // console.log("15");
         console.log(responseData);
         if (response.ok === true) {
-          localStorage.setItem("auth", "true");
+          sessionStorage.setItem("auth", "true");
           n("/Employee");
         }
       } catch (error) {
@@ -59,10 +59,10 @@ const Login = () => {
       const { access, refresh } = await authService.login(username, password);
       setAccess1(access);
       console.log("Access Token:", access);
-      localStorage.setItem("accessToken", access);
-      localStorage.setItem("refreshToken", refresh);
-      localStorage.setItem("userName", username);
-      localStorage.setItem("password", password);
+      sessionStorage.setItem("accessToken", access);
+      sessionStorage.setItem("refreshToken", refresh);
+      sessionStorage.setItem("userName", username);
+      sessionStorage.setItem("password", password);
       console.log("Access Token:", access);
       console.log("Refresh Token:", refresh);
     } catch (error) {

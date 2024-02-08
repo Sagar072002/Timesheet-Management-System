@@ -8,12 +8,20 @@ import {Link,useNavigate} from 'react-router-dom'
 
 const Employee = () => {
   const n = useNavigate();
+  useEffect(
+    ()=>{
+           if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
+             n("/Employee");
+           }
+  
+    },[]
+    )
   const handleLogout=()=>{
-    localStorage.setItem('auth',"false")
-    localStorage.setItem("accessToken", "");
-      localStorage.setItem("refreshToken", "");
-      localStorage.setItem("userName", "");
-      localStorage.setItem("password", "");
+    sessionStorage.setItem('auth',"false")
+    sessionStorage.setItem("accessToken", "");
+      sessionStorage.setItem("refreshToken", "");
+      sessionStorage.setItem("userName", "");
+      sessionStorage.setItem("password", "");
       n('/')
 
   }

@@ -1,10 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import {FaUser,FaPhoneAlt,FaBabyCarriage,FaLock,FaSearchLocation} from "react-icons/fa"
 import {MdEmail} from "react-icons/md"
 import {CgGenderMale} from "react-icons/cg"
 
 const Register = () => {
+
+  useEffect(
+  ()=>{
+         if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
+           n("/Employee");
+         }
+
+  },[]
+  )
 
   const n=useNavigate()
 
