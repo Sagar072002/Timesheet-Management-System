@@ -16,10 +16,12 @@ const Login = () => {
       try {
         const accessToken = access1;
         if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
-          alert("hello rithik")
+          n("/Employee");
+          // alert("hello rithik")
+        }
           //toast.error(sessionStorage.getItem("userName") !="")
-           console.log("Access Token:", `${accessToken}`);
-        const response = await fetch("api/v1/auth/jwt/verify/", {
+          console.log("Access Token:", `${accessToken}`);
+          const response = await fetch("api/v1/auth/jwt/verify/", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -45,13 +47,8 @@ const Login = () => {
           n("/Employee");
         }
           
-         }
-         if (sessionStorage.getItem("auth") === "false") {
-          //toast.error(sessionStorage.getItem("userName") !="")
-          n("/");
-         
         
-      }
+         
       } catch (error) {
         toast.error("Request failed:", error);
       }
