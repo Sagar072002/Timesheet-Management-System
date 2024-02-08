@@ -47,7 +47,7 @@ const Register = () => {
     const ph=document.getElementById('phone').value
     const age=document.getElementById('age').value
     const add=document.getElementById('address').value
-    const response = await fetch('http://localhost:8000/api/v1/auth/users/',
+    const response = await fetch('api/v1/auth/users/',
       {
         method:'POST',
         headers: {"Content-type": "application/json; charset=UTF-8"},

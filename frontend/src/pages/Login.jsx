@@ -41,6 +41,19 @@ const Login = () => {
         console.log(responseData);
         if (response.ok === true) {
           sessionStorage.setItem("auth", "true");
+          const newresp =await fetch(
+            `api/v1/auth/jwt/refresh/`,{
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${accessToken}`,
+                  "Content-Type": "application/json",
+                },
+                body:JSON.stringify({token:`${accessToken}`})
+                 
+                
+              });
+          
+          console.log(newresp)
           n("/Employee");
         }
       } catch (error) {
