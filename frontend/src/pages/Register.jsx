@@ -3,6 +3,8 @@ import { Link,useNavigate } from 'react-router-dom'
 import {FaUser,FaPhoneAlt,FaBabyCarriage,FaLock,FaSearchLocation} from "react-icons/fa"
 import {MdEmail} from "react-icons/md"
 import {CgGenderMale} from "react-icons/cg"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
 
@@ -19,15 +21,17 @@ const Register = () => {
 
 
   const handleregister=async ()=>{
-    
+    if (document.getElementById('name').value === "") {
+      toast.error("Name cannot be blank");
+    }
     if(document.getElementById('password').value===""){
-      alert("Name Cannot Be Empty")
+      toast.error("Name Cannot Be Empty")
     }
     if(document.getElementById('employeeid').value===""){
-      alert("Password Cannot Be Empty")
+      toast.error("Password Cannot Be Empty")
     }
     if(document.getElementById('confirm-password').value===""){
-      alert("Confirm Passsword Cannot Be Empty")
+      toast.error("Confirm Passsword Cannot Be Empty")
     }
     // console.log(document.getElementById('name').value)
     // console.log(document.getElementById('employeeid').value)
@@ -47,6 +51,7 @@ const Register = () => {
     const ph=document.getElementById('phone').value
     const age=document.getElementById('age').value
     const add=document.getElementById('address').value
+    try{
     const response = await fetch('api/v1/auth/users/',
       {
         method:'POST',
@@ -70,22 +75,43 @@ const Register = () => {
     if(!response.ok){
       // response.status
       // console.log("*********",response.status,response.statusText,data.message,data.errors)
-      alert(
+      toast.error(
         `${response.status}\n${response.statusText}\n${data.message}`
      )
     }
-    if(response.ok){
 
       // response.status
-      alert(
-        `${response.status}\n${response.statusText}\n${data.message}`
-     )
-     
-      n('/')
+    //   toast.success(
+    //     `${response.status}\n${response.statusText}\n${data.message}`
+    //  )
+    
+     toast.success("Registration successful!");
+    
+     console.log('Registered values:', {
+      name,
+      empid,
+      gender,
+      pass1,
+      pass2,
+      email,
+      ph,
+      age,
+      add
+    });
+
+    // Delay redirect to ensure success message is shown
+    setTimeout(() => {
+      n('/');
+    }, 4000); // Adjust the delay as needed
+
     
     }
+    catch(error){
+      toast.error(error.message)
+    }
+    
     // console.log(data.errors.username[0])
-    console.log(data.message)
+    // toast.error(data.message)
     
     // const data=await response.json()
     // console.log(data)
@@ -96,6 +122,7 @@ const Register = () => {
  
   return (
     <section className="bg-gray-50 p-3">
+      <ToastContainer/>
     <div className="flex flex-col items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0">
     
       <div className="w-full bg-white rounded-md shadow min-w-[650px]  md:mt-0 sm:max-w-md xl:p-0 ">
@@ -194,7 +221,7 @@ const Register = () => {
               <div className="flex bg-slate-50 border p-3 rounded">
               <FaLock className='mr-3' />
               <input
-                type="confirm-password"
+                type="password"
                 name="confirm-password"
                 id="confirm-password"
                 placeholder="••••••••"
