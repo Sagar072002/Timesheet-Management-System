@@ -15,15 +15,10 @@ const Login = () => {
     const fetchData = async () => {
       try {
         const accessToken = access1;
-         if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
-           //toast.error(sessionStorage.getItem("userName") !="")
-           n("/Employee");
-         }
-         if (sessionStorage.getItem("auth") === "false") {
+        if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
+          alert("hello rithik")
           //toast.error(sessionStorage.getItem("userName") !="")
-          n("/");
-         
-        toast.error("Access Token:", `${accessToken}`);
+           console.log("Access Token:", `${accessToken}`);
         const response = await fetch("api/v1/auth/jwt/verify/", {
           method: "POST",
           headers: {
@@ -34,21 +29,28 @@ const Login = () => {
            
           
         });
-        
+      
         if (!response.ok) {
           const errorResponseData = await response.json();
           toast.error("Request failed:", errorResponseData);
           throw new Error("Request failed");
         }
-        toast.error("response",response);
+        console.log("response",response);
         const responseData = await response.json();
         setData(responseData);
         // toast.error("15");
-        toast.error(responseData);
+        console.log(responseData);
         if (response.ok === true) {
           sessionStorage.setItem("auth", "true");
           n("/Employee");
         }
+          
+         }
+         if (sessionStorage.getItem("auth") === "false") {
+          //toast.error(sessionStorage.getItem("userName") !="")
+          n("/");
+         
+        
       }
       } catch (error) {
         toast.error("Request failed:", error);
@@ -65,13 +67,13 @@ const Login = () => {
     try {
       const { access, refresh } = await authService.login(username, password);
       setAccess1(access);
-      toast.error("Access Token:", access);
+      console.log("Access Token:", access);
       sessionStorage.setItem("accessToken", access);
       sessionStorage.setItem("refreshToken", refresh);
       sessionStorage.setItem("userName", username);
       sessionStorage.setItem("password", password);
-      toast.error("Access Token:", access);
-      toast.error("Refresh Token:", refresh);
+      console.log("Access Token:", access);
+      console.log("Refresh Token:", refresh);
     } catch (error) {
       toast.error("Login failed:", error);
     }
