@@ -177,6 +177,16 @@ DJOSER = {
         'user_create': 'users.serializers.CreateUserSerializer',
         'user': "users.serializers.CreateUserSerializer",
         'user_delete': "djoser.serializers.UserDeleteSerializer",      
+        'user_update': "users.serializers.CreateUserSerializer",
+        'user_set_password': "djoser.serializers.SetPasswordSerializer",
+        'user_reset_password': "djoser.serializers.ResetPasswordSerializer",
+        'user_reset_username': "djoser.serializers.ResetUsernameSerializer",
+        'user_reset_username_confirm': "djoser.serializers.UidAndTokenSerializer",
+        'user_reset_password_confirm': "djoser.serializers.UidAndTokenSerializer",
+        'user_activation': "djoser.serializers.UidAndTokenSerializer",
+        'user_activation_re_send': "djoser.serializers.EmailOrUsernameSerializer",
+        'password_reset': "djoser.serializers.EmailSerializer",
+        'password_reset_confirm': "djoser.serializers.UidAndTokenSerializer",
     },
 }
 
