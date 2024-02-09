@@ -3,7 +3,7 @@ import logo from "../assets/user_img.jpg"
 import Profile from "../components/Profile";
 import EmployeeCard from "../components/EmployeeCard";
 // import React,{useEffect,useState} from 'react';
-import { Link,json,useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Admin = () => {
   const n=useNavigate();

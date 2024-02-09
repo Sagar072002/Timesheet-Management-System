@@ -2,14 +2,19 @@ import React, { useState,useEffect } from "react";
 import logo from "../assets/user_img.jpg"
 import Timesheet from "../components/Timesheet";
 import Profile from "../components/Profile";
-import Scorecard from "../components/Scorecard";
+// import Scorecard from "../components/Scorecard";
 import {FaUser} from "react-icons/fa"
-import {Link,useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
+import { ToastContainer, toast } from "react-toastify";
 
 const Employee = () => {
   const n = useNavigate();
+  const [username, setUsername] = useState("");
+
   useEffect(
     ()=>{
+      const fetchedUsername = sessionStorage.getItem("userName");
+    setUsername(fetchedUsername);
            if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
              n("/Employee");
            }
@@ -20,12 +25,15 @@ const Employee = () => {
     },[]
     )
   const handleLogout=()=>{
+    toast.success("Log out successfully")
     sessionStorage.setItem('auth',"false")
     sessionStorage.setItem("accessToken", "");
       sessionStorage.setItem("refreshToken", "");
       sessionStorage.setItem("userName", "");
       sessionStorage.setItem("password", "");
-      n('/')
+      setTimeout(() => {
+        n('/');
+      }, 4000); // Adjust the delay as needed
 
   }
   
@@ -41,9 +49,12 @@ const Employee = () => {
   };
   return (
     <div className="bg-slate-500 w-full">
+      <ToastContainer/>
       <div className="">
     <div className="">
   <h2 className="font-bold text-2xl uppercase text-center pt-4 text-white">Employee Dashboard</h2>
+  <div className="">
+  <span className="text-white mr-2 absolute right-28 top-5">Hii, {username}</span></div>
   <FaUser onClick={toggleProfileVisibility} className=' w-8 h-8  text-white text-xl absolute right-14 top-3' />
         </div>
         {isProfileVisible && (

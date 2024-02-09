@@ -10,7 +10,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     employeeid = models.CharField(max_length=255, unique=True)
     gender = models.CharField(max_length=10, choices=[("Male", "Male"), ("Female", "Female"), ("Other", "Other")])
     email = models.EmailField(unique=True)
-    phone_number = models.CharField(max_length=15)
+    phone_number = models.CharField(max_length=12)
     age = models.IntegerField()
     address = models.TextField()
     is_active = models.BooleanField(default=True)

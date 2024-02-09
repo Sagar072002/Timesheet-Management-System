@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import {FaUser,FaPhoneAlt,FaBabyCarriage,FaLock,FaSearchLocation} from "react-icons/fa"
 import {MdEmail} from "react-icons/md"
@@ -21,27 +21,7 @@ const Register = () => {
 
 
   const handleregister=async ()=>{
-    if (document.getElementById('name').value === "") {
-      toast.error("Name cannot be blank");
-    }
-    if(document.getElementById('password').value===""){
-      toast.error("Name Cannot Be Empty")
-    }
-    if(document.getElementById('employeeid').value===""){
-      toast.error("Password Cannot Be Empty")
-    }
-    if(document.getElementById('confirm-password').value===""){
-      toast.error("Confirm Passsword Cannot Be Empty")
-    }
-    // console.log(document.getElementById('name').value)
-    // console.log(document.getElementById('employeeid').value)
-    // console.log(document.getElementById('gender').value)
-    // console.log(document.getElementById('password').value)
-    // console.log(document.getElementById('confirm-password').value)
-    // console.log(document.getElementById('email').value)
-    // console.log(document.getElementById('phone').value)
-    // console.log(document.getElementById('age').value)
-    // console.log(document.getElementById('address').value)
+    
     const name=document.getElementById('name').value
     const empid=document.getElementById('employeeid').value
     const gender=document.getElementById('gender').value
@@ -51,6 +31,37 @@ const Register = () => {
     const ph=document.getElementById('phone').value
     const age=document.getElementById('age').value
     const add=document.getElementById('address').value
+    if(name===""){
+toast.error("Name cannot be empty")
+    }
+    if(empid===""){
+toast.error("Employee ID cannot be empty")
+    }
+    if(gender===""){
+toast.error("Gender cannot be empty")
+    }
+    if(pass1===""){
+toast.error("Password cannot be empty")
+    }
+    if(pass2===""){
+toast.error("Confirm Password cannot be empty")
+    }
+    if(email===""){
+toast.error("Email cannot be empty")
+    }
+    if(ph===""){
+toast.error("Phone cannot be empty")
+    }
+    if(age===""){
+toast.error("Age cannot be empty")
+    }
+    if(add===""){
+toast.error("Address cannot be empty")
+}
+if(pass1!==pass2){
+      toast.error("Passwords dont match")
+
+    }
     try{
     const response = await fetch('api/v1/auth/users/',
       {
@@ -75,7 +86,7 @@ const Register = () => {
     if(!response.ok){
       // response.status
       // console.log("*********",response.status,response.statusText,data.message,data.errors)
-      toast.error(
+      console.log(
         `${response.status}\n${response.statusText}\n${data.message}`
      )
     }
@@ -84,7 +95,8 @@ const Register = () => {
     //   toast.success(
     //     `${response.status}\n${response.statusText}\n${data.message}`
     //  )
-    
+    if(response.ok){
+
      toast.success("Registration successful!");
     
      console.log('Registered values:', {
@@ -103,7 +115,7 @@ const Register = () => {
     setTimeout(() => {
       n('/');
     }, 4000); // Adjust the delay as needed
-
+  }
     
     }
     catch(error){

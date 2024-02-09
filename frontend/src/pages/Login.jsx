@@ -1,8 +1,7 @@
 import authService from './Auth'
 import React,{useEffect,useState} from 'react';
 import { Link,json,useNavigate } from 'react-router-dom';
-import {FaLock} from "react-icons/fa"
-import {MdEmail} from "react-icons/md"
+import {FaLock,FaUser} from "react-icons/fa"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -43,8 +42,11 @@ const Login = () => {
         // toast.error("15");
         console.log(responseData);
         if (response.ok === true) {
+          toast.success("Login successfully")
           sessionStorage.setItem("auth", "true");
-          n("/Employee");
+          setTimeout(() => {
+            n('/Employee');
+          }, 4000); // Adjust the delay as needed
         }
           
         
@@ -99,14 +101,14 @@ const Login = () => {
                 Employee ID
               </label>
               <div className="flex bg-slate-50 border p-3 rounded">
-              <MdEmail className='mr-3' />
+              <FaUser className='mr-3' />
 
               <input
                 type="text"
                 name="employeeid"
                 id="employeeid"
                 className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full "
-                placeholder="Your employeeid"
+                placeholder="Your employee id"
                 required=""
               />
  </div>
