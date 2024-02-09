@@ -8,14 +8,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
 
-  useEffect(
-  ()=>{
-         if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
-           n("/Employee");
-         }
+  // // useEffect(
+  // // ()=>{
+  // //        if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
+  // //          n("/Employee");
+  // //        }
 
-  },[]
-  )
+  // // },[]
+  // // )
 
   const n=useNavigate()
 
@@ -31,6 +31,7 @@ const Register = () => {
     const ph=document.getElementById('phone').value
     const age=document.getElementById('age').value
     const add=document.getElementById('address').value
+     
     if(name===""){
 toast.error("Name cannot be empty")
     }
@@ -62,6 +63,22 @@ if(pass1!==pass2){
       toast.error("Passwords dont match")
 
     }
+     if(document.getElementById('isAdmin').checked)
+       {
+         if(!document.getElementById('employeeid').value.startsWith("A"))
+         {
+           toast.error("Admin ID should start with 'A'")
+           return;
+         }
+       }
+       else
+       {
+         if(!document.getElementById('employeeid').value.startsWith("E"))
+         {
+           toast.error("Employee ID should start with 'E'")
+           return;
+         }
+       }
     try{
     const response = await fetch('api/v1/auth/users/',
       {
@@ -208,7 +225,7 @@ if(pass1!==pass2){
                 htmlFor="password"
                 className="block mb-2 text-sm font-medium text-gray-900 "
               >
-                Password
+                Password <span className="text-slate-500">(Password must be atleast 8 characters and Alphanumeric)</span>
               </label>
               <div className="flex bg-slate-50 border p-3 rounded">
               <FaLock className='mr-3' />
@@ -336,7 +353,7 @@ if(pass1!==pass2){
             
             <div className="flex pt-4 justify-between">
               <div>
-            <input type="checkbox" name="" id="" />
+            <input type="checkbox" name="isAdmin" id="isAdmin" />
         <span className="text-md font-md text-gray-500 pl-2 pb-3">Register as Admin</span>
         </div>
       <p className="text-md font-light text-gray-500 pb-3">

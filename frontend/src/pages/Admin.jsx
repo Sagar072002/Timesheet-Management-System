@@ -7,14 +7,18 @@ import { useNavigate } from 'react-router-dom';
 
 const Admin = () => {
   const n=useNavigate();
+  const [username, setUsername] = useState("");
+
   useEffect(
     ()=>{
-      if(sessionStorage.getItem('auth')==="false"){
-        n('/')
-      }
-      else if(sessionStorage.getItem('auth')==="true" && sessionStorage.getItem('admin')==="false"){
-        n('/employee')
-      }
+      const fetchedUsername = sessionStorage.getItem("userName");
+      setUsername(fetchedUsername);
+       if(sessionStorage.getItem('auth')==="false"){
+         n('/')
+       }
+      //  else if(sessionStorage.getItem('auth')==="true" && sessionStorage.getItem('admin')==="false"){
+      //    n('/employee')
+      //  }
 
     },[]
   )
@@ -47,8 +51,10 @@ const Admin = () => {
         <div className="flex justify-between px-5">
           <p></p>
   <h2 className="font-bold text-2xl uppercase text-center">Admin Dashboard</h2>
+  <span className="text-white mr-2 absolute right-28 top-5">Hii, {username}</span>
 <img src={logo} onClick={toggleProfileVisibility} className="w-10 h-10 mix-blend-color-burn " alt="" />
         </div>
+
         {isProfileVisible && (
           <div className=" bg-slate-200 border border-slate-400 rounded absolute right-0 top-19 max-w-[500px] p-5 pt-2 h-32">
             <div className="flex justify-center">

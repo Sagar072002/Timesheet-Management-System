@@ -13,9 +13,26 @@ const Login = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const uname = sessionStorage.getItem("userName");
+        
         const accessToken = access1;
-        if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
-          n("/Employee");
+        if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") 
+        {
+          console.log("uname1",uname);
+          
+          if(uname.startsWith("A")){
+            alert("hello admin")
+            n("/admin");
+          }
+          else if(uname.startsWith("E"))
+          {
+            alert("hello emp")
+            n("/employee");
+          }
+          else
+          {
+            n("/");
+          }
           // alert("hello rithik")
         }
           //toast.error(sessionStorage.getItem("userName") !="")
@@ -41,11 +58,24 @@ const Login = () => {
         setData(responseData);
         // toast.error("15");
         console.log(responseData);
-        if (response.ok === true) {
+        if (response.ok === true) 
+        {
+          console.log("uname2",uname);
           toast.success("Login successfully")
           sessionStorage.setItem("auth", "true");
           setTimeout(() => {
-            n('/Employee');
+            if(uname.startsWith("A")){
+              alert("hello admin")
+              n("/admin");
+            }
+            else if(uname.startsWith("E"))
+            {
+              alert("hello emp")
+              n("/employee");
+            }
+            else{
+              n("/");
+            }
           }, 4000); // Adjust the delay as needed
         }
           

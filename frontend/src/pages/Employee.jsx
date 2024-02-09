@@ -15,12 +15,12 @@ const Employee = () => {
     ()=>{
       const fetchedUsername = sessionStorage.getItem("userName");
     setUsername(fetchedUsername);
-           if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
-             n("/Employee");
-           }
-           else{
-            n("/");
-           }
+          //  if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
+          //    n("/Employee");
+          //  }
+          //  else{
+          //   n("/");
+          //  }
   
     },[]
     )

@@ -20,6 +20,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'employeeid'
     REQUIRED_FIELDS = ['name', 'gender', 'email', 'phone_number', 'age', 'address']
 
+    def save(self, *args, **kwargs):
+        self.is_active = True  # Ensure is_active is set to True
+        super().save(*args, **kwargs)
+
 
     class Meta:
         verbose_name = _("User")
