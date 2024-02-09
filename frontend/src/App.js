@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Contact from './pages/Contact';
 import Profile from './components/Profile';
+import Detail from './components/Detail';
 import Timesheet from './components/Timesheet';
 import Scorecard from './components/Scorecard';
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/register" element={<Register/>} />
           <Route path="/contact" element={<Contact/>} />
           <Route path="/profile" element={<Profile/>} />
+          <Route path="/detail" element={<Detail/>} />
           <Route path="/timesheet" element={<Timesheet/>} />
           <Route path="/scorecard" element={<Scorecard/>} />
 
