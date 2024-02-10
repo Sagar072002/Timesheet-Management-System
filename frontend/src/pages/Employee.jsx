@@ -17,6 +17,7 @@ const Employee = () => {
     ()=>{
       const fetchedUsername = sessionStorage.getItem("userName");
     setUsername(fetchedUsername);
+    displayData();
           //  if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
           //    n("/Employee");
           //  }
@@ -98,7 +99,9 @@ const Employee = () => {
   const toggleProfileVisibility = () => {
     setProfileVisible(!isProfileVisible);
   };
-
+  const updateProfileValue = (updatedProfile) => {
+    setProfileValue(updatedProfile);
+  }
   const [isProfileDivVisible, setProfileDivVisible] = useState(false);
 
   const toggleProfileDivVisibility = () => {
@@ -111,7 +114,7 @@ const Employee = () => {
     <div className="">
   <h2 className="font-bold text-2xl uppercase text-center pt-4 text-white">Employee Dashboard</h2>
   <div className="">
-  <span className="text-white mr-2 absolute right-28 top-5">Hii, {username}</span></div>
+  <span className="text-white mr-2 absolute right-28 top-5">Hii, {profilevalue.name}</span></div>
   <FaUser onClick={toggleProfileVisibility} className=' w-8 h-8  text-white text-xl absolute right-14 top-3' />
         </div>
         {isProfileVisible && (
@@ -124,7 +127,7 @@ const Employee = () => {
               />
             </div>
             <div className="editprofilediv mt-3 text-lg" >
-              <p className="border-b border-red-700 py-1 px-2 hover:cursor-pointer" onClick={function(event){ toggleProfileDivVisibility(); displayData()}}>Edit Profile</p>
+              <p className="border-b border-red-700 py-1 px-2 hover:cursor-pointer" onClick={ toggleProfileDivVisibility}>Edit Profile</p>
               <button className="px-4 hover:cursor-pointer" onClick={handleLogout}>Logout</button>
             </div>
           </div>
@@ -133,7 +136,8 @@ const Employee = () => {
           <div className=" bg-transparent absolute left-1/2 -top-8 w-20 z-10">
             <Profile
               profilevalue={profilevalue}
-              
+              onUpdateProfile={updateProfileValue} // Pass the function to update profile value
+            
             />
           </div>
         )}
@@ -151,3 +155,4 @@ const Employee = () => {
 };
 
 export default Employee;
+

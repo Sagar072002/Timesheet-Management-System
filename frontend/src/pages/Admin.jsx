@@ -8,17 +8,74 @@ import { ToastContainer, toast } from "react-toastify";
 const Admin = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const [profilevalue, setProfileValue] = useState("");
+
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredEmployees, setFilteredEmployees] = useState([]);
 
   useEffect(() => {
     const fetchedUsername = sessionStorage.getItem("userName");
     setUsername(fetchedUsername);
+    displayData();
+
     if (sessionStorage.getItem("auth") === "false") {
       navigate("/");
     }
   }, []);
-
+  const displayData = async() => {
+    console.log("Displaying data");
+    try{
+      const named = sessionStorage.getItem("userName");
+      const url = `api/v1/users/get/${named}`;
+      console.log("Name:",named)
+      const response = await fetch(url,
+        {
+          method:'GET',
+          headers: {"Content-type": "application/json; charset=UTF-8"},
+          // body: JSON.stringify({
+          //   'employeeid':empid,//"username":empid use this username is a mandatory one 
+          //   "name":name,
+          //   "gender":gender,
+          //   "email":email,
+          //   "phone_number":ph,
+          //   "age":age,
+          //   "address":add,
+          //   'password':pass1,
+          //   're_password':pass2,
+          // })
+        }     
+      );
+      
+      const data=await response.json()
+      console.log(data)
+      setProfileValue(data)
+      if(!response.ok){
+        // response.status
+        // console.log("*********",response.status,response.statusText,data.message,data.errors)
+        console.log(
+          `${response.status}\n${response.statusText}\n${data.message}`
+       )
+      }
+  
+        // response.status
+      //   toast.success(
+      //     `${response.status}\n${response.statusText}\n${data.message}`
+      //  )
+      if(response.ok){
+  
+       //toast.success("Registration successful!");
+      
+       console.log('Fetched values:');
+      
+  
+      
+    }
+      
+      }
+      catch(error){
+        toast.error(error.message)
+      }
+  }  
   const handleLogout = () => {
     toast.success("Log out successfully")
 
@@ -37,7 +94,9 @@ const Admin = () => {
   const toggleProfileVisibility = () => {
     setProfileVisible(!isProfileVisible);
   };
-
+  const updateProfileValue = (updatedProfile) => {
+    setProfileValue(updatedProfile);
+  }
   const [isProfileDivVisible, setProfileDivVisible] = useState(false);
   const toggleProfileDivVisibility = () => {
     setProfileDivVisible(!isProfileDivVisible);
@@ -70,7 +129,7 @@ const Admin = () => {
             Admin Dashboard
           </h2>
           <span className="text-white mr-2 absolute right-28 top-5">
-            Hii, {username}
+            Hii, {profilevalue.name}
           </span>
           <img
             src={logo}
@@ -104,7 +163,10 @@ const Admin = () => {
         )}
         {isProfileDivVisible && (
           <div className=" bg-transparent absolute left-1/2 -top-8 w-20 z-10">
-            <Profile />
+            <Profile
+             profilevalue={profilevalue}
+             onUpdateProfile={updateProfileValue} // Pass the function to update profile value
+            />
           </div>
         )}
         <div className="mt-4 flex justify-center p-4 ">
