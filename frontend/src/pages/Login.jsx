@@ -1,9 +1,10 @@
 import authService from './Auth'
 import React,{useEffect,useState} from 'react';
-import { Link,json,useNavigate } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import {FaLock,FaUser} from "react-icons/fa"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 const Login = () => {
   const [access1, setAccess1] = useState("");
@@ -16,17 +17,18 @@ const Login = () => {
         const uname = sessionStorage.getItem("userName");
         
         const accessToken = access1;
+        
         if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") 
         {
-          console.log("uname1",uname);
+          // console.log("uname1",uname);
           
           if(uname.startsWith("A")){
-            alert("hello admin")
+            // alert("hello admin")
             n("/admin");
           }
           else if(uname.startsWith("E"))
           {
-            alert("hello emp")
+            // alert("hello emp")
             n("/employee");
           }
           else
@@ -36,7 +38,7 @@ const Login = () => {
           // alert("hello rithik")
         }
           //toast.error(sessionStorage.getItem("userName") !="")
-          console.log("Access Token:", `${accessToken}`);
+          // console.log("Access Token:", `${accessToken}`);
           const response = await fetch("api/v1/auth/jwt/verify/", {
           method: "POST",
           headers: {
@@ -49,28 +51,33 @@ const Login = () => {
         });
       
         if (!response.ok) {
+          const username = document.getElementById("employeeid").value;
+          const password = document.getElementById("password").value;
           const errorResponseData = await response.json();
-          console.log("Request failed:", errorResponseData);
+          // console.log("Request failed:", errorResponseData);
+          if(username!=="" && password!=="")
+                      toast.error('Invalid credentials');
+
           // throw new Error("Request failed");
         }
-        console.log("response",response);
+        // console.log("response",response);
         const responseData = await response.json();
         setData(responseData);
         // toast.error("15");
-        console.log(responseData);
+        // console.log(responseData);
         if (response.ok === true) 
         {
-          console.log("uname2",uname);
+          // console.log("uname2",uname);
           toast.success("Login successfully")
           sessionStorage.setItem("auth", "true");
           setTimeout(() => {
             if(uname.startsWith("A")){
-              alert("hello admin")
+              // alert("hello admin")
               n("/admin");
             }
             else if(uname.startsWith("E"))
             {
-              alert("hello emp")
+              // alert("hello emp")
               n("/employee");
             }
             else{
@@ -83,7 +90,7 @@ const Login = () => {
          
       }
        catch (error) {
-        console.log("Request failed:", error);
+        // console.log("Request failed:", error);
       }
     };
 
@@ -93,19 +100,21 @@ const Login = () => {
   const handleLogin = async () => {
     const username = document.getElementById("employeeid").value;
     const password = document.getElementById("password").value;
-    toast.error(authService.login(username, password));
+    // toast.error(authService.login(username, password));
     try {
+      if(username==="")toast.error("User id cannot be empty")
+      if(password==="")toast.error("Password cannot be empty")
       const { access, refresh } = await authService.login(username, password);
       setAccess1(access);
-      console.log("Access Token:", access);
+      // console.log("Access Token:", access);
       sessionStorage.setItem("accessToken", access);
       sessionStorage.setItem("refreshToken", refresh);
       sessionStorage.setItem("userName", username);
       sessionStorage.setItem("password", password);
-      console.log("Access Token:", access);
-      console.log("Refresh Token:", refresh);
+      // console.log("Access Token:", access);
+      // console.log("Refresh Token:", refresh);
     } catch (error) {
-      toast.error("Login failed:", error);
+      // toast.error("Login failed:", error);
     }
   };
 
@@ -120,7 +129,7 @@ const Login = () => {
     <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
       <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
         <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl ">
-          Sign in to your account
+          Sign in 
         </h1>
         <div className="space-y-4 md:space-y-6" >
         <div>
@@ -128,7 +137,8 @@ const Login = () => {
                 htmlFor="employeeid"
                 className="block mb-2 text-sm font-medium text-gray-900 "
               >
-                Employee ID
+                User ID               <span className='text-red-600'>(E : Employee &nbsp;&nbsp;A : Admin)</span>
+
               </label>
               <div className="flex bg-slate-50 border p-3 rounded">
               <FaUser className='mr-3' />
@@ -138,7 +148,7 @@ const Login = () => {
                 name="employeeid"
                 id="employeeid"
                 className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full "
-                placeholder="Your employee id"
+                placeholder="Your user id"
                 required=""
               />
  </div>
@@ -218,3 +228,8 @@ const Login = () => {
 }
 
 export default Login
+
+
+
+
+  

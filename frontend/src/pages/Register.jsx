@@ -6,8 +6,9 @@ import {CgGenderMale} from "react-icons/cg"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Register = () => {
 
+const Register = () => {
+   
   // // useEffect(
   // // ()=>{
   // //        if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
@@ -63,20 +64,26 @@ if(pass1!==pass2){
       toast.error("Passwords dont match")
 
     }
+    if(!document.getElementById('employeeid').value.startsWith("A") && !document.getElementById('employeeid').value.startsWith("E")){
+      toast.error("User ID should start with either 'A' or 'E'")
+    }
+
      if(document.getElementById('isAdmin').checked)
        {
+        
          if(!document.getElementById('employeeid').value.startsWith("A"))
          {
-           toast.error("Admin ID should start with 'A'")
+           toast.error("Uncheck the Checkbox to register as Employee")
            return;
          }
        }
        else
        {
+     
          if(!document.getElementById('employeeid').value.startsWith("E"))
          {
-           toast.error("Employee ID should start with 'E'")
-           return;
+          toast.error("Check the Checkbox to register as Admin")
+          return;
          }
        }
     try{
@@ -116,17 +123,7 @@ if(pass1!==pass2){
 
      toast.success("Registration successful!");
     
-     console.log('Registered values:', {
-      name,
-      empid,
-      gender,
-      pass1,
-      pass2,
-      email,
-      ph,
-      age,
-      add
-    });
+    
 
     // Delay redirect to ensure success message is shown
     setTimeout(() => {
@@ -154,7 +151,7 @@ if(pass1!==pass2){
       <ToastContainer/>
     <div className="flex flex-col items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0">
     
-      <div className="w-full bg-white rounded-md shadow min-w-[650px]  md:mt-0 sm:max-w-md xl:p-0 ">
+      <div className="w-full bg-white rounded-md shadow min-w-[730px]  md:mt-0 sm:max-w-md xl:p-0 ">
         <div className="px-2 space-y-4 md:space-y-4 sm:p-8">
           <h1 className="text-xl -mt-5 font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl ">
             Create an account
@@ -165,7 +162,7 @@ if(pass1!==pass2){
            <div className=''>
               <label
                 htmlFor="name"
-                className="block mb-2 text-sm font-medium text-gray-900 "
+                className="block mb-2 text-sm font-bold text-gray-900 "
               >
                 Name
               </label>
@@ -184,9 +181,10 @@ if(pass1!==pass2){
             <div>
               <label
                 htmlFor="employeeid"
-                className="block mb-2 text-sm font-medium text-gray-900 "
+                className="block mb-2 text-sm font-bold text-gray-900 "
               >
-                Employee ID
+                User ID &nbsp;
+              <span className='text-slate-500 font-medium'>(E : Employee &nbsp;&nbsp;A : Admin)</span>
               </label>
               <div className="flex bg-slate-50 border p-3 rounded">
                 <FaUser className='mr-3' />
@@ -196,7 +194,7 @@ if(pass1!==pass2){
                 name="employeeid"
                 id="employeeid"
                 className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full  "
-                placeholder="Employee ID"
+                placeholder="User ID"
                 required=""
               />
               </div>
@@ -204,7 +202,7 @@ if(pass1!==pass2){
             <div>
               <label
                 htmlFor="gender"
-                className="block mb-2 text-sm font-medium text-gray-900 "
+                className="block mb-2 text-sm font-bold text-gray-900 "
               >
                 Gender
               </label>
@@ -223,9 +221,9 @@ if(pass1!==pass2){
              <div>
               <label
                 htmlFor="password"
-                className="block mb-2 text-sm font-medium text-gray-900 "
+                className="block mb-2 text-sm font-bold text-gray-900 "
               >
-                Password <span className="text-slate-500">(Password must be atleast 8 characters and Alphanumeric)</span>
+                Password<span className="text-slate-500 font-medium">(Atleast 8 characters and Alphanumeric)</span>
               </label>
               <div className="flex bg-slate-50 border p-3 rounded">
               <FaLock className='mr-3' />
@@ -243,7 +241,7 @@ if(pass1!==pass2){
             <div >
               <label
                 htmlFor="confirm-password"
-                className="block mb-2 text-sm font-medium text-gray-900 "
+                className="block mb-2 text-sm font-bold text-gray-900 "
               >
                 Confirm password
               </label>
@@ -268,7 +266,7 @@ if(pass1!==pass2){
              <div>
                <label
                 htmlFor="email"
-                className="block mb-2 text-sm font-medium text-gray-900 "
+                className="block mb-2 text-sm font-bold text-gray-900 "
               >
                 Email
               </label>
@@ -289,7 +287,7 @@ if(pass1!==pass2){
             <div>
               <label
                 htmlFor="phone"
-                className="block mb-2 text-sm font-medium text-gray-900 "
+                className="block mb-2 text-sm font-bold text-gray-900 "
               >
                 Phone
               </label>
@@ -310,7 +308,7 @@ if(pass1!==pass2){
             <div>
                <label
                 htmlFor="age"
-                className="block mb-2 text-sm font-medium text-gray-900 "
+                className="block mb-2 text-sm font-bold text-gray-900 "
               >
                 Age
               </label>
@@ -331,7 +329,7 @@ if(pass1!==pass2){
             <div >
               <label
                 htmlFor="address"
-                className="block mb-2 text-sm font-medium text-gray-900 "
+                className="block mb-2 text-sm font-bold text-gray-900 "
               >
                 Address
               </label>
@@ -360,7 +358,7 @@ if(pass1!==pass2){
               Already have an account?{" "}
               <Link
                to="/"
-                className="font-medium text-blue-600 hover:underline "
+                className="font-bold text-blue-600 hover:underline "
               >
                 Login here
               </Link>
@@ -370,7 +368,7 @@ if(pass1!==pass2){
             <button
               type="submit"
               onClick={handleregister}
-              className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-3 text-center"
+              className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-md text-sm px-5 py-3 text-center"
             >
               Register
             </button>

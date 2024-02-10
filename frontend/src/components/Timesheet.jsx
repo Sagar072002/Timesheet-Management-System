@@ -1,17 +1,13 @@
-import React,{useEffect} from 'react';
-import {useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Timesheet = () => {
-  const n=useNavigate();
-  useEffect(
-    ()=>{
-      if(sessionStorage.getItem('auth')==="false"){
-        n('/')
-      }
-
-    },[]
-  )
-
+  const n = useNavigate();
+  useEffect(() => {
+    if (sessionStorage.getItem("auth") === "false") {
+      n("/");
+    }
+  }, []);
 
   return (
     <div className="flex bg-slate-500">
@@ -48,9 +44,7 @@ const Timesheet = () => {
                     <tr className=" text-lg text-white">
                       <th className="px-7 py-5 border-4 ">Day</th>
                       <th className="px-7 py-5 border-4 ">Task</th>
-                      <th className="px-7 py-5 border-4 ">
-                        Duration
-                      </th>
+                      <th className="px-7 py-5 border-4 ">Duration</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -154,7 +148,6 @@ const Timesheet = () => {
           </div>
         </div>
       </div>
-      
     </div>
   );
 };

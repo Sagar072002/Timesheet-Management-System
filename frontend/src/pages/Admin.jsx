@@ -3,6 +3,7 @@ import logo from "../assets/user_img.jpg";
 import Profile from "../components/Profile";
 import EmployeeCard from "../components/EmployeeCard";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -19,13 +20,17 @@ const Admin = () => {
   }, []);
 
   const handleLogout = () => {
+    toast.success("Log out successfully")
+
     sessionStorage.setItem("auth", "false");
     sessionStorage.setItem("admin", "false");
     sessionStorage.setItem("accessToken", "");
     sessionStorage.setItem("refreshToken", "");
     sessionStorage.setItem("userName", "");
     sessionStorage.setItem("password", "");
-    navigate("/");
+    setTimeout(() => {
+      navigate('/');
+    }, 4000); // Adjust the delay as needed
   };
 
   const [isProfileVisible, setProfileVisible] = useState(false);
@@ -57,6 +62,7 @@ const Admin = () => {
 
   return (
     <div className="relative flex">
+      <ToastContainer/>
       <div className="p-4 bg-blue-gray-200 w-full bg-gray-300">
         <div className="flex justify-between px-5">
           <p></p>
