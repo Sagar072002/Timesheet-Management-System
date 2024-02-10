@@ -1,12 +1,12 @@
 from django.contrib.auth import get_user_model
 from djoser.serializers import UserCreateSerializer
-from django.core.validators import validate_email
 
 User = get_user_model()
 
 
 class CreateUserSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
+        
         model = User
         fields = ['id', 'name', 'employeeid', 'gender', 'email', 'phone_number', 'age', 'address', 'password']
     #     #validators = [validate_email] 

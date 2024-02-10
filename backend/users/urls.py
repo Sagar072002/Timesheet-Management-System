@@ -12,6 +12,7 @@ from . import views
 
 urlpatterns = [
     path('get/<str:employeeid>/', views.getUser, name='get_user'),
+    path('getall/', views.getUserAll, name='get_user_all'),
     path('update/<str:employeeid>/', views.updateUser, name='update_user'),
     # Add other paths for create, update, delete as needed
     # path('create/', views.addUser, name='create_user'),

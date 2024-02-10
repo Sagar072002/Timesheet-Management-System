@@ -13,6 +13,13 @@ def getUser(request, employeeid):
     serializer = CreateUserSerializer(user, many=False)
     return Response(serializer.data)
 
+#fetch all data
+@api_view(['GET'])
+def getUserAll(request):
+    users = User.objects.all()
+    serializer = CreateUserSerializer(users, many=True)
+    return Response(serializer.data)
+
 #update data
 @api_view(['PUT'])
 def updateUser(request, employeeid):
