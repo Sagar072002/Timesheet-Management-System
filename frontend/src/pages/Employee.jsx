@@ -11,6 +11,8 @@ const Employee = () => {
   const n = useNavigate();
   const [username, setUsername] = useState("");
 
+  const [profilevalue, setProfileValue] = useState("");
+
   useEffect(
     ()=>{
       const fetchedUsername = sessionStorage.getItem("userName");
@@ -24,6 +26,61 @@ const Employee = () => {
   
     },[]
     )
+
+  const displayData = async() => {
+    console.log("Displaying data");
+    try{
+      const named = sessionStorage.getItem("userName");
+      const url = `api/v1/users/get/${named}`;
+      console.log("Name:",named)
+      const response = await fetch(url,
+        {
+          method:'GET',
+          headers: {"Content-type": "application/json; charset=UTF-8"},
+          // body: JSON.stringify({
+          //   'employeeid':empid,//"username":empid use this username is a mandatory one 
+          //   "name":name,
+          //   "gender":gender,
+          //   "email":email,
+          //   "phone_number":ph,
+          //   "age":age,
+          //   "address":add,
+          //   'password':pass1,
+          //   're_password':pass2,
+          // })
+        }     
+      );
+      
+      const data=await response.json()
+      console.log(data)
+      setProfileValue(data)
+      if(!response.ok){
+        // response.status
+        // console.log("*********",response.status,response.statusText,data.message,data.errors)
+        console.log(
+          `${response.status}\n${response.statusText}\n${data.message}`
+       )
+      }
+  
+        // response.status
+      //   toast.success(
+      //     `${response.status}\n${response.statusText}\n${data.message}`
+      //  )
+      if(response.ok){
+  
+       //toast.success("Registration successful!");
+      
+       console.log('Fetched values:');
+      
+  
+      
+    }
+      
+      }
+      catch(error){
+        toast.error(error.message)
+      }
+  }  
   const handleLogout=()=>{
     toast.success("Log out successfully")
     sessionStorage.setItem('auth',"false")
@@ -67,14 +124,17 @@ const Employee = () => {
               />
             </div>
             <div className="editprofilediv mt-3 text-lg" >
-              <p className="border-b border-red-700 py-1 px-2 hover:cursor-pointer" onClick={toggleProfileDivVisibility}>Edit Profile</p>
+              <p className="border-b border-red-700 py-1 px-2 hover:cursor-pointer" onClick={function(event){ toggleProfileDivVisibility(); displayData()}}>Edit Profile</p>
               <button className="px-4 hover:cursor-pointer" onClick={handleLogout}>Logout</button>
             </div>
           </div>
         )}
         {isProfileDivVisible && (
           <div className=" bg-transparent absolute left-1/2 -top-8 w-20 z-10">
-            <Profile/>
+            <Profile
+              profilevalue={profilevalue}
+              
+            />
           </div>
         )}
         </div>

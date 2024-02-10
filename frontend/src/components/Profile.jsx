@@ -3,7 +3,8 @@ import {useNavigate } from 'react-router-dom';
 import logo from "../assets/user_img.jpg";
 import {RxCross2} from "react-icons/rx"
 
-const Profile = () => {
+const Profile = ({profilevalue}) => {
+    console.log("Profile value inside profile:",profilevalue)
     const [isVisible, setIsVisible] = useState(true);
     const n=useNavigate();
     useEffect(
@@ -56,7 +57,7 @@ const Profile = () => {
                 name="name"
                 id="name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                placeholder="Your Name"
+                placeholder= {profilevalue.name}
                 required=""
               />
             </div>
@@ -83,13 +84,15 @@ const Profile = () => {
               >
                 Gender
               </label>
-             
-              <select className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 " name="cars" id="cars">
-  <option className='rounded-none'  value="">Selet a category</option>
-  <option className='rounded-none' value="Male">Male</option>
-  <option className='rounded-none' value="Female">Female</option>
-  <option className='rounded-none' value="Other">Other</option>
-</select>
+              <input
+                type="text"
+                name="gender"
+                id="gender"
+                placeholder={profilevalue.gender}
+                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
+                required=""
+              />
+              
             </div>
             
              <div>
@@ -103,7 +106,7 @@ const Profile = () => {
                 type="text"
                 name="address"
                 id="address"
-                placeholder="Address"
+                placeholder={profilevalue.address}
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
                 required=""
               />
