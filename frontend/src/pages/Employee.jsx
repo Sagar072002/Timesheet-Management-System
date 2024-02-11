@@ -95,6 +95,10 @@ const Employee = () => {
   const toggleProfileDivVisibility = () => {
     setProfileDivVisible(!isProfileDivVisible);
   };
+
+  const updateProfileValue = (updatedProfile) => {
+    setProfileValue(updatedProfile);
+  };
   
   return (
     <div className="bg-slate-500 w-full">
@@ -124,8 +128,8 @@ const Employee = () => {
         {isProfileDivVisible && (
           <div className=" bg-transparent absolute left-1/2 -top-8 w-20 z-10">
             <Profile
-              profilevalue={profilevalue}
-              
+              profilevalue={profilevalue.user}
+              onUpdateProfile={updateProfileValue}
             />
           </div>
         )}

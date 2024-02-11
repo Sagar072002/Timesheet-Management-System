@@ -10,7 +10,6 @@ const Admin = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [profilevalue, setProfileValue] = useState("");
-
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredEmployees, setFilteredEmployees] = useState([]);
   
@@ -171,7 +170,7 @@ const Admin = () => {
         </div>
 
         {isProfileVisible && (
-          <div className=" bg-slate-200 border border-slate-400 rounded absolute right-0 top-19 max-w-[500px] p-5 pt-2 h-32">
+          <div className=" bg-slatehoi-200 border border-slate-400 rounded absolute right-0 top-19 max-w-[500px] p-5 pt-2 h-32">
             <div className="flex justify-center">
               <img
                 src={logo}
@@ -195,7 +194,7 @@ const Admin = () => {
         {isProfileDivVisible && (
           <div className=" bg-transparent absolute left-1/2 -top-8 w-20 z-10">
             <Profile
-             profilevalue={profilevalue}
+             profilevalue={profilevalue.user}
              onUpdateProfile={updateProfileValue} // Pass the function to update profile value
             />
           </div>
