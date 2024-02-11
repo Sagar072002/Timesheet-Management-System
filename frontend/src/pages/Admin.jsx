@@ -112,8 +112,8 @@ const Admin = () => {
 
     sessionStorage.setItem("auth", "false");
     sessionStorage.setItem("admin", "false");
-    sessionStorage.setItem("accessToken", "");
-    sessionStorage.setItem("refreshToken", "");
+    //sessionStorage.setItem("accessToken", "");
+    //sessionStorage.setItem("refreshToken", "");
     sessionStorage.setItem("userName", "");
     sessionStorage.setItem("password", "");
     setTimeout(() => {
