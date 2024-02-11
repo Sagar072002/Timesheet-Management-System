@@ -9,9 +9,11 @@ import axios from "axios";
 const Admin = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const [profilevalue, setProfileValue] = useState("");
+
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredEmployees, setFilteredEmployees] = useState([]);
-  const [profilevalue, setProfileValue] = useState("");
+  
   useEffect(() => {
     const fetchedUsername = sessionStorage.getItem("userName");
     setUsername(fetchedUsername);
@@ -21,7 +23,6 @@ const Admin = () => {
       navigate("/");
     }
   }, []);
-
   const displayData = async() => {
     console.log("Displaying data");
     try{
@@ -159,7 +160,7 @@ const Admin = () => {
             Admin Dashboard
           </h2>
           <span className="text-white mr-2 absolute right-28 top-5">
-            Hii, {username}
+            Hii, {profilevalue.name}
           </span>
           <img
             src={logo}
@@ -193,9 +194,9 @@ const Admin = () => {
         )}
         {isProfileDivVisible && (
           <div className=" bg-transparent absolute left-1/2 -top-8 w-20 z-10">
-            <Profile 
-              profilevalue={profilevalue.user}
-              onUpdateProfile={updateProfileValue}
+            <Profile
+             profilevalue={profilevalue}
+             onUpdateProfile={updateProfileValue} // Pass the function to update profile value
             />
           </div>
         )}
