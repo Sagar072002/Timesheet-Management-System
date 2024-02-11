@@ -4,6 +4,7 @@ import { Link,useNavigate } from 'react-router-dom';
 import {FaLock,FaUser} from "react-icons/fa"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 
 const Login = () => {
@@ -39,34 +40,106 @@ const Login = () => {
         }
           //toast.error(sessionStorage.getItem("userName") !="")
           // console.log("Access Token:", `${accessToken}`);
-          const response = await fetch("api/v1/auth/jwt/verify/", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-          body:JSON.stringify({token:`${accessToken}`})
+        //   const response = await fetch("api/v1/auth/jwt/verify/", {
+        //   method: "POST",
+        //   headers: {
+        //     Authorization: `Bearer ${accessToken}`,
+        //     "Content-Type": "application/json",
+        //   },
+        //   body:JSON.stringify({token:`${accessToken}`})
            
           
-        });
+        // });
       
-        if (!response.ok) {
+        // if (!response.ok) {
+        //   const username = document.getElementById("employeeid").value;
+        //   const password = document.getElementById("password").value;
+        //   const errorResponseData = await response.json();
+        //   // console.log("Request failed:", errorResponseData);
+        //   if(username!=="" && password!=="")
+        //               toast.error('Invalid credentials');
+
+        //   // throw new Error("Request failed");
+        // }
+        // // console.log("response",response);
+        // const responseData = await response.json();
+        // setData(responseData);
+        // // toast.error("15");
+        // // console.log(responseData);
+        // if (response.ok === true) 
+        // {
+        //   // console.log("uname2",uname);
+        //   toast.success("Login successfully")
+        //   sessionStorage.setItem("auth", "true");
+        //   setTimeout(() => {
+        //     if(uname.startsWith("A")){
+        //       // alert("hello admin")
+        //       n("/admin");
+        //     }
+        //     else if(uname.startsWith("E"))
+        //     {
+        //       // alert("hello emp")
+        //       n("/employee");
+        //     }
+        //     else{
+        //       n("/");
+        //     }
+        //   }, 4000); // Adjust the delay as needed
+        // }
+          
+        
+         
+      }
+       catch (error) {
+        // console.log("Request failed:", error);
+      }
+    };
+
+    fetchData();
+  }, [access1]);
+
+  const handleLogin = async () => {
+    const username = document.getElementById("employeeid").value;
+    const password = document.getElementById("password").value;
+    // toast.error(authService.login(username, password));
+    try {
+      if(username==="")toast.error("User id cannot be empty")
+      if(password==="")toast.error("Password cannot be empty")
+      // const { access, refresh } = await authService.login(username, password);
+      // setAccess1(access);
+      // console.log("Access Token:", access);
+      // sessionStorage.setItem("accessToken", access);
+      // sessionStorage.setItem("refreshToken", refresh);
+      sessionStorage.setItem("userName", username);
+      sessionStorage.setItem("password", password);
+      // console.log("Access Token:", access);
+      // console.log("Refresh Token:", refresh);
+
+      try{
+       
+          //toast.error(sessionStorage.getItem("userName") !="")
+          // console.log("Access Token:", `${accessToken}`);
+          const response = await axios.post('http://localhost:3000/login', {"userid":username ,"password": password });
+         
+        console.log("response",response);
+        if (response.status!==200) {
           const username = document.getElementById("employeeid").value;
           const password = document.getElementById("password").value;
-          const errorResponseData = await response.json();
+          //const errorResponseData = await response.json();
           // console.log("Request failed:", errorResponseData);
           if(username!=="" && password!=="")
                       toast.error('Invalid credentials');
 
           // throw new Error("Request failed");
         }
-        // console.log("response",response);
-        const responseData = await response.json();
+        
+        const responseData =  response.data.user;
         setData(responseData);
         // toast.error("15");
         // console.log(responseData);
-        if (response.ok === true) 
+        if (response.status===200) 
         {
+          const uname = sessionStorage.getItem("userName");
           // console.log("uname2",uname);
           toast.success("Login successfully")
           sessionStorage.setItem("auth", "true");
@@ -92,27 +165,9 @@ const Login = () => {
        catch (error) {
         // console.log("Request failed:", error);
       }
-    };
+  
 
-    fetchData();
-  }, [access1]);
-
-  const handleLogin = async () => {
-    const username = document.getElementById("employeeid").value;
-    const password = document.getElementById("password").value;
-    // toast.error(authService.login(username, password));
-    try {
-      if(username==="")toast.error("User id cannot be empty")
-      if(password==="")toast.error("Password cannot be empty")
-      const { access, refresh } = await authService.login(username, password);
-      setAccess1(access);
-      // console.log("Access Token:", access);
-      sessionStorage.setItem("accessToken", access);
-      sessionStorage.setItem("refreshToken", refresh);
-      sessionStorage.setItem("userName", username);
-      sessionStorage.setItem("password", password);
-      // console.log("Access Token:", access);
-      // console.log("Refresh Token:", refresh);
+      
     } catch (error) {
       // toast.error("Login failed:", error);
     }

@@ -3,9 +3,11 @@ import {useNavigate } from 'react-router-dom';
 import logo from "../assets/user_img.jpg";
 import {RxCross2} from "react-icons/rx"
 
-const Profile = ({profilevalue}) => {
-    console.log("Profile value inside profile:",profilevalue)
+const Profile = ({profilevalue,onUpdateProfile}) => {
     const [isVisible, setIsVisible] = useState(true);
+    const [isEditable, setIsEditable] = useState(false); // State to track if fields are editable
+    const [editedProfile, setEditedProfile] = useState({ ...profilevalue });
+
     const n=useNavigate();
     useEffect(
       ()=>{
@@ -15,10 +17,34 @@ const Profile = ({profilevalue}) => {
       },[]
     )
   
+    useEffect(() => {
+      setEditedProfile({ ...profilevalue }); // Update edited profile when profilevalue changes
+    }, [profilevalue]);
+  
     const handleCrossClick = () => {
       setIsVisible(false);
     };
   
+    const handleEditClick = () => {
+      setIsEditable(true);
+    };
+  
+    const handleSaveClick = () => {
+      setIsEditable(false);
+      onUpdateProfile(editedProfile); // Update profile value in parent component
+      setEditedProfile({ ...editedProfile }); // Reset edited profile
+      handleInputChange({ target: { name: '', value: '' } });
+    };
+    const handleInputChange = (e) => {
+      if (e && e.target) {
+        const { name, value } = e.target;
+        setEditedProfile((prevProfile) => ({
+          ...prevProfile,
+          [name]: value,
+        }));
+      }
+    };
+    
     if (!isVisible) {
       return null; // If isVisible is false, return null to render nothing
     }
@@ -32,17 +58,7 @@ const Profile = ({profilevalue}) => {
           </div>
         <div className="px-2 space-y-4 md:space-y-4 sm:p-8">
           <form className="space-y-4 pt-4 md:space-y-2" action="#">
-          {/* <div className="flex justify-center mb-5">
-  <input
-    type="file"
-    accept="image/*"
-    className="hidden"
-    id="logoInput"
-  />
-  <label htmlFor="logoInput" className="cursor-pointer">
-    <img src={logo} className="h-16 w-16 rounded-full" alt="" />
-  </label>
-</div> */}
+          
             <div className="flex w-full gap-5">
            <div className="flex flex-col gap-5 w-full">
            <div className=''>
@@ -57,26 +73,14 @@ const Profile = ({profilevalue}) => {
                 name="name"
                 id="name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                placeholder= {profilevalue.name}
+                value={isEditable ? editedProfile.name || '' : profilevalue.name || ''}
+                disabled={!isEditable} // Disable if not editable
+                onChange={(e) => handleInputChange(e)}
+
                 required=""
               />
             </div>
-            {/* <div>
-              <label
-                htmlFor="employeeid"
-                className="block mb-2 text-sm font-medium text-gray-900 "
-              >
-                Employee ID
-              </label>
-              <input
-                type="text"
-                name="employeeid"
-                id="employeeid"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                placeholder="Employee ID"
-                required=""
-              />
-            </div> */}
+           
             <div>
               <label
                 htmlFor="gender"
@@ -88,7 +92,10 @@ const Profile = ({profilevalue}) => {
                 type="text"
                 name="gender"
                 id="gender"
-                placeholder={profilevalue.gender}
+                value={isEditable ? editedProfile.gender || '' : profilevalue.gender || ''}
+                                      disabled={!isEditable} // Disable if not editable
+                                      onChange={(e) => handleInputChange(e)}
+
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
                 required=""
               />
@@ -106,43 +113,15 @@ const Profile = ({profilevalue}) => {
                 type="text"
                 name="address"
                 id="address"
-                placeholder={profilevalue.address}
+                value={isEditable ? editedProfile.address || '' : profilevalue.address || ''}
+                                      disabled={!isEditable} // Disable if not editable
+                                      onChange={(e) => handleInputChange(e)}
+
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
                 required=""
               />
             </div>
-             {/* <div>
-              <label
-                htmlFor="current-password"
-                className="block mb-2 mt-2 text-sm font-medium text-gray-900 "
-              >
-                Current Password
-              </label>
-              <input
-                type="password"
-                name="current-password"
-                id="current-password"
-                placeholder="••••••••"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                required=""
-              />
-            </div> */}
-            {/* <div >
-              <label
-                htmlFor="new-password"
-                className="block mb-2 text-sm font-medium text-gray-900 "
-              >
-                New Password
-              </label>
-              <input
-                type="password"
-                name="new-password"
-                id="new-password"
-                placeholder="••••••••"
-                className="mb-3 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                required=""
-              />
-            </div> */}
+            
            </div>
            
            
@@ -160,7 +139,10 @@ const Profile = ({profilevalue}) => {
                 name="email"
                 id="email"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                placeholder="Your Email"
+                value={isEditable ? editedProfile.email || '' : profilevalue.email || ''}
+                                      disabled={!isEditable} // Disable if not editable
+                                      onChange={(e) => handleInputChange(e)}
+
                 required=""
               />
              </div>
@@ -176,7 +158,10 @@ const Profile = ({profilevalue}) => {
                 name="phone"
                 id="phone"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                placeholder="Your Phone"
+                value={isEditable ? editedProfile.phone_number || '' : profilevalue.phone_number || ''}
+                                      disabled={!isEditable} // Disable if not editable
+                                      onChange={(e) => handleInputChange(e)}
+
                 required=""
               />
             </div>
@@ -192,44 +177,36 @@ const Profile = ({profilevalue}) => {
                 name="age"
                 id="age"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                placeholder="Your age"
+                value={isEditable ? editedProfile.age || '' : profilevalue.age || ''}
+                                      disabled={!isEditable} // Disable if not editable
+                                      onChange={(e) => handleInputChange(e)}
                 required=""
               />
              </div>
-            {/* <div >
-              <label
-                htmlFor="address"
-                className="block mb-2 text-sm font-medium text-gray-900 "
-              >
-                Address
-              </label>
-              <textarea
-                type="text"
-                name="address"
-                id="address"
-                rows={6}
-                placeholder="Your address"
-                className=" mb-3 resize-none bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                required=""
-              />
-            </div> */}
+           
             </div>
             </div>
             
             <div className="flex gap-8 pt-7">
-            <button
-              type="submit"
-              className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-3 text-center"
-            >
-              Edit
-            </button>
-            <button
-              type="submit"
-              className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-3 text-center"
-            >
-              Save
-            </button>
-            </div>
+                {!isEditable && (
+                  <button
+                    type="button"
+                    className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-3 text-center"
+                    onClick={handleEditClick}
+                  >
+                    Edit
+                  </button>
+                )}
+                {isEditable && (
+                  <button
+                    type="button"
+                    className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-3 text-center"
+                    onClick={handleSaveClick}
+                  >
+                    Save
+                  </button>
+                )}
+              </div>
             
           </form>
         </div>

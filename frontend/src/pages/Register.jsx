@@ -5,6 +5,7 @@ import {MdEmail} from "react-icons/md"
 import {CgGenderMale} from "react-icons/cg"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 
 const Register = () => {
@@ -87,12 +88,10 @@ if(pass1!==pass2){
          }
        }
     try{
-    const response = await fetch('api/v1/auth/users/',
+    const response = await axios.post('http://localhost:3000/register',
       {
-        method:'POST',
-        headers: {"Content-type": "application/json; charset=UTF-8"},
-        body: JSON.stringify({
-          'employeeid':empid,//"username":empid use this username is a mandatory one 
+       
+          'userid':empid,//"username":empid use this username is a mandatory one 
           "name":name,
           "gender":gender,
           "email":email,
@@ -101,13 +100,12 @@ if(pass1!==pass2){
           "address":add,
           'password':pass1,
           're_password':pass2,
-        })
       }     
     );
     
-    const data=await response.json()
+    const data= response.data;
     console.log(data)
-    if(!response.ok){
+    if(response.status!==200){
       // response.status
       // console.log("*********",response.status,response.statusText,data.message,data.errors)
       console.log(
@@ -119,7 +117,7 @@ if(pass1!==pass2){
     //   toast.success(
     //     `${response.status}\n${response.statusText}\n${data.message}`
     //  )
-    if(response.ok){
+    if(response.status===200){
 
      toast.success("Registration successful!");
     

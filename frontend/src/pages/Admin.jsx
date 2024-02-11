@@ -4,20 +4,107 @@ import Profile from "../components/Profile";
 import EmployeeCard from "../components/EmployeeCard";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
 const Admin = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredEmployees, setFilteredEmployees] = useState([]);
-
+  const [profilevalue, setProfileValue] = useState("");
   useEffect(() => {
     const fetchedUsername = sessionStorage.getItem("userName");
     setUsername(fetchedUsername);
+    fetchAllEmployees();
+    displayData();
     if (sessionStorage.getItem("auth") === "false") {
       navigate("/");
     }
   }, []);
+
+  const displayData = async() => {
+    console.log("Displaying data");
+    try{
+      const named = sessionStorage.getItem("userName");
+      const url = `http://localhost:3000/users/${named}`;
+      console.log("userid:",named)
+      const response = await axios.get(url,
+        {
+         
+        }     
+      );
+      
+      const data=response.data
+      console.log(data)
+      setProfileValue(data)
+      if(response.status!==200){
+        // response.status
+        // console.log("*********",response.status,response.statusText,data.message,data.errors)
+        console.log(
+          `${response.status}\n${response.statusText}\n${data.message}`
+       )
+      }
+  
+        // response.status
+      //   toast.success(
+      //     `${response.status}\n${response.statusText}\n${data.message}`
+      //  )
+      if(response.status===200){
+  
+       //toast.success("Registration successful!");
+      
+       console.log('Fetched values:');
+      
+  
+      
+    }
+      
+      }
+      catch(error){
+        toast.error(error.message)
+      }
+  }
+
+  const fetchAllEmployees = async() => {
+    console.log("Displaying data");
+    try{
+      //const named = sessionStorage.getItem("userName");
+      const url = `http://localhost:3000/users`;
+      //console.log("userid:",named)
+      const response = await axios.get(url,
+        {
+         
+        }     
+      );
+      
+      const data=response.data
+      console.log(data)
+      //setProfileValue(data)
+      if(response.status!==200){
+        // response.status
+        // console.log("*********",response.status,response.statusText,data.message,data.errors)
+        console.log(
+          `${response.status}\n${response.statusText}\n${data.message}`
+       )
+      }
+  
+        // response.status
+      //   toast.success(
+      //     `${response.status}\n${response.statusText}\n${data.message}`
+      //  )
+      if(response.status===200){
+  
+       //toast.success("Registration successful!");
+      
+       console.log('all users:',data);
+
+    }
+      
+      }
+      catch(error){
+        toast.error(error.message)
+      }
+  }
 
   const handleLogout = () => {
     toast.success("Log out successfully")
@@ -37,7 +124,9 @@ const Admin = () => {
   const toggleProfileVisibility = () => {
     setProfileVisible(!isProfileVisible);
   };
-
+  const updateProfileValue = (updatedProfile) => {
+    setProfileValue(updatedProfile);
+  };
   const [isProfileDivVisible, setProfileDivVisible] = useState(false);
   const toggleProfileDivVisibility = () => {
     setProfileDivVisible(!isProfileDivVisible);
@@ -92,7 +181,7 @@ const Admin = () => {
             <div className="editprofilediv mt-3 text-lg">
               <p
                 className="border-b border-red-700 py-1 px-2 hover:cursor-pointer"
-                onClick={toggleProfileDivVisibility}
+                onClick={function(event){ toggleProfileDivVisibility(); displayData()}}
               >
                 Edit Profile
               </p>
@@ -104,7 +193,10 @@ const Admin = () => {
         )}
         {isProfileDivVisible && (
           <div className=" bg-transparent absolute left-1/2 -top-8 w-20 z-10">
-            <Profile />
+            <Profile 
+              profilevalue={profilevalue.user}
+              onUpdateProfile={updateProfileValue}
+            />
           </div>
         )}
         <div className="mt-4 flex justify-center p-4 ">

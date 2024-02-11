@@ -6,6 +6,7 @@ import Profile from "../components/Profile";
 import {FaUser} from "react-icons/fa"
 import {useNavigate} from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
 const Employee = () => {
   const n = useNavigate();
@@ -16,7 +17,9 @@ const Employee = () => {
   useEffect(
     ()=>{
       const fetchedUsername = sessionStorage.getItem("userName");
+      console.log("Fetched username:",fetchedUsername);
     setUsername(fetchedUsername);
+    displayData();
           //  if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
           //    n("/Employee");
           //  }
@@ -31,30 +34,18 @@ const Employee = () => {
     console.log("Displaying data");
     try{
       const named = sessionStorage.getItem("userName");
-      const url = `api/v1/users/get/${named}`;
-      console.log("Name:",named)
-      const response = await fetch(url,
+      const url = `http://localhost:3000/users/${named}`;
+      console.log("userid:",named)
+      const response = await axios.get(url,
         {
-          method:'GET',
-          headers: {"Content-type": "application/json; charset=UTF-8"},
-          // body: JSON.stringify({
-          //   'employeeid':empid,//"username":empid use this username is a mandatory one 
-          //   "name":name,
-          //   "gender":gender,
-          //   "email":email,
-          //   "phone_number":ph,
-          //   "age":age,
-          //   "address":add,
-          //   'password':pass1,
-          //   're_password':pass2,
-          // })
+         
         }     
       );
       
-      const data=await response.json()
+      const data=response.data
       console.log(data)
       setProfileValue(data)
-      if(!response.ok){
+      if(response.status!==200){
         // response.status
         // console.log("*********",response.status,response.statusText,data.message,data.errors)
         console.log(
@@ -66,7 +57,7 @@ const Employee = () => {
       //   toast.success(
       //     `${response.status}\n${response.statusText}\n${data.message}`
       //  )
-      if(response.ok){
+      if(response.status===200){
   
        //toast.success("Registration successful!");
       
@@ -84,8 +75,8 @@ const Employee = () => {
   const handleLogout=()=>{
     toast.success("Log out successfully")
     sessionStorage.setItem('auth',"false")
-    sessionStorage.setItem("accessToken", "");
-      sessionStorage.setItem("refreshToken", "");
+    // sessionStorage.setItem("accessToken", "");
+    //   sessionStorage.setItem("refreshToken", "");
       sessionStorage.setItem("userName", "");
       sessionStorage.setItem("password", "");
       setTimeout(() => {
@@ -98,12 +89,15 @@ const Employee = () => {
   const toggleProfileVisibility = () => {
     setProfileVisible(!isProfileVisible);
   };
-
+  const updateProfileValue = (updatedProfile) => {
+    setProfileValue(updatedProfile);
+  };
   const [isProfileDivVisible, setProfileDivVisible] = useState(false);
 
   const toggleProfileDivVisibility = () => {
     setProfileDivVisible(!isProfileDivVisible);
   };
+  
   return (
     <div className="bg-slate-500 w-full">
       <ToastContainer/>
@@ -124,7 +118,9 @@ const Employee = () => {
               />
             </div>
             <div className="editprofilediv mt-3 text-lg" >
-              <p className="border-b border-red-700 py-1 px-2 hover:cursor-pointer" onClick={function(event){ toggleProfileDivVisibility(); displayData()}}>Edit Profile</p>
+              <p 
+                className="border-b border-red-700 py-1 px-2 hover:cursor-pointer" 
+                onClick={function(event){ toggleProfileDivVisibility(); displayData()}}>Edit Profile</p>
               <button className="px-4 hover:cursor-pointer" onClick={handleLogout}>Logout</button>
             </div>
           </div>
@@ -132,8 +128,8 @@ const Employee = () => {
         {isProfileDivVisible && (
           <div className=" bg-transparent absolute left-1/2 -top-8 w-20 z-10">
             <Profile
-              profilevalue={profilevalue}
-              
+              profilevalue={profilevalue.user}
+              onUpdateProfile={updateProfileValue}
             />
           </div>
         )}
