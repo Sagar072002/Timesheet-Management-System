@@ -20,18 +20,26 @@ const Employee = () => {
       console.log("Fetched username:",fetchedUsername);
     setUsername(fetchedUsername);
     displayData();
-          //  if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
-          //    n("/Employee");
-          //  }
-          //  else{
-          //   n("/");
-          //  }
+            if(sessionStorage.getItem("auth") === "true" &&sessionStorage.getItem("userName")[0]==='A' ){
+            n("/admin")
+
+            }
+           else if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
+             n("/Employee");
+           }
+           else{
+            n("/");
+           }
   
     },[]
     )
 
   const displayData = async() => {
-    console.log("Displaying data");
+    // const d=JSON.parse(sessionStorage.getItem("data"))
+    // console.log(d.user.name)
+    
+    // console.log("DATAS",d);
+    // console.log("Displaying data");
     try{
       const named = sessionStorage.getItem("userName");
       const url = `http://localhost:3000/users/${named}`;

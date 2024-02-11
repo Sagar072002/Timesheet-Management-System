@@ -18,6 +18,7 @@ const Admin = () => {
     setUsername(fetchedUsername);
     fetchAllEmployees();
     displayData();
+    console.log("hell",sessionStorage.getItem("auth"))
     if (sessionStorage.getItem("auth") === "false") {
       navigate("/");
     }
