@@ -11,6 +11,7 @@ const Admin = () => {
   const [username, setUsername] = useState("");
   const [profilevalue, setProfileValue] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [employees, setEmployees] = useState([]); // Store the original list of employees
   const [filteredEmployees, setFilteredEmployees] = useState([]);
   
   useEffect(() => {
@@ -22,101 +23,42 @@ const Admin = () => {
       navigate("/");
     }
   }, []);
-  const displayData = async() => {
-    console.log("Displaying data");
-    try{
+
+  const displayData = async () => {
+    try {
       const named = sessionStorage.getItem("userName");
       const url = `http://localhost:3000/users/${named}`;
-      console.log("userid:",named)
-      const response = await axios.get(url,
-        {
-         
-        }     
-      );
-      
-      const data=response.data
+      const response = await axios.get(url);
+      const data = response.data;
       console.log(data)
-      setProfileValue(data)
-      if(response.status!==200){
-        // response.status
-        // console.log("*********",response.status,response.statusText,data.message,data.errors)
-        console.log(
-          `${response.status}\n${response.statusText}\n${data.message}`
-       )
-      }
-  
-        // response.status
-      //   toast.success(
-      //     `${response.status}\n${response.statusText}\n${data.message}`
-      //  )
-      if(response.status===200){
-  
-       //toast.success("Registration successful!");
-      
-       console.log('Fetched values:');
-      
-  
-      
+      setProfileValue(data);
+    } catch (error) {
+      toast.error(error.message);
     }
-      
-      }
-      catch(error){
-        toast.error(error.message)
-      }
-  }
+  };
 
-  const fetchAllEmployees = async() => {
-    console.log("Displaying data");
-    try{
-      //const named = sessionStorage.getItem("userName");
+  const fetchAllEmployees = async () => {
+    try {
       const url = `http://localhost:3000/users`;
-      //console.log("userid:",named)
-      const response = await axios.get(url,
-        {
-         
-        }     
-      );
-      
-      const data=response.data
-      console.log(data)
-      //setProfileValue(data)
-      if(response.status!==200){
-        // response.status
-        // console.log("*********",response.status,response.statusText,data.message,data.errors)
-        console.log(
-          `${response.status}\n${response.statusText}\n${data.message}`
-       )
-      }
+      const response = await axios.get(url);
+      const data = response.data.users; // Extract the array of users from the object
   
-        // response.status
-      //   toast.success(
-      //     `${response.status}\n${response.statusText}\n${data.message}`
-      //  )
-      if(response.status===200){
-  
-       //toast.success("Registration successful!");
-      
-       console.log('all users:',data);
-
+      console.log("Fetched employees:", data);
+  setEmployees(data);
+      setFilteredEmployees(data);
+    } catch (error) {
+      toast.error(error.message);
     }
-      
-      }
-      catch(error){
-        toast.error(error.message)
-      }
-  }
+  };
 
   const handleLogout = () => {
-    toast.success("Log out successfully")
-
+    toast.success("Log out successfully");
     sessionStorage.setItem("auth", "false");
     sessionStorage.setItem("admin", "false");
-    //sessionStorage.setItem("accessToken", "");
-    //sessionStorage.setItem("refreshToken", "");
     sessionStorage.setItem("userName", "");
     sessionStorage.setItem("password", "");
     setTimeout(() => {
-      navigate('/');
+      navigate("/");
     }, 4000); // Adjust the delay as needed
   };
 
@@ -127,40 +69,53 @@ const Admin = () => {
   const updateProfileValue = (updatedProfile) => {
     setProfileValue(updatedProfile);
   };
+
   const [isProfileDivVisible, setProfileDivVisible] = useState(false);
   const toggleProfileDivVisibility = () => {
     setProfileDivVisible(!isProfileDivVisible);
   };
 
-  useEffect(() => {
-    const filtered = [1, 2, 3, 4].filter((index) => {
-      const employeeData = {
-        name: `Employee ${index}`,
-        employeeID: `ID-${index}`,
-        email: `employee${index}@example.com`,
-        totalScore: 20, 
-      };
-      return (
-        employeeData.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        employeeData.employeeID.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        employeeData.email.toLowerCase().includes(searchQuery.toLowerCase()) 
-      );
+  const handleSearch = (e) => {
+    const query = e.target.value.trim(); // Trim whitespace
+    setSearchQuery(query);
+    
+    const filtered = employees.filter((employee) => {
+      // Convert name and email to lowercase for case-insensitive comparison
+      const lowercaseQuery = query.toLowerCase();
+      const employeeName = employee.name.toLowerCase();
+      const employeeid = employee.userid.toLowerCase();
+      const employeeEmail = employee.email ? employee.email.toLowerCase() : "";
+      
+      // Check if the query is present in the lowercase versions of name or email
+      const nameMatch = employeeName.includes(lowercaseQuery);
+      const emailMatch = employeeEmail.includes(lowercaseQuery);
+      const idMatch = employeeid.includes(lowercaseQuery);
+  
+      // Return true if any of the matches are found
+      return nameMatch || idMatch || emailMatch;
     });
+    
+    // Set filteredEmployees based on the query
     setFilteredEmployees(filtered);
-  }, [searchQuery]);
-
+  };
+  
+  
+  
+  
+  
+  
   return (
     <div className="relative flex">
-      <ToastContainer/>
+      <ToastContainer />
       <div className="p-4 bg-blue-gray-200 w-full bg-gray-300">
         <div className="flex justify-between px-5">
           <p></p>
           <h2 className="font-bold text-2xl uppercase text-center">
-            Admin Dashboard
+            Admin Dashboard 
           </h2>
-          <span className="text-white mr-2 absolute right-28 top-5">
-            Hii, {profilevalue.name}
-          </span>
+          {/* <span className="text-white mr-2 absolute right-28 top-5">
+            Hii, {profilevalue.user.name}
+          </span> */}
           <img
             src={logo}
             onClick={toggleProfileVisibility}
@@ -181,7 +136,10 @@ const Admin = () => {
             <div className="editprofilediv mt-3 text-lg">
               <p
                 className="border-b border-red-700 py-1 px-2 hover:cursor-pointer"
-                onClick={function(event){ toggleProfileDivVisibility(); displayData()}}
+                onClick={() => {
+                  toggleProfileDivVisibility();
+                  displayData();
+                }}
               >
                 Edit Profile
               </p>
@@ -199,30 +157,26 @@ const Admin = () => {
             />
           </div>
         )}
-        <div className="mt-4 flex justify-center p-4 ">
-          <input
-            className="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-slate-600 focus:border-slate-600 block w-3/4 p-3.5"
-            type="search"
-            name=""
-            id=""
-            placeholder="Search Employee by name or employee ID or email..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-        <div className="py-1 px-5 h-screen flex overflow-auto gap-5">
-          {filteredEmployees.map((index) => (
-            <EmployeeCard
-              key={index}
-              employeeData={{
-                name: `Employee ${index}`,
-                employeeID: `ID-${index}`,
-                email: `employee${index}@example.com`,
-                totalScore: 20, 
-              }}
-            />
-          ))}
-        </div>
+       <div className="mt-4 flex justify-center p-4 ">
+  <input
+    className="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-slate-600 focus:border-slate-600 block w-3/4 p-3.5"
+    type="search"
+    name=""
+    id=""
+    placeholder="Search Employee by name or employee ID or email..."
+    value={searchQuery}
+    onChange={handleSearch}
+  />
+</div>
+
+<div className="py-1 px-5 h-screen flex overflow-auto gap-5">
+  {filteredEmployees.map((employee, index) => (
+    <EmployeeCard
+      key={index}
+      employeeData={employee}
+    />
+  ))}
+</div>
       </div>
     </div>
   );
