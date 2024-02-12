@@ -46,11 +46,12 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
           ...prevProfile,
           [name]: value,
         }));
+        var d = JSON.parse(sessionStorage.getItem("data"));
         sessionStorage.setItem("data",JSON.stringify({
-          ...profilevalue,
+          ...d,
           [name]: value,
         }))
-        const d = JSON.parse(sessionStorage.getItem("data"));
+        d = JSON.parse(sessionStorage.getItem("data"));
 
       }
     };
