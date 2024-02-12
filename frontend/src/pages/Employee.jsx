@@ -115,7 +115,7 @@ const Employee = () => {
     <div className="">
   <h2 className="font-bold text-2xl uppercase text-center pt-4 text-white">Employee Dashboard</h2>
   <div className="">
-  <span className="text-white mr-2 absolute right-28 top-5">Hii, {profilevalue.name}</span></div>
+  <span className="text-white mr-2 absolute right-28 top-5">Hii, {JSON.parse(sessionStorage.getItem("data")).name}</span></div>
   <FaUser onClick={toggleProfileVisibility} className=' w-8 h-8  text-white text-xl absolute right-14 top-3' />
         </div>
         {isProfileVisible && (
