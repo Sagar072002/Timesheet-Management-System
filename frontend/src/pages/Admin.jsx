@@ -19,7 +19,7 @@ const Admin = () => {
     setUsername(fetchedUsername);
     fetchAllEmployees();
     displayData();
-    console.log("hell",sessionStorage.getItem("auth"))
+    // console.log("hell",sessionStorage.getItem("auth"))
     if (sessionStorage.getItem("auth") === "false") {
       navigate("/");
     }
@@ -36,7 +36,7 @@ const Admin = () => {
       const url = `http://localhost:3000/users/${named}`;
       const response = await axios.get(url);
       const data = response.data;
-      console.log(data)
+      // console.log(data)
       setProfileValue(data);
     } catch (error) {
       toast.error(error.message);
@@ -49,7 +49,7 @@ const Admin = () => {
       const response = await axios.get(url);
       const data = response.data.users; // Extract the array of users from the object
   
-      console.log("Fetched employees:", data);
+      // console.log("Fetched employees:", data);
   setEmployees(data);
       setFilteredEmployees(data);
     } catch (error) {
@@ -113,13 +113,13 @@ const Admin = () => {
   return (
     <div className="relative flex">
       <ToastContainer />
-      <div className="p-4 bg-blue-gray-200 w-full bg-gray-300">
+      <div className="p-4 pt-6 bg-blue-gray-200 w-full bg-gray-300">
         <div className="flex justify-between px-5">
           <p></p>
           <h2 className="font-bold text-2xl uppercase text-center">
             Admin Dashboard 
           </h2>
-           <span className="text-white mr-2 absolute right-28 top-5">
+           <span className="text-lg text-slate-700 mr-2 absolute right-24 top-8">
             Hii, {JSON.parse(sessionStorage.getItem("data")).name}
           </span> 
           <img
@@ -175,7 +175,7 @@ const Admin = () => {
   />
 </div>
 
-<div className="py-1 px-5 h-screen flex overflow-auto gap-5">
+<div className="py-1 px-5 ml-10 h-screen flex overflow-auto gap-8">
   {filteredEmployees.map((employee, index) => (
     <EmployeeCard
       key={index}

@@ -15,7 +15,7 @@ const EmployeeCard = ({ employeeData }) => {
   };
 
   return (
-    <div className="mt-6 border border-slate-400 rounded-md bg-slate-300 px-5 py-4 h-56">
+    <div className="mt-6 border shadow-md transition-all hover:scale-105 rounded-md bg-white hover:cursor-pointer px-5 py-4 h-56">
       <div className="flex gap-7">
         <div>
           <p className="leading-7 font-bold">Name:</p>
@@ -33,7 +33,7 @@ const EmployeeCard = ({ employeeData }) => {
 
       <div className="flex gap-6 mt-5 justify-center">
         <button 
-          className="px-5 py-3 border-2 border-slate-500 text-white hover:border-2 hover:bg-white hover:text-slate-500 bg-slate-500 rounded-md"
+          className="px-5 py-3 hover:border border-slate-500 text-white hover:bg-white hover:text-slate-500 bg-slate-500 rounded-md"
           onClick={handleShowDetails}
         >
           Details
