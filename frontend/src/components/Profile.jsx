@@ -11,6 +11,10 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
     const n=useNavigate();
     useEffect(
       ()=>{
+        const d = JSON.parse(sessionStorage.getItem("data"));
+        console.log("session", d);
+        // const d=sessionStorage.getItem("data")
+        // console.log(d)
         if(sessionStorage.getItem('auth')==="false"){
           n('/')
         }
@@ -42,6 +46,13 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
           ...prevProfile,
           [name]: value,
         }));
+        sessionStorage.setItem("data",JSON.stringify({
+          ...editedProfile,
+          [name]: value,
+        }))
+        const d = JSON.parse(sessionStorage.getItem("data"));
+        console.log("session005", d);
+
       }
     };
     
@@ -73,7 +84,8 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
                 name="name"
                 id="name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                value={isEditable ? editedProfile.name || '' : profilevalue.name || ''}
+                value={isEditable ? JSON.parse(sessionStorage.getItem("data")).name|| '' : JSON.parse(sessionStorage.getItem("data")).name || ''}
+                // value={isEditable ? editedProfile.name || '' : profilevalue.name || ''}
                 disabled={!isEditable} // Disable if not editable
                 onChange={(e) => handleInputChange(e)}
 
@@ -92,7 +104,8 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
                 type="text"
                 name="gender"
                 id="gender"
-                value={isEditable ? editedProfile.gender || '' : profilevalue.gender || ''}
+                value={isEditable ? JSON.parse(sessionStorage.getItem("data")).gender || '' : JSON.parse(sessionStorage.getItem("data")).gender || ''}
+                // value={isEditable ? editedProfile.gender || '' : profilevalue.gender || ''}
                                       disabled={!isEditable} // Disable if not editable
                                       onChange={(e) => handleInputChange(e)}
 
@@ -113,7 +126,8 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
                 type="text"
                 name="address"
                 id="address"
-                value={isEditable ? editedProfile.address || '' : profilevalue.address || ''}
+                value={isEditable ? JSON.parse(sessionStorage.getItem("data")).address || '' : JSON.parse(sessionStorage.getItem("data")).address || ''}
+                // value={isEditable ? editedProfile.address || '' : profilevalue.address || ''}
                                       disabled={!isEditable} // Disable if not editable
                                       onChange={(e) => handleInputChange(e)}
 
@@ -139,7 +153,8 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
                 name="email"
                 id="email"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                value={isEditable ? editedProfile.email || '' : profilevalue.email || ''}
+                value={isEditable ? JSON.parse(sessionStorage.getItem("data")).email || '' : JSON.parse(sessionStorage.getItem("data")).email || ''}
+                // value={isEditable ? editedProfile.email || '' : profilevalue.email || ''}
                                       disabled={!isEditable} // Disable if not editable
                                       onChange={(e) => handleInputChange(e)}
 
@@ -158,7 +173,8 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
                 name="phone"
                 id="phone"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                value={isEditable ? editedProfile.phone_number || '' : profilevalue.phone_number || ''}
+                value={isEditable ? JSON.parse(sessionStorage.getItem("data")).phone_number || '' : JSON.parse(sessionStorage.getItem("data")).phone_number || ''}
+                // value={isEditable ? editedProfile.phone_number || '' : profilevalue.phone_number || ''}
                                       disabled={!isEditable} // Disable if not editable
                                       onChange={(e) => handleInputChange(e)}
 
@@ -177,7 +193,8 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
                 name="age"
                 id="age"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                value={isEditable ? editedProfile.age || '' : profilevalue.age || ''}
+                value={isEditable ? JSON.parse(sessionStorage.getItem("data")).age || '' : JSON.parse(sessionStorage.getItem("data")).age || ''}
+                // value={isEditable ? editedProfile.age || '' : profilevalue.age || ''}
                                       disabled={!isEditable} // Disable if not editable
                                       onChange={(e) => handleInputChange(e)}
                 required=""

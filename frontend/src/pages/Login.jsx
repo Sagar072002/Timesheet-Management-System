@@ -133,7 +133,9 @@ const Login = () => {
 
           // throw new Error("Request failed");
         }
-        // sessionStorage.setItem("data",response.data.user)
+        sessionStorage.setItem("data", JSON.stringify(response.data.user));
+        const d = JSON.parse(sessionStorage.getItem("data"));
+        console.log("session", d, response.data.user);
         const responseData =  response.data.user;
         setData(responseData);
         // toast.error("15");
