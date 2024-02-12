@@ -50,21 +50,26 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
         const named = sessionStorage.getItem("userName");
         const url = `http://localhost:3000/users/${named}`;
         console.log("userid:",named)
+        const d = JSON.parse(sessionStorage.getItem("data"));
+        console.log("edit", d);
         const response = await axios.put(url,
           {
-           
+             "name": d.name,
+             "gender": d.gender,
+             "email": d.email,
+             "phone_number": d.phone_number,
+             "age": d.age,
+             "address": d.address,
           }     
         );
         
-        const data=response.data
+        //const data=response.data
         // console.log(data)
         // setProfileValue(data)
         if(response.status!==200){
           // response.status
           // console.log("*********",response.status,response.statusText,data.message,data.errors)
-          console.log(
-            `${response.status}\n${response.statusText}\n${data.message}`
-         )
+          //console.log(`${response.status}\n${response.statusText}\n${data.message}`)
         }
     
           // response.status
