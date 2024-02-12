@@ -120,19 +120,22 @@ const Login = () => {
           //toast.error(sessionStorage.getItem("userName") !="")
           // console.log("Access Token:", `${accessToken}`);
           const response = await axios.post('http://localhost:3000/login', {"userid":username ,"password": password });
-         
+        // sessionStorage.setItem("data", JSON.parse(response.data)); 
+        // console.log(sessionStorage.getItem("data"),response.data);
         console.log("response",response);
         if (response.status!==200) {
           const username = document.getElementById("employeeid").value;
           const password = document.getElementById("password").value;
           //const errorResponseData = await response.json();
           // console.log("Request failed:", errorResponseData);
-          if(username!=="" && password!=="")
+          if(username==="" && password==="")
                       toast.error('Invalid credentials');
 
           // throw new Error("Request failed");
         }
-        
+        sessionStorage.setItem("data", JSON.stringify(response.data.user));
+        const d = JSON.parse(sessionStorage.getItem("data"));
+        console.log("session", d, response.data.user);
         const responseData =  response.data.user;
         setData(responseData);
         // toast.error("15");
@@ -163,7 +166,7 @@ const Login = () => {
          
       }
        catch (error) {
-        // console.log("Request failed:", error);
+         toast.error("Invalid Credentials");
       }
   
 

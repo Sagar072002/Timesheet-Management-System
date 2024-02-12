@@ -20,18 +20,26 @@ const Employee = () => {
       console.log("Fetched username:",fetchedUsername);
     setUsername(fetchedUsername);
     displayData();
-          //  if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
-          //    n("/Employee");
-          //  }
-          //  else{
-          //   n("/");
-          //  }
+            if(sessionStorage.getItem("auth") === "true" &&sessionStorage.getItem("userName")[0]==='A' ){
+            n("/admin")
+
+            }
+           else if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") {
+             n("/Employee");
+           }
+           else{
+            n("/");
+           }
   
     },[]
     )
 
   const displayData = async() => {
-    console.log("Displaying data");
+    // const d=JSON.parse(sessionStorage.getItem("data"))
+    // console.log(d.user.name)
+    
+    // console.log("DATAS",d);
+    // console.log("Displaying data");
     try{
       const named = sessionStorage.getItem("userName");
       const url = `http://localhost:3000/users/${named}`;
@@ -107,7 +115,7 @@ const Employee = () => {
     <div className="">
   <h2 className="font-bold text-2xl uppercase text-center pt-4 text-white">Employee Dashboard</h2>
   <div className="">
-  <span className="text-white mr-2 absolute right-28 top-5">Hii, {profilevalue.name}</span></div>
+  <span className="text-white mr-2 absolute right-28 top-5">Hii, {JSON.parse(sessionStorage.getItem("data")).name}</span></div>
   <FaUser onClick={toggleProfileVisibility} className=' w-8 h-8  text-white text-xl absolute right-14 top-3' />
         </div>
         {isProfileVisible && (
