@@ -114,9 +114,9 @@ const Admin = () => {
           <h2 className="font-bold text-2xl uppercase text-center">
             Admin Dashboard 
           </h2>
-          {/* <span className="text-white mr-2 absolute right-28 top-5">
-            Hii, {profilevalue.user.name}
-          </span> */}
+           <span className="text-white mr-2 absolute right-28 top-5">
+            Hii, {JSON.parse(sessionStorage.getItem("data")).name}
+          </span> 
           <img
             src={logo}
             onClick={toggleProfileVisibility}

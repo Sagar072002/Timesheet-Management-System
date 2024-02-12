@@ -47,7 +47,7 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
           [name]: value,
         }));
         sessionStorage.setItem("data",JSON.stringify({
-          ...editedProfile,
+          ...profilevalue,
           [name]: value,
         }))
         const d = JSON.parse(sessionStorage.getItem("data"));
