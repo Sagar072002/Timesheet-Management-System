@@ -16,6 +16,7 @@ const Admin = () => {
   
   useEffect(() => {
     const fetchedUsername = sessionStorage.getItem("userName");
+    console.log("Fetched username:", fetchedUsername);
     setUsername(fetchedUsername);
     fetchAllEmployees();
     displayData();

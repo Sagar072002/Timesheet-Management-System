@@ -16,10 +16,10 @@ const Login = () => {
     const fetchData = async () => {
       try {
         const uname = sessionStorage.getItem("userName");
-        
+        console.log("uname1",uname);
         const accessToken = access1;
         
-        if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("userName") !=="") 
+        if (sessionStorage.getItem("auth") === "true" && sessionStorage.getItem("useremail") !=="") 
         {
           // console.log("uname1",uname);
           
@@ -52,7 +52,7 @@ const Login = () => {
         // });
       
         // if (!response.ok) {
-        //   const username = document.getElementById("employeeid").value;
+        //   const username = document.getElementById("email").value;
         //   const password = document.getElementById("password").value;
         //   const errorResponseData = await response.json();
         //   // console.log("Request failed:", errorResponseData);
@@ -99,18 +99,18 @@ const Login = () => {
   }, [access1]);
 
   const handleLogin = async () => {
-    const username = document.getElementById("employeeid").value;
+    const uemail = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     // toast.error(authService.login(username, password));
     try {
-      if(username==="")toast.error("User id cannot be empty")
+      if(uemail==="")toast.error("email id cannot be empty")
       if(password==="")toast.error("Password cannot be empty")
       // const { access, refresh } = await authService.login(username, password);
       // setAccess1(access);
       // console.log("Access Token:", access);
       // sessionStorage.setItem("accessToken", access);
       // sessionStorage.setItem("refreshToken", refresh);
-      sessionStorage.setItem("userName", username);
+      sessionStorage.setItem("useremail", uemail);
       sessionStorage.setItem("password", password);
       // console.log("Access Token:", access);
       // console.log("Refresh Token:", refresh);
@@ -119,16 +119,16 @@ const Login = () => {
        
           //toast.error(sessionStorage.getItem("userName") !="")
           // console.log("Access Token:", `${accessToken}`);
-          const response = await axios.post('http://localhost:3000/login', {"userid":username ,"password": password });
+          const response = await axios.post('http://localhost:3000/login', {"email":uemail ,"password": password });
         // sessionStorage.setItem("data", JSON.parse(response.data)); 
         // console.log(sessionStorage.getItem("data"),response.data);
         console.log("response",response);
         if (response.status!==200) {
-          const username = document.getElementById("employeeid").value;
+          const uemail = document.getElementById("email").value;
           const password = document.getElementById("password").value;
           //const errorResponseData = await response.json();
           // console.log("Request failed:", errorResponseData);
-          if(username==="" && password==="")
+          if(uemail==="" && password==="")
                       toast.error('Invalid credentials');
 
           // throw new Error("Request failed");
@@ -142,10 +142,12 @@ const Login = () => {
         // console.log(responseData);
         if (response.status===200) 
         {
-          const uname = sessionStorage.getItem("userName");
-          // console.log("uname2",uname);
+          const uname = responseData.userid;
+          console.log("uname2",uname);
           toast.success("Login successfully")
           sessionStorage.setItem("auth", "true");
+          sessionStorage.setItem("userName", uname);
+          
           setTimeout(() => {
             if(uname.startsWith("A")){
               // alert("hello admin")
@@ -192,10 +194,10 @@ const Login = () => {
         <div className="space-y-4 md:space-y-6" >
         <div>
                <label
-                htmlFor="employeeid"
+                htmlFor="email"
                 className="block mb-2 text-sm font-medium text-gray-900 "
               >
-                User ID               <span className='text-red-600'>(E : Employee &nbsp;&nbsp;A : Admin)</span>
+                Email ID               <span className='text-red-600'>(E : Employee &nbsp;&nbsp;A : Admin)</span>
 
               </label>
               <div className="flex bg-slate-50 border p-3 rounded">
@@ -203,8 +205,8 @@ const Login = () => {
 
               <input
                 type="text"
-                name="employeeid"
-                id="employeeid"
+                name="email"
+                id="email"
                 className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full "
                 placeholder="Your user id"
                 required=""

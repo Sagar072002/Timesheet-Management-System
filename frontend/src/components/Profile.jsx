@@ -2,6 +2,9 @@ import React,{useEffect,useState} from 'react';
 import {useNavigate } from 'react-router-dom';
 import logo from "../assets/user_img.jpg";
 import {RxCross2} from "react-icons/rx"
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Profile = ({profilevalue,onUpdateProfile}) => {
     const [isVisible, setIsVisible] = useState(true);
@@ -38,7 +41,49 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
       onUpdateProfile(editedProfile); // Update profile value in parent component
       setEditedProfile({ ...editedProfile }); // Reset edited profile
       handleInputChange({ target: { name: '', value: '' } });
+      updateDatabase();
     };
+    
+    const updateDatabase = async() => {
+ 
+      try{
+        const named = sessionStorage.getItem("userName");
+        const url = `http://localhost:3000/users/${named}`;
+        console.log("userid:",named)
+        const response = await axios.put(url,
+          {
+           
+          }     
+        );
+        
+        const data=response.data
+        // console.log(data)
+        // setProfileValue(data)
+        if(response.status!==200){
+          // response.status
+          // console.log("*********",response.status,response.statusText,data.message,data.errors)
+          console.log(
+            `${response.status}\n${response.statusText}\n${data.message}`
+         )
+        }
+    
+          // response.status
+        //   toast.success(
+        //     `${response.status}\n${response.statusText}\n${data.message}`
+        //  )
+        if(response.status===200){
+    
+         //toast.success("Registration successful!");
+        
+         console.log('updated successfully');
+
+        }
+        
+        }
+        catch(error){
+          toast.error(error.message)
+        }
+    } 
     const handleInputChange = (e) => {
       if (e && e.target) {
         const { name, value } = e.target;
