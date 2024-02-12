@@ -62,7 +62,7 @@ toast.error("Age cannot be empty")
 toast.error("Address cannot be empty")
 }
 if(pass1!==pass2){
-      toast.error("Passwords dont match")
+      toast.error("Passwords do not match")
 
     }
     if(!document.getElementById('employeeid').value.startsWith("A") && !document.getElementById('employeeid').value.startsWith("E")){
@@ -131,7 +131,7 @@ if(pass1!==pass2){
     
     }
     catch(error){
-      toast.error(error.message)
+      toast.error("User Already Exists")
     }
     
     // console.log(data.errors.username[0])
@@ -208,7 +208,7 @@ if(pass1!==pass2){
              <CgGenderMale className='mr-3 text-xl'/>
               <select                 className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md 0 outline-none block w-full "
  name="gender" id="gender">
-  <option className='rounded-none text-gray-900'  value="">Selet a category</option>
+  <option className='rounded-none text-gray-900'  value="">Select a category</option>
   <option className='rounded-none text-gray-900' value="Male">Male</option>
   <option className='rounded-none text-gray-900' value="Female">Female</option>
   <option className='rounded-none text-gray-900' value="Other">Other</option>
