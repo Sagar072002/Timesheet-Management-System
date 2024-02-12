@@ -51,7 +51,6 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
           [name]: value,
         }))
         const d = JSON.parse(sessionStorage.getItem("data"));
-        console.log("session005", d);
 
       }
     };
