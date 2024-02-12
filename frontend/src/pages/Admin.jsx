@@ -23,6 +23,11 @@ const Admin = () => {
     if (sessionStorage.getItem("auth") === "false") {
       navigate("/");
     }
+    else if(sessionStorage.getItem("auth") === "true" &&sessionStorage.getItem("userName")[0]==='E' ) 
+    {
+      console.log("UNauth",sessionStorage.getItem("userName"))
+      navigate("/Employee")
+    }
   }, []);
 
   const displayData = async () => {
