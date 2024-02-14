@@ -168,6 +168,7 @@ const Login = () => {
          
       }
        catch (error) {
+        console.log(uemail,password);
          toast.error("Invalid Credentials");
       }
   

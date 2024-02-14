@@ -1,3 +1,4 @@
+
 // controllers/UserController.js
 const { User } = require('../db');
 const bcrypt = require('bcrypt');
@@ -13,6 +14,7 @@ const createUser = async (req, res) => {
       age,
       address,
       password,
+      is_admin,
     } = req.body;
 
     const user = await User.create({
@@ -24,6 +26,7 @@ const createUser = async (req, res) => {
       age,
       address,
       password,
+      is_admin,
     });
 
     res.status(200).json({ user });

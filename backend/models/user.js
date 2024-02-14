@@ -48,6 +48,9 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    is_admin: {
+      type: DataTypes.BOOLEAN,
+    },
   });
 
   User.beforeCreate(async (user, options) => {

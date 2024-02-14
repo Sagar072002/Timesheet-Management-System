@@ -33,6 +33,7 @@ const Register = () => {
     const ph=document.getElementById('phone').value
     const age=document.getElementById('age').value
     const add=document.getElementById('address').value
+    const admin=document.getElementById('isAdmin').checked
      
     if(name===""){
 toast.error("Name cannot be empty")
@@ -100,6 +101,7 @@ if(pass1!==pass2){
           "address":add,
           'password':pass1,
           're_password':pass2,
+          'is_admin':admin,
       }     
     );
     
@@ -131,6 +133,7 @@ if(pass1!==pass2){
     
     }
     catch(error){
+      console.log(admin);
       toast.error("User Already Exists")
     }
     
