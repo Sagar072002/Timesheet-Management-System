@@ -66,28 +66,28 @@ if(pass1!==pass2){
       toast.error("Passwords do not match")
 
     }
-    if(!document.getElementById('employeeid').value.startsWith("A") && !document.getElementById('employeeid').value.startsWith("E")){
-      toast.error("User ID should start with either 'A' or 'E'")
-    }
+    // if(!document.getElementById('employeeid').value.startsWith("A") && !document.getElementById('employeeid').value.startsWith("E")){
+    //   toast.error("User ID should start with either 'A' or 'E'")
+    // }
 
-     if(document.getElementById('isAdmin').checked)
-       {
+    //  if(document.getElementById('isAdmin').checked)
+    //    {
         
-         if(!document.getElementById('employeeid').value.startsWith("A"))
-         {
-           toast.error("Uncheck the Checkbox to register as Employee")
-           return;
-         }
-       }
-       else
-       {
+    //      if(!document.getElementById('employeeid').value.startsWith("A"))
+    //      {
+    //        toast.error("Uncheck the Checkbox to register as Employee")
+    //        return;
+    //      }
+    //    }
+    //    else
+    //    {
      
-         if(!document.getElementById('employeeid').value.startsWith("E"))
-         {
-          toast.error("Check the Checkbox to register as Admin")
-          return;
-         }
-       }
+    //      if(!document.getElementById('employeeid').value.startsWith("E"))
+    //      {
+    //       toast.error("Check the Checkbox to register as Admin")
+    //       return;
+    //      }
+    //    }
     try{
     const response = await axios.post('http://localhost:3000/register',
       {
@@ -185,7 +185,7 @@ if(pass1!==pass2){
                 className="block mb-2 text-sm font-bold text-gray-900 "
               >
                 User ID &nbsp;
-              <span className='text-slate-500 font-medium'>(E : Employee &nbsp;&nbsp;A : Admin)</span>
+              <span className='text-slate-500 font-medium'></span>
               </label>
               <div className="flex bg-slate-50 border p-3 rounded">
                 <FaUser className='mr-3' />

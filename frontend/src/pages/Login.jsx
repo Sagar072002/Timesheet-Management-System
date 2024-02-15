@@ -16,6 +16,7 @@ const Login = () => {
     const fetchData = async () => {
       try {
         const uname = sessionStorage.getItem("userName");
+        const admin = sessionStorage.getItem("userType");
         console.log("uname1",uname);
         const accessToken = access1;
         
@@ -23,20 +24,28 @@ const Login = () => {
         {
           // console.log("uname1",uname);
           
-          if(uname.startsWith("A")){
-            // alert("hello admin")
-            n("/admin");
-          }
-          else if(uname.startsWith("E"))
+          // if(uname.startsWith("A")){
+          //   // alert("hello admin")
+          //   n("/admin");
+          // }
+          // else if(uname.startsWith("E"))
+          // {
+          //   // alert("hello emp")
+          //   n("/employee");
+          // }
+          // else
+          // {
+          //   n("/");
+          // }
+          // alert("hello rithik")
+          if(admin)
           {
-            // alert("hello emp")
+            n("/admin");
+          
+          }
+          else{
             n("/employee");
           }
-          else
-          {
-            n("/");
-          }
-          // alert("hello rithik")
         }
           //toast.error(sessionStorage.getItem("userName") !="")
           // console.log("Access Token:", `${accessToken}`);
@@ -143,23 +152,33 @@ const Login = () => {
         if (response.status===200) 
         {
           const uname = responseData.userid;
+          const admin = responseData.is_admin;
           console.log("uname2",uname);
           toast.success("Login successfully")
           sessionStorage.setItem("auth", "true");
           sessionStorage.setItem("userName", uname);
+          sessionStorage.setItem("userType", admin);
           
           setTimeout(() => {
-            if(uname.startsWith("A")){
-              // alert("hello admin")
-              n("/admin");
-            }
-            else if(uname.startsWith("E"))
+            // if(uname.startsWith("A")){
+            //   // alert("hello admin")
+            //   n("/admin");
+            // }
+            // else if(uname.startsWith("E"))
+            // {
+            //   // alert("hello emp")
+            //   n("/employee");
+            // }
+            // else{
+            //   n("/");
+            // }
+            if(admin)
             {
-              // alert("hello emp")
-              n("/employee");
+              n("/admin");
+            
             }
             else{
-              n("/");
+              n("/employee");
             }
           }, 4000); // Adjust the delay as needed
         }
@@ -198,7 +217,7 @@ const Login = () => {
                 htmlFor="email"
                 className="block mb-2 text-sm font-medium text-gray-900 "
               >
-                Email ID               <span className='text-red-600'>(E : Employee &nbsp;&nbsp;A : Admin)</span>
+                Email ID               <span className='text-red-600'></span>
 
               </label>
               <div className="flex bg-slate-50 border p-3 rounded">
