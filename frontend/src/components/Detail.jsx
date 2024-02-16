@@ -22,7 +22,7 @@ const Detail = ({ employee }) => {
           <div className="flex gap-10 w-full justify-center items-center mt-10">
             <div className="left leading-10">
               <p>Name:</p>
-              <p>Employee ID:</p>
+              <p>User ID:</p>
               <p>Email:</p>
               <p>Gender:</p>
               <p>Age:</p>
