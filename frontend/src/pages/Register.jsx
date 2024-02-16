@@ -148,13 +148,13 @@ if(pass1!==pass2){
   }
  
   return (
-    <section className="bg-gray-50 p-3">
+    <section className="back  bg-gray-50 p-3">
       <ToastContainer/>
-    <div className="flex flex-col items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0">
+    <div className=" flex  flex-col items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0">
     
-      <div className="w-full bg-white rounded-md shadow min-w-[730px]  md:mt-0 sm:max-w-md xl:p-0 ">
+      <div className="w-full border-2 rounded-md shadow min-w-[730px]  md:mt-0 sm:max-w-md xl:p-0 ">
         <div className="px-2 space-y-4 md:space-y-4 sm:p-8">
-          <h1 className="text-xl -mt-5 font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl ">
+          <h1 className="text-xl -mt-5 font-bold leading-tight tracking-tight text-center text-white md:text-2xl ">
             Create an account
           </h1>
           <div className="space-y-4 md:space-y-2" action="#">
@@ -163,7 +163,7 @@ if(pass1!==pass2){
            <div className=''>
               <label
                 htmlFor="name"
-                className="block mb-2 text-sm font-bold text-gray-900 "
+                className="block mb-2 text-sm font-bold text-white "
               >
                 Name
               </label>
@@ -173,7 +173,7 @@ if(pass1!==pass2){
                 type="text"
                 name="name"
                 id="name"
-                className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full  "
+                className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full  "
                 placeholder="Your Name"
                 required=""
               />
@@ -182,7 +182,7 @@ if(pass1!==pass2){
             <div>
               <label
                 htmlFor="employeeid"
-                className="block mb-2 text-sm font-bold text-gray-900 "
+                className="block mb-2 text-sm font-bold text-white "
               >
                 User ID &nbsp;
               <span className='text-slate-500 font-medium'></span>
@@ -194,7 +194,7 @@ if(pass1!==pass2){
                 type="text"
                 name="employeeid"
                 id="employeeid"
-                className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full  "
+                className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full  "
                 placeholder="User ID"
                 required=""
               />
@@ -203,18 +203,18 @@ if(pass1!==pass2){
             <div>
               <label
                 htmlFor="gender"
-                className="block mb-2 text-sm font-bold text-gray-900 "
+                className="block mb-2 text-sm font-bold text-white "
               >
                 Gender
               </label>
               <div className="flex bg-slate-50 border p-3 rounded">
              <CgGenderMale className='mr-3 text-xl'/>
-              <select                 className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md 0 outline-none block w-full "
+              <select                 className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md 0 outline-none block w-full "
  name="gender" id="gender">
-  <option className='rounded-none text-gray-900'  value="">Select a category</option>
-  <option className='rounded-none text-gray-900' value="Male">Male</option>
-  <option className='rounded-none text-gray-900' value="Female">Female</option>
-  <option className='rounded-none text-gray-900' value="Other">Other</option>
+  <option className='rounded-none text-black'  value="">Select a category</option>
+  <option className='rounded-none text-black' value="Male">Male</option>
+  <option className='rounded-none text-black' value="Female">Female</option>
+  <option className='rounded-none text-black' value="Other">Other</option>
 </select>
    </div>
             </div>
@@ -222,9 +222,9 @@ if(pass1!==pass2){
              <div>
               <label
                 htmlFor="password"
-                className="block mb-2 text-sm font-bold text-gray-900 "
+                className="block mb-2 text-sm font-bold text-white "
               >
-                Password<span className="text-slate-500 font-medium">(Atleast 8 characters and Alphanumeric)</span>
+                Password<span className="text-white font-medium"> (Min. 8 characters and Alphanumeric)</span>
               </label>
               <div className="flex bg-slate-50 border p-3 rounded">
               <FaLock className='mr-3' />
@@ -234,7 +234,7 @@ if(pass1!==pass2){
                 name="password"
                 id="password"
                 placeholder="••••••••"
-                className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full "
+                className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full "
                 required=""
               />
               </div>
@@ -242,7 +242,7 @@ if(pass1!==pass2){
             <div >
               <label
                 htmlFor="confirm-password"
-                className="block mb-2 text-sm font-bold text-gray-900 "
+                className="block mb-2 text-sm font-bold text-white "
               >
                 Confirm password
               </label>
@@ -253,7 +253,7 @@ if(pass1!==pass2){
                 name="confirm-password"
                 id="confirm-password"
                 placeholder="••••••••"
-                className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full "
+                className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full "
                 required=""
               />
                             </div>
@@ -267,7 +267,7 @@ if(pass1!==pass2){
              <div>
                <label
                 htmlFor="email"
-                className="block mb-2 text-sm font-bold text-gray-900 "
+                className="block mb-2 text-sm font-bold text-white "
               >
                 Email
               </label>
@@ -278,7 +278,7 @@ if(pass1!==pass2){
                 type="email"
                 name="email"
                 id="email"
-                className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full "
+                className="bg-transparent border-none border-b-gray-300 text-black sm:text-sm -md outline-none block w-full "
                 placeholder="Your Email"
                 required=""
               />
@@ -288,7 +288,7 @@ if(pass1!==pass2){
             <div>
               <label
                 htmlFor="phone"
-                className="block mb-2 text-sm font-bold text-gray-900 "
+                className="block mb-2 text-sm font-bold text-white "
               >
                 Phone
               </label>
@@ -299,7 +299,7 @@ if(pass1!==pass2){
                 type="number"
                 name="phone"
                 id="phone"
-                className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full "
+                className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full "
                 placeholder="Your Phone"
                 required=""
               />
@@ -309,7 +309,7 @@ if(pass1!==pass2){
             <div>
                <label
                 htmlFor="age"
-                className="block mb-2 text-sm font-bold text-gray-900 "
+                className="block mb-2 text-sm font-bold text-white "
               >
                 Age
               </label>
@@ -320,7 +320,7 @@ if(pass1!==pass2){
                 type="number"
                 name="age"
                 id="age"
-                className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full  "
+                className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full  "
                 placeholder="Your age"
                 required=""
               />
@@ -330,7 +330,7 @@ if(pass1!==pass2){
             <div >
               <label
                 htmlFor="address"
-                className="block mb-2 text-sm font-bold text-gray-900 "
+                className="block mb-2 text-sm font-bold text-white "
               >
                 Address
               </label>
@@ -342,7 +342,7 @@ if(pass1!==pass2){
                 id="address"
                 rows={4}
                 placeholder="Your address"
-                className="mb-3 bg-transparent resize-none border-none border-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full p-2.5 "
+                className="mb-3 bg-transparent resize-none border-none border-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full p-2.5 "
                 required=""
                 />
                 </div>
@@ -353,13 +353,13 @@ if(pass1!==pass2){
             <div className="flex pt-4 justify-between">
               <div>
             <input type="checkbox" name="isAdmin" id="isAdmin" />
-        <span className="text-md font-md text-gray-500 pl-2 pb-3">Register as Admin</span>
+        <span className="text-md font-bold text-white pl-2 pb-3">Register as Admin</span>
         </div>
-      <p className="text-md font-light text-gray-500 pb-3">
+      <p className="text-md font-bold text-white pb-3">
               Already have an account?{" "}
               <Link
                to="/"
-                className="font-bold text-blue-600 hover:underline "
+                className="font-bold text-cyan-600 hover:underline "
               >
                 Login here
               </Link>
@@ -369,8 +369,10 @@ if(pass1!==pass2){
             <button
               type="submit"
               onClick={handleregister}
-              className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-md text-sm px-5 py-3 text-center"
-            >
+              // className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-md text-sm px-5 py-3 text-center"
+             className="w-full text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br font-medium rounded-md text-sm px-5 py-2.5 text-center me-2 mb-2">
+
+            
               Register
             </button>
           </div>

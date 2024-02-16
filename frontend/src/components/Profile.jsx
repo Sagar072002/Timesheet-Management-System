@@ -41,6 +41,7 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
       onUpdateProfile(editedProfile); // Update profile value in parent component
       setEditedProfile({ ...editedProfile }); // Reset edited profile
       handleInputChange({ target: { name: '', value: '' } });
+      toast.success("Updated successfully")
       updateDatabase();
     };
     
@@ -258,7 +259,7 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
                 {!isEditable && (
                   <button
                     type="button"
-                    className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-3 text-center"
+                    className='w-full  text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'     
                     onClick={handleEditClick}
                   >
                     Edit
@@ -267,8 +268,7 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
                 {isEditable && (
                   <button
                     type="button"
-                    className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-3 text-center"
-                    onClick={handleSaveClick}
+                    className='w-full  text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'                             onClick={handleSaveClick}
                   >
                     Save
                   </button>

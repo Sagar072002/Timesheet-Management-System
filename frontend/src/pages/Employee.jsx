@@ -109,27 +109,26 @@ const Employee = () => {
   };
   
   return (
-    <div className="bg-slate-500 w-full">
+    <div className="back w-full p-4">
       <ToastContainer/>
       <div className="">
     <div className="">
   <h2 className="font-bold text-2xl uppercase text-center pt-4 text-white">Employee Dashboard</h2>
   <div className="">
-  <span className="text-white mr-2 absolute right-28 top-5">Hii, {JSON.parse(sessionStorage.getItem("data")).name}</span></div>
+  <span className="text-white font-medium text-lg mr-2 absolute right-28 top-4">Hii, {JSON.parse(sessionStorage.getItem("data")).name}</span></div>
+  
   <FaUser onClick={toggleProfileVisibility} className=' w-8 h-8  text-white text-xl absolute right-14 top-3' />
         </div>
         {isProfileVisible && (
-          <div className=" bg-slate-200 border border-slate-400 rounded absolute right-0 top-19 max-w-[500px] p-5 pt-2 h-32">
-            <div className="flex justify-center">
-              <img
-                src={logo}
-                className="w-10 h-10 mix-blend-color-burn"
-                alt=""
-              />
-            </div>
+          <div className=" bg-slate-200 border border-slate-400 rounded absolute right-0 top-11 max-w-[500px] p-5 pt-2 h-32">
+            <div className="border-white  bg-slate-600 rounded-full p-2 flex justify-center">
+                          <FaUser             onClick={toggleProfileVisibility}
+            className="text-2xl text-white"
+           />
+</div>
             <div className="editprofilediv mt-3 text-lg" >
-              <p className="border-b border-red-700 py-1 px-2 hover:cursor-pointer" onClick={function(event){ toggleProfileDivVisibility(); displayData()}}>Edit Profile</p>
-              <button className="px-4 hover:cursor-pointer" onClick={handleLogout}>Logout</button>
+              <p className="border-b font-medium border-red-700 py-1 px-2 hover:text-red-700 hover:cursor-pointer" onClick={function(event){ toggleProfileDivVisibility(); displayData()}}>Edit Profile</p>
+              <button className="px-4 font-medium hover:text-red-700 hover:cursor-pointer" onClick={handleLogout}>Logout</button>
             </div>
           </div>
         )}
