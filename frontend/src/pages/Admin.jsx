@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import logo from "../assets/user_img.jpg";
+import logo from "../assets/user-icon.webp";
 import Profile from "../components/Profile";
 import EmployeeCard from "../components/EmployeeCard";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import "../index.css"
+import {FaUser} from  "react-icons/fa"
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -114,35 +116,38 @@ const Admin = () => {
   return (
     <div className="relative flex">
       <ToastContainer />
-      <div className="p-4 pt-6 bg-blue-gray-200 w-full bg-gray-300">
+      <div className="back p-4 pt-6 bg-blue-gray-200 w-full bg-gray-300">
         <div className="flex justify-between px-5">
           <p></p>
-          <h2 className="font-bold text-2xl uppercase text-center">
+          <h2 className="font-bold text-white text-2xl uppercase text-center">
             Admin Dashboard 
           </h2>
-           <span className="text-lg text-slate-700 mr-2 absolute right-24 top-8">
+           <span className="text-lg text-white mr-2 absolute right-20 top-8">
             Hii, {JSON.parse(sessionStorage.getItem("data")).name}
           </span> 
-          <img
+          {/* <img
             src={logo}
             onClick={toggleProfileVisibility}
             className="w-10 h-10 mix-blend-color-burn"
             alt=""
-          />
+          /> */}
+          <div className="border-white  bg-black rounded-full p-2">
+                          <FaUser             onClick={toggleProfileVisibility}
+            className="text-2xl text-white"
+           />
+</div>
         </div>
 
         {isProfileVisible && (
-          <div className=" bg-slatehoi-200 border border-slate-400 rounded absolute right-0 top-19 max-w-[500px] p-5 pt-2 h-32">
-            <div className="flex justify-center">
-              <img
-                src={logo}
-                className="w-10 h-10 mix-blend-color-burn"
-                alt=""
-              />
-            </div>
+          <div className=" bg-slate-200 border border-slate-400 rounded absolute right-0 top-19 max-w-[500px] p-5 pt-2 h-32">
+           <div className="border-white  bg-slate-600 rounded-full p-2 flex justify-center">
+                          <FaUser             onClick={toggleProfileVisibility}
+            className="text-2xl text-white"
+           />
+</div>
             <div className="editprofilediv mt-3 text-lg">
               <p
-                className="border-b border-red-700 py-1 px-2 hover:cursor-pointer"
+                className="border-b font-medium hover:text-red-700 border-red-700 py-1 px-2 hover:cursor-pointer"
                 onClick={() => {
                   toggleProfileDivVisibility();
                   displayData();
@@ -150,7 +155,7 @@ const Admin = () => {
               >
                 Edit Profile
               </p>
-              <button onClick={handleLogout} className="px-4 hover:cursor-pointer">
+              <button onClick={handleLogout} className="px-4 font-medium hover:text-red-700 hover:cursor-pointer">
                 Logout
               </button>
             </div>
