@@ -48,6 +48,7 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
     },
     reset_link: {
+      default:false,
       type: DataTypes.BOOLEAN,
     },
   });
