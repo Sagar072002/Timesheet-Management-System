@@ -28,7 +28,6 @@ function App() {
           <Route path="/detail" element={<Detail/>} />
           <Route path="/timesheet" element={<Timesheet/>} />
           <Route path="/scorecard" element={<Scorecard/>} />
-          <Route path="/forgotpass" element={<Forgot/>} />
 
         </Routes>
     </Router>
@@ -36,3 +35,5 @@ function App() {
 }
 
 export default App;
+
+
