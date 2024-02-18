@@ -119,9 +119,8 @@ const Admin = () => {
       <div className="back p-4 pt-6 bg-blue-gray-200 w-full bg-gray-300">
         <div className="flex justify-between px-5">
           <p></p>
-          <h2 className="font-bold text-white text-2xl uppercase text-center">
-            Admin Dashboard 
-          </h2>
+          <h1 class="uppercase text-center pt-4 text-3xl font-extrabold text-gray-900  md:text-5xl lg:text-5xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-500 from-sky-500">Admin Dashboard</span> </h1>
+
            <span className="text-lg text-white mr-2 absolute right-20 top-8">
             Hii, {JSON.parse(sessionStorage.getItem("data")).name}
           </span> 
@@ -131,7 +130,7 @@ const Admin = () => {
             className="w-10 h-10 mix-blend-color-burn"
             alt=""
           /> */}
-          <div className="border-white  bg-black rounded-full p-2">
+          <div className="border-white  rounded-full p-2">
                           <FaUser             onClick={toggleProfileVisibility}
             className="text-2xl text-white"
            />

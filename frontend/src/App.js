@@ -27,10 +27,11 @@ function App() {
           <Route path="/detail" element={<Detail/>} />
           <Route path="/timesheet" element={<Timesheet/>} />
           <Route path="/scorecard" element={<Scorecard/>} />
-
         </Routes>
     </Router>
   );
 }
 
 export default App;
+
+

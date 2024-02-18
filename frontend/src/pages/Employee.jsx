@@ -1,12 +1,11 @@
 import React, { useState,useEffect } from "react";
-import logo from "../assets/user_img.jpg"
-import Timesheet from "../components/Timesheet";
 import Profile from "../components/Profile";
-// import Scorecard from "../components/Scorecard";
 import {FaUser} from "react-icons/fa"
 import {useNavigate} from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import Timesheet from "../components/Timesheet";
+import TimesheetList from "./TimesheetList";
 
 const Employee = () => {
   const n = useNavigate();
@@ -109,18 +108,20 @@ const Employee = () => {
   };
   
   return (
-    <div className="back w-full p-4">
+    <div className="back  w-full p-4 pt-7">
       <ToastContainer/>
       <div className="">
     <div className="">
-  <h2 className="font-bold text-2xl uppercase text-center pt-4 text-white">Employee Dashboard</h2>
+  <h1 class="uppercase text-center pt-4 text-3xl font-extrabold text-gray-900  md:text-5xl lg:text-5xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-500 from-sky-500">Employee Dashboard</span> </h1>
+
   <div className="">
-  <span className="text-white font-medium text-lg mr-2 absolute right-28 top-4">Hii, {JSON.parse(sessionStorage.getItem("data")).name}</span></div>
+  <span className="text-white font-medium text-lg mr-2 absolute right-28 top-14">Hii, {JSON.parse(sessionStorage.getItem("data")).name}</span>
+  </div>
   
-  <FaUser onClick={toggleProfileVisibility} className=' w-8 h-8  text-white text-xl absolute right-14 top-3' />
+  <FaUser onClick={toggleProfileVisibility} className=' w-8 h-8  text-white text-xl absolute right-14 top-12' />
         </div>
         {isProfileVisible && (
-          <div className=" bg-slate-200 border border-slate-400 rounded absolute right-0 top-11 max-w-[500px] p-5 pt-2 h-32">
+          <div className=" bg-slate-200 z-10 border border-slate-400 rounded absolute right-0 top-15 max-w-[500px] p-5 pt-2 h-32">
             <div className="border-white  bg-slate-600 rounded-full p-2 flex justify-center">
                           <FaUser             onClick={toggleProfileVisibility}
             className="text-2xl text-white"
@@ -140,15 +141,16 @@ const Employee = () => {
             />
           </div>
         )}
+
         </div>
-        <div className="flex">
-      <div className=" w-3/4">
-        <Timesheet/>
-      </div>
-      {/* <div className="">
-        <Scorecard/>
-      </div> */}
-      </div>
+        <div>
+        
+
+        </div>
+   
+     <Timesheet/> 
+   <TimesheetList/>
+      
     </div>
   );
 };
