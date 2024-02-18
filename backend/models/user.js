@@ -47,6 +47,9 @@ module.exports = (sequelize) => {
     is_admin: {
       type: DataTypes.BOOLEAN,
     },
+    reset_link: {
+      type: DataTypes.BOOLEAN,
+    },
   });
 
   User.beforeCreate(async (user, options) => {

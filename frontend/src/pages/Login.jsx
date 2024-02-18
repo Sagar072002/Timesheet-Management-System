@@ -6,13 +6,22 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import "../index.css"
+import Fpm from "../components/forgotpassmail";
+import { MdEmail } from "react-icons/md"
 
 
 const Login = () => {
   const [access1, setAccess1] = useState("");
   const [data, setData] = useState("");
+  
+  const [isvisible,setIsvisible]=useState(false)
 
   const n = useNavigate();
+  function fp(){
+    setIsvisible(!isvisible)
+
+
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -222,7 +231,7 @@ const Login = () => {
 
               </label>
               <div className="flex bg-slate-50 border p-3 rounded">
-              <FaUser className='mr-3' />
+              <MdEmail className='mr-3' />
 
               <input
                 type="text"
@@ -255,9 +264,9 @@ const Login = () => {
               />
               </div>
             </div>
-          {/* <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between">
             <div className="flex items-start">
-              <div className="flex items-center h-5">
+              {/* <div className="flex items-center h-5">
                 <input
                   id="remember"
                   aria-describedby="remember"
@@ -265,23 +274,28 @@ const Login = () => {
                   className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 "
                   required=""
                 />
-              </div>
-              <div className="ml-3 text-sm">
+              </div> */}
+              {/* <div className="ml-3 text-sm">
                 <label
                   htmlFor="remember"
                   className="text-gray-500 "
                 >
                   Remember me
                 </label>
-              </div>
+              </div> */}
             </div>
-            <a
-              href="#"
+            {isvisible && (
+          <div className=" bg-transparent absolute left-1/2 -top-8 w-20 z-10">
+            <Fpm  func={fp}/>
+          </div>
+        )}
+            <button
+              onClick={fp}
               className="text-sm font-medium text-blue-600 hover:underline "
             >
               Forgot password?
-            </a>
-          </div> */}
+            </button>
+          </div>
           <button
             type="submit"
             onClick={handleLogin}
