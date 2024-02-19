@@ -14,7 +14,7 @@ const Timesheet = () => {
     const filled = timeData.some(row => row.some((field, index) => index !== 0 && field !== ''));
     setIsAnyFieldFilled(filled);
   }, [timeData]);
-
+  const isFriday = new Date().getDay() === 5;
 
   const getWeekDates = (offset = 0) => {
     const today = new Date();
@@ -237,7 +237,7 @@ const Timesheet = () => {
       className=" mt-4 ml-8 w-3/4 h-12 text-center bg-slate-100 border border-gray-300"
       value={timeData[index] ? timeData[index][dayIndex + 1] : ''} 
       onChange={(e) => updateTimeData(index, dayIndex + 1, e.target.value)}
-    // disabled={dayIndex !== (new Date().getDay() + 6) % 7}
+    disabled={dayIndex !== (new Date().getDay() + 6) % 7}
     />
   </td>
 ))}
@@ -272,7 +272,8 @@ const Timesheet = () => {
       </div>
       <div className="w-full flex justify-end p-4 gap-4">
         <button type="button" className='bg-cyan-500 hover:bg-cyan-400 px-8 py-3 text-white rounded-sm' onClick={handleSave}>Save</button>
-        <button type="submit" className='bg-cyan-500 hover:bg-cyan-400 px-8 py-3 text-white rounded-sm' onClick={handleSubmit}>Submit</button>
+        <button type="submit"     className={`px-8 py-3 text-white rounded-sm ${isFriday ? 'bg-cyan-500 hover:bg-cyan-400' : 'bg-white text-slate-700 cursor-not-allowed'}`}
+ disabled={!isFriday} onClick={handleSubmit}>Submit</button>
       </div>
       <div className=''>
         <p className='text-white font-bold text-2xl my-12  text-center uppercase'>List of Timesheets</p>

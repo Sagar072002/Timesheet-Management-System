@@ -35,13 +35,16 @@ async function reset_pass(req, res) {
 }
 
 async function sendmail(req, res) {
+  console.log("hey")
   const oauth2Client = new google.auth.OAuth2(
     client_id,
     client_sec,
     redirect_uri
-  );
-  oauth2Client.setCredentials({ refresh_token: refresh_token });
-  try {
+    );
+    oauth2Client.setCredentials({ refresh_token: refresh_token });
+    try {
+    console.log("hello")
+
     const { email } = req.body;
     console.log(req.body);
     console.log("sending....");
@@ -114,46 +117,5 @@ module.exports = { sendmail, verifymail, reset_pass };
 
 // sendmail().then(e=>console.log("result",e.response)).catch(error=>console.log("error",error))
 
-async function main() {
-  // Temporary ethereal mail ,so msil wont be sent ..
 
-  const transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    auth: {
-      user: "jovani.jacobson49@ethereal.email",
-      pass: "TWx6Ry7d3KD7VWAmk9",
-    },
-  });
 
-  // AIzaSyDYxcFgm7-G2pvXSejDE54uM6K-PsHNQGo
-
-  // Email message
-  const mailOptions = {
-    from: "msecitsecondyear@gmail.com",
-    to: "rithikharendarm@example.com",
-    subject: "Test Email",
-    text: "This is a test email sent from Node.js using Nodemailer with Gmail API key.",
-  };
-
-  // Sending email
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error("Error:", error);
-    } else {
-      console.log("Email sent:", info.response);
-    }
-  });
-
-  // const info=await transporter.sendMail({
-  //     from:'jovani.jacobson49@ethereal.email',
-  //     to:'mahesh.jaga@hotmail.com',
-  //     subject:"Test Mail",
-  //     html:html
-
-  // })
-
-  // console.log("msg sent"+ info.messageId)
-}
-
-// main();

@@ -15,6 +15,7 @@ const createUser = async (req, res) => {
       address,
       password,
       is_admin,
+      reset_link
     } = req.body;
 
     const user = await User.create({
@@ -27,6 +28,7 @@ const createUser = async (req, res) => {
       address,
       password,
       is_admin,
+      reset_link
     });
 
     res.status(200).json({ user });

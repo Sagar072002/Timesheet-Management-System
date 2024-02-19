@@ -24,6 +24,8 @@ const Forgotpassmail = ({ func }) => {
     // document.getElementById()
     
     const response = await axios.post('mail/forgotpassword',{"email":email}).catch(e=>toast.error(e.response.data.message));
+    console.log(response)
+
     if(response.status===200){
       toast.success("Reset Mail Sent Successfully \n Check your inbox")
       setTimeout(function(){ 
@@ -40,11 +42,11 @@ const Forgotpassmail = ({ func }) => {
 
   }
   return (
-    <>
+    <div className="" >
       <ToastContainer />
-      <div className="flex flex-col items-center justify-center  m-24">
-        <div className="w-full bg-white rounded-md shadow  items-center justify-center min-h-[400px] min-w-[400px]  relative">
-          <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-black mt-10 md:text-2xl ">
+      <div className="">
+        <div className=" bg-white rounded-md shadow   min-h-[200px] min-w-[400px] relative ">
+          <h1 className="text-xl font-bold  text-center text-black md:text-2xl pt-5 ">
             Forgot Password
           </h1>
           <div className="absolute top-2 right-2 mt-2 mr-2 hover:bg-slate-400 hover:text-white rounded-full p-1">
@@ -58,7 +60,7 @@ const Forgotpassmail = ({ func }) => {
               Email ID <span className="text-red-600"></span>
             </label>
             <div className="flex bg-slate-200 border p-3 rounded">
-              <MdEmail className="mr-3" />
+              <MdEmail className="mr-3 text-xl" />
               <input
                 type="email"
                 pattern=".+@example\.com"
@@ -73,20 +75,17 @@ const Forgotpassmail = ({ func }) => {
               <button
                 type="submit"
                 onClick={mailsend}
-                className="w-full mt-10 text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                className="w-full mt-10 text-white bg-cyan-500 hover:bg-cyan-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
               >
                 Send Mail
               </button>
             </div>
           </div>
 
-          {/* <div className="p-2 space-y-4 md:space-y-4 sm:p-8">
-            
-              
-            </div> */}
+         
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

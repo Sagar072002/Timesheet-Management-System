@@ -102,6 +102,7 @@ if(pass1!==pass2){
           'password':pass1,
           're_password':pass2,
           'is_admin':admin,
+          'reset_link':false,
       }     
     );
     
