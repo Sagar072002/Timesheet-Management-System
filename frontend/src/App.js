@@ -5,6 +5,7 @@ import Admin from './pages/Admin';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Contact from './pages/Contact';
+import Forgot from './pages/forgotpass';
 import Profile from './components/Profile';
 import Detail from './components/Detail';
 import Timesheet from './components/Timesheet';
@@ -27,6 +28,7 @@ function App() {
           <Route path="/detail" element={<Detail/>} />
           <Route path="/timesheet" element={<Timesheet/>} />
           <Route path="/scorecard" element={<Scorecard/>} />
+          <Route path="/forgotpass" element={<Forgot/>} />
 
         </Routes>
     </Router>
@@ -34,3 +36,5 @@ function App() {
 }
 
 export default App;
+
+

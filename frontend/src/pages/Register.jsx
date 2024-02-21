@@ -102,6 +102,7 @@ if(pass1!==pass2){
           'password':pass1,
           're_password':pass2,
           'is_admin':admin,
+          'reset_link':false,
       }     
     );
     
@@ -148,10 +149,9 @@ if(pass1!==pass2){
   }
  
   return (
-    <section className="back  bg-gray-50 p-3">
+    <section className="back bg-gray-50 ">
       <ToastContainer/>
-    <div className=" flex  flex-col items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0">
-    
+    <div className=" flex flex-col items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0">
       <div className="w-full border-2 rounded-md shadow min-w-[730px]  md:mt-0 sm:max-w-md xl:p-0 ">
         <div className="px-2 space-y-4 md:space-y-4 sm:p-8">
           <h1 className="text-xl -mt-5 font-bold leading-tight tracking-tight text-center text-white md:text-2xl ">
@@ -356,10 +356,10 @@ if(pass1!==pass2){
         <span className="text-md font-bold text-white pl-2 pb-3">Register as Admin</span>
         </div>
       <p className="text-md font-bold text-white pb-3">
-              Already have an account?{" "}
+              Already have an account?
               <Link
                to="/"
-                className="font-bold text-cyan-600 hover:underline "
+                className="font-bold ml-1 text-cyan-500 hover:underline "
               >
                 Login here
               </Link>
@@ -370,7 +370,7 @@ if(pass1!==pass2){
               type="submit"
               onClick={handleregister}
               // className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-md text-sm px-5 py-3 text-center"
-             className="w-full text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br font-medium rounded-md text-sm px-5 py-2.5 text-center me-2 mb-2">
+             className="w-full text-white bg-cyan-600 hover:bg-cyan-500 font-medium rounded-md text-sm px-5 py-2.5 text-center me-2 mb-2">
 
             
               Register

@@ -15,8 +15,9 @@ const createUser = async (req, res) => {
       address,
       password,
       is_admin,
+      reset_link
     } = req.body;
-
+    const twofa=false;
     const user = await User.create({
       name,
       userid, 
@@ -27,6 +28,8 @@ const createUser = async (req, res) => {
       address,
       password,
       is_admin,
+      reset_link,
+      twofa,
     });
 
     res.status(200).json({ user });

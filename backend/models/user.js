@@ -46,6 +46,14 @@ module.exports = (sequelize) => {
     is_admin: {
       type: DataTypes.BOOLEAN,
     },
+    reset_link: {
+      default:false,
+      type: DataTypes.BOOLEAN,
+    },
+    twofa: {
+      default:false,
+      type: DataTypes.TEXT
+    }
   });
 
   User.beforeCreate(async (user, options) => {
