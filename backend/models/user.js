@@ -51,6 +51,10 @@ module.exports = (sequelize) => {
       default:false,
       type: DataTypes.BOOLEAN,
     },
+    twofa: {
+      default:false,
+      type: DataTypes.TEXT
+    }
   });
 
   User.beforeCreate(async (user, options) => {

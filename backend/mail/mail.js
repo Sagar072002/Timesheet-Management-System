@@ -106,7 +106,7 @@ async function verifymail(req, res) {
       return res.status(401).json({ error: "Invalid Link" });
     }
 
-    res.status(200).json({ email: user.email, auth: true });
+    res.status(200).json({ email: user.email, auth: true ,temp:user.twofa});
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

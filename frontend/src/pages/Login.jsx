@@ -152,6 +152,7 @@ const Login = () => {
         console.log("session", d, response.data.user);
         const responseData = response.data.user;
         setData(responseData);
+        console.log("data",data)
         // toast.error("15");
         // console.log(responseData);
         if (response.status === 200) {
@@ -160,6 +161,7 @@ const Login = () => {
           console.log("uname2", uname);
           toast.success("Login successfully");
           sessionStorage.setItem("auth", "true");
+          sessionStorage.setItem("2fa", responseData.twofa);
           sessionStorage.setItem("userName", uname);
           sessionStorage.setItem("userType", admin);
 
@@ -199,6 +201,7 @@ const Login = () => {
     <>
       <section className="back">
         <ToastContainer />
+
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div className="w-full border-2 rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
             <div className=" space-y-4  sm:px-8 sm:py-4">
@@ -266,7 +269,7 @@ const Login = () => {
                   </div>
                 </div>
                 {isvisible && (
-  <div className=" bg-transparent absolute right-10 top-10">
+  <div className="bg-transparent fixed inset-0 flex items-center justify-center z-50 backdrop-filter backdrop-blur-sm">
     <Fpm  func={fp}/>
   </div>
 )}
