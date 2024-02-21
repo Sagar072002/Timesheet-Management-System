@@ -14,10 +14,9 @@ const Employee = () => {
 
   const [profilevalue, setProfileValue] = useState("");
 
-  useEffect(
-    ()=>{
-      const fetchedUsername = sessionStorage.getItem("userName");
-      console.log("Fetched username:",fetchedUsername);
+  useEffect(() => {
+    const fetchedUsername = sessionStorage.getItem("userName");
+    console.log("Fetched username:", fetchedUsername);
     setUsername(fetchedUsername);
     displayData();
     if (

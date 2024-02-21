@@ -16,6 +16,11 @@ app.use(cors());
 
 // Routes
 app.get("/",(req,res)=>res.send("Hello Done Succesfully"))
+app.post('/mail/forgotpassword', sendmail);   // Send Reset/Forgot password mail
+app.post('/mail/verifyforgot', verifymail);   // to verify user link mail
+app.post('/mail/reset', reset_pass);   // Send Reset/Forgot password mail
+app.post('/auth/qr',qrgen)
+app.post('/auth/set2fa',set2fa)
 
 //user routes
 app.post('/register', createUser);
