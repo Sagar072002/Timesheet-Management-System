@@ -8,8 +8,18 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
 });
 
 const User = require('./models/user')(sequelize);
+const Timelog = require('./models/timelog')(sequelize);
+const Scorecard = require('./models/scorecard')(sequelize);
 
-module.exports = { sequelize, User };
+User.hasMany(Timelog, { foreignKey: 'userid' });
+Timelog.belongsTo(User, { foreignKey: 'userid' });
+
+User.hasMany(Scorecard, { foreignKey: 'userid' });
+Scorecard.belongsTo(User, { foreignKey: 'userid' });
+
+module.exports = { sequelize, User, Timelog, Scorecard };
+
+
 
 
 

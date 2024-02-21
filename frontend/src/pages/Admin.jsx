@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import "../index.css"
 import {FaUser} from  "react-icons/fa"
+import ViewTimesheet from "../components/ViewTimesheet";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -114,14 +115,13 @@ const Admin = () => {
   
   
   return (
-    <div className="relative flex">
+    <div className="relative h-full  flex">
       <ToastContainer />
       <div className="back p-4 pt-6 bg-blue-gray-200 w-full bg-gray-300">
         <div className="flex justify-between px-5">
           <p></p>
-          <h2 className="font-bold text-white text-2xl uppercase text-center">
-            Admin Dashboard 
-          </h2>
+          <h1 className="uppercase text-center pt-4 text-3xl font-extrabold text-gray-900  md:text-5xl lg:text-5xl"><span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-500 from-sky-500">Admin Dashboard</span> </h1>
+
            <span className="text-lg text-white mr-2 absolute right-20 top-8">
             Hii, {JSON.parse(sessionStorage.getItem("data")).name}
           </span> 
@@ -131,7 +131,7 @@ const Admin = () => {
             className="w-10 h-10 mix-blend-color-burn"
             alt=""
           /> */}
-          <div className="border-white  bg-black rounded-full p-2">
+          <div className="border-white  rounded-full p-2">
                           <FaUser             onClick={toggleProfileVisibility}
             className="text-2xl text-white"
            />
@@ -181,7 +181,7 @@ const Admin = () => {
   />
 </div>
 
-<div className="py-1 px-5 ml-10 h-screen flex overflow-auto gap-8">
+<div className="flex flex-wrap justify-start py-1 px-5 ml-10 gap-8">
   {filteredEmployees.map((employee, index) => (
     <EmployeeCard
       key={index}
