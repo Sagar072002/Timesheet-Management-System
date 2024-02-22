@@ -3,6 +3,7 @@ import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
 import TimesheetList from '../pages/TimesheetList';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import {useNavigate} from  "react-router-dom"
 
 const Timesheet = () => {
   const [rowCount, setRowCount] = useState(1);
@@ -12,6 +13,7 @@ const Timesheet = () => {
   const [isAnyFieldFilled, setIsAnyFieldFilled] = useState(false);
   const [userScore, setUserScore] = useState(0); // Initialize user score with base value
 
+  const navigate=useNavigate()
   const currentDate = new Date();
   const currentDay = currentDate.getDay(); // Define currentDay
   useEffect(() => {
@@ -114,7 +116,7 @@ const Timesheet = () => {
         //  )
         if(response.status===200){
    
-         toast.success("delete successful!");
+         toast.success("Deleted successfully");
        }
      
       }
@@ -168,7 +170,7 @@ const Timesheet = () => {
       const submissionTime = currentDate.getHours() * 60 + currentDate.getMinutes(); // Convert current time to minutes
 
       // Check if submission time is before 8:50 AM (530 minutes)
-      const bonusPoints = submissionTime < (8 * 60 + 45) ? 10 : 0;
+      const bonusPoints = submissionTime < (11 * 60 + 45) ? 10 : 0;
   
       const isAnyTaskFilled = timeData.every(row => {
         const taskName = row[0];
@@ -181,7 +183,9 @@ const Timesheet = () => {
         const durations = row.slice(1);
         return durations.some((duration, index) => duration !== '' && taskName === '');
       });
-  
+     
+    
+    
       if (isAnyTaskFilled && !isAnyDurationFilledWithoutTaskName) {
         const isTimesheetSaved = timesheets.some(timesheet => timesheet.weekRange === `${weekDates.monday} - ${weekDates.friday}`);
         if (isTimesheetSaved) {
@@ -272,23 +276,24 @@ const Timesheet = () => {
       const durations = row.slice(1);
       return durations.some(duration => duration !== '') && taskName !== '';
     });
+
+
   
     if (isAnyTaskFilled && !isAnyDurationFilledWithoutTaskName && isAnyTaskWithFilledDuration) {
+      // Process the timesheet data for saving
       const existingTimesheetIndex = timesheets.findIndex(timesheet => timesheet.weekRange === `${weekDates.monday} - ${weekDates.friday}`);
       const updatedTaskData = timeData.map((taskData, index) => ({
         task: taskData[0] || '',
-        durations: taskData.slice(1).filter(duration => duration !== ''), // Filter out empty durations
-        day:taskData.slice(1).filter(duration => duration !== '').map(d =>{
-          const dt=new Date(weekDates.monday)
-          dt.setDate(dt.getDate() +taskData.indexOf(d)-1);
-          // console.log(d,dt.toLocaleDateString('en-GB'))
-          if( d!== ''){
-            return dt.toLocaleDateString('en-GB')
+        durations: taskData.slice(1).map(duration => duration === '' ? '0' : duration), // Treat empty duration as zero
+        day: taskData.slice(1).map((duration, dayIndex) => {
+          if (duration !== '') {
+            const currentDate = new Date(weekDates.monday);
+            currentDate.setDate(currentDate.getDate() + dayIndex);
+            return currentDate.toLocaleDateString('en-GB');
           }
-        })
+        }).filter(date => date !== undefined)
       }));
-      console.log(updatedTaskData)
-      console.log(updatedTaskData)
+  
       for (const task of updatedTaskData)
       {
         const { day, durations, task: taskName } = task;
@@ -345,11 +350,6 @@ const Timesheet = () => {
       if (existingTimesheetIndex !== -1) {
         const existingTimesheet = timesheets[existingTimesheetIndex];
   
-        // console.log("Values being updated in the timesheet card:");
-        // console.log("timesheetNumber:", existingTimesheet.timesheetNumber);
-        // console.log("weekRange:", existingTimesheet.weekRange);
-        // console.log("tasks:", updatedTaskData);
-  
         const updatedTimesheets = [...timesheets];
         updatedTimesheets[existingTimesheetIndex] = {
           ...existingTimesheet,
@@ -364,17 +364,12 @@ const Timesheet = () => {
           tasks: updatedTaskData,
         };
   
-        // console.log("Values being saved in the timesheet card:");
-        // console.log("timesheetNumber:", newTimesheet.timesheetNumber);
-        // console.log("weekRange:", newTimesheet.weekRange);
-        // console.log("tasks:", newTimesheet.tasks);
-  
         setTimesheets([...timesheets, newTimesheet]);
         setIsFirstEntry(false);
         toast.success("Timesheet saved successfully");
         if (isFirstEntry) {
           setIsFirstEntry(false);
-          toast.info("New entry added to timesheet");
+          // toast.info("New entry added to timesheet");
         }
       }
     } else if (!isAnyTaskFilled && isAnyDurationFilledWithoutTaskName) {
@@ -386,12 +381,16 @@ const Timesheet = () => {
     }
   };
   
-  
+ const handletimesheetlist=()=>{
+  // alert("hello")
+  navigate("/timesheetlist")
+ }
 
 
   return (
-    <div className="w-full mt-7">
+    <div className="w-full mt-20">
       <ToastContainer/>
+      
       <div className=" my-10 mx-5 text-white font-bold text-xl">
       <p> Current Week: <span className="font-medium text-lg text-cyan-400">{weekDates.monday} - {weekDates.friday}</span></p> 
       <p> Total score: <span className="font-medium text-lg text-cyan-400">{userScore}</span> </p> 
@@ -439,24 +438,36 @@ const Timesheet = () => {
   {[...Array(rowCount)].map((_, index) => (
     <tr key={index} className="bg-white">
       <th scope="row" className="px-3 py-4 font-medium text-gray-900 whitespace-nowrap ">
-      <input
+      {/* <input
   type="text"
   className="mt-4 text-center bg-slate-100 h-12 w-full border border-gray-300"
   value={timeData[index] ? timeData[index][0] : ''} 
+  onChange={(e) => updateTimeData(index, 0, e.target.value)}
+/> */}
+<input
+  type="text"
+  className="mt-4 text-center bg-slate-100 h-12 w-full border border-gray-300"
+  value={timeData[index]?.[0] || ''} 
   onChange={(e) => updateTimeData(index, 0, e.target.value)}
 />
 
 </th>
 {[0, 1, 2, 3, 4].map(dayIndex => (
   <td key={dayIndex} className="">
-    <input
+    {/* <input
   type="number"
   className="mt-4 ml-8 w-3/4 h-12 text-center bg-slate-100 border border-gray-300"
   value={timeData[index] ? timeData[index][dayIndex + 1] : ''} 
   onChange={(e) => updateTimeData(index, dayIndex + 1, e.target.value)}
   disabled={dayIndex >= currentDay}
+/> */}
+<input
+  type="number"
+  className="mt-4 ml-8 w-3/4 h-12 text-center bg-slate-100 border border-gray-300"
+  value={timeData[index]?.[dayIndex + 1] || ''} 
+  onChange={(e) => updateTimeData(index, dayIndex + 1, e.target.value)}
+  disabled={dayIndex >= currentDay}
 />
-
   </td>
 ))}
       <td className="text-center text-xl">
@@ -492,25 +503,26 @@ const Timesheet = () => {
         <button type="button" className='bg-cyan-500 hover:bg-cyan-400 px-8 py-3 text-white rounded-sm' onClick={handleSave}>Save</button>
         <button
   type="submit"
-  className={`px-8 py-3 rounded-sm ${currentDay !== 3 ? 'bg-gray-200 text-slate-700 cursor-not-allowed' : 'bg-cyan-500 text-white hover:bg-cyan-400'}`}
+  className={`px-8 py-3 rounded-sm ${currentDay !== 4 ? 'bg-gray-200 text-slate-700 cursor-not-allowed' : 'bg-cyan-500 text-white hover:bg-cyan-400'}`}
   onClick={handleSubmit}
-  disabled={currentDay !== 3} // Disabling the button programmatically as well
+  disabled={currentDay !== 4} // Disabling the button programmatically as well
 >
   Submit
 </button>
       </div>
-      <div className=''>
-  <p className='text-white font-bold text-2xl my-12 text-center uppercase'>List of Timesheets</p>
+      <button  className='text-white border-2 px-5 py-2 rounded-md' onClick={handletimesheetlist}>View Timesheet List</button>
+      <div >
+  <p  className='text-white font-bold text-2xl my-12 text-center uppercase' >Current Timesheet</p>
   {timesheets.map(timesheet => (
     
-  <div key={timesheet.timesheetNumber} className="mb-4">
-    <p className="text-white font-bold text-lg mb-2">Timesheet for {timesheet.weekRange}</p>
+  <div key={timesheet.timesheetNumber} className="mb-4 bg-white pt-2">
+    <p className="text-black font-bold text-lg my-2 text-center">Timesheet for {timesheet.weekRange}</p>
+    <div className=' flex gap-3 '>
     {timesheet.tasks.map((task, index) => (
-  <div key={index} className="mb-4">
-    <p className="text-white font-bold text-lg mb-2">Timesheet for {timesheet.weekRange}</p>
+  <div key={index} className="mb-4 rounded-md p-4">
     {task.durations.some(duration => parseFloat(duration) !== 0) && ( // Check if any duration is not zero
       <div className="flex flex-col bg-gray-800 p-3 rounded-md mb-2">
-        <p className="text-white mb-1">{task.task}</p>
+        <p className="text-white mb-1 font-bold">Task Name: <span className='font-medium'>{task.task}</span> </p>
         {task.durations.map((duration, dayIndex) => {
           if (parseFloat(duration) !== 0) { // Only render if duration is not zero
             const currentDate = new Date(weekDates.monday);
@@ -522,10 +534,10 @@ const Timesheet = () => {
             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             const dayName = days[currentDate.getDay()];
             return (
-              <div key={dayIndex} className="flex  text-white">
+              <div key={dayIndex} className="flex gap-5 justify-between text-white">
                 <p>{dayName}</p>
-                <p>{formattedDate}</p>
-                <p>{duration}</p>
+                <p> {formattedDate}</p>
+                <p>{duration} hr</p>
               </div>
             );
           } else {
@@ -536,7 +548,7 @@ const Timesheet = () => {
     )}
   </div>
 ))}
-
+</div>
   </div>
 ))}
 

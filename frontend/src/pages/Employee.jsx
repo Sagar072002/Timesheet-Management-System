@@ -16,7 +16,7 @@ const Employee = () => {
 
   useEffect(() => {
     const fetchedUsername = sessionStorage.getItem("userName");
-    console.log("Fetched username:", fetchedUsername);
+    // console.log("Fetched username:", fetchedUsername);
     setUsername(fetchedUsername);
     displayData();
     if (
@@ -47,14 +47,14 @@ const Employee = () => {
       const response = await axios.get(url, {});
 
       const data = response.data;
-      console.log(data);
+      // console.log(data);
       setProfileValue(data);
       if (response.status !== 200) {
         // response.status
         // console.log("*********",response.status,response.statusText,data.message,data.errors)
-        console.log(
-          `${response.status}\n${response.statusText}\n${data.message}`
-        );
+        // console.log(
+        //   `${response.status}\n${response.statusText}\n${data.message}`
+        // );
       }
 
       // response.status
@@ -64,7 +64,7 @@ const Employee = () => {
       if (response.status === 200) {
         //toast.success("Registration successful!");
 
-        console.log("Fetched values:");
+        // console.log("Fetched values:");
       }
     } catch (error) {
       toast.error(error.message);

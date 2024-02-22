@@ -3,23 +3,23 @@ import { RxCross2 } from 'react-icons/rx';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const ViewTimesheet = ({ employee }) => {
+const ViewScorecard = ({ employee }) => {
     const [isVisible, setIsVisible] = useState(true);
+    const [selectedYear, setSelectedYear] = useState('');
+    const [selectedMonth, setSelectedMonth] = useState('');
     const [fetchedData, setFetchedData] = useState(null); // State to store fetched data
 
     const handleCrossClick = () => {
         setIsVisible(false);
     };
 
-    if (!isVisible) {
-        return null; // If isVisible is false, return null to render nothing
-    }
-
     const handleSubmit = async () => {
-        // Get the selected year and month from the dropdowns
-        const selectedYear = parseInt(document.getElementById('year').value);
-        const selectedMonth = parseInt(document.getElementById('month').value);
-    
+        // Check if both fields are filled
+        if (!selectedYear || !selectedMonth) {
+            toast.error("Please select both year and month.");
+            return;
+        }
+
         // Retrieve the employee ID
         const userId = employee.userid;
     
@@ -49,8 +49,19 @@ const ViewTimesheet = ({ employee }) => {
             toast.error("Error in fetching");
         }
     };
-    
 
+    // Function to handle year selection
+    const handleYearChange = (event) => {
+        setSelectedYear(event.target.value);
+    };
+
+    // Function to handle month selection
+    const handleMonthChange = (event) => {
+        setSelectedMonth(event.target.value);
+    };
+    if (!isVisible) {
+        return null; // If isVisible is false, return null to render nothing
+    }
     return (
         <div className='bg-cyan-600 text-white flex rounded-md p-5 mx-auto min-h-[350px]'>
             <div className="absolute top-2 right-2 mt-2 mr-2 bg-white text-cyan-500 hover:text-slate-700 rounded-full p-1">
@@ -65,15 +76,15 @@ const ViewTimesheet = ({ employee }) => {
                     </div>
                     <div className='flex flex-col gap-3'>
                         <label htmlFor="year" className="font-bold">Select Year:</label>
-                        <select id="year" className="p-2 border rounded-md text-black">
-                            <option value="" className=''>Select Year</option>
+                        <select id="year" className="p-2 border rounded-md text-black outline-none" onChange={handleYearChange}>
+                            <option value="">Select Year</option>
                             {Array.from({ length: 10 }, (_, i) => {
                                 const year = new Date().getFullYear() + i;
                                 return <option key={year} value={year}>{year}</option>;
                             })}
                         </select>
                         <label htmlFor="month" className="font-bold">Select Month:</label>
-                        <select id="month" className="p-2 border rounded-md text-black">
+                        <select id="month" className="p-2 border rounded-md outline-none text-black" onChange={handleMonthChange}>
                             <option value="">Select Month</option>
                             <option value="1">January</option>
                             <option value="2">February</option>
@@ -88,7 +99,7 @@ const ViewTimesheet = ({ employee }) => {
                             <option value="11">November</option>
                             <option value="12">December</option>
                         </select>
-                        <button type="button" onClick={handleSubmit} className='bg-cyan-500 text-white rounded-md py-2'>Submit</button>
+                        <button type="button" onClick={handleSubmit} className={`bg-cyan-500 text-black rounded-md py-2 ${!selectedYear || !selectedMonth ? 'cursor-not-allowed opacity-50 ' : 'text-white'}`} disabled={!selectedYear || !selectedMonth}>Submit</button>
                     </div>
                 </div>
             </div>
@@ -125,4 +136,4 @@ const ViewTimesheet = ({ employee }) => {
     );
 };
 
-export default ViewTimesheet;
+export default ViewScorecard;
