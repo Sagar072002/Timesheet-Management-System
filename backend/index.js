@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const { sequelize } = require('./db');
 const { createUser, loginUser, getAllUsers, getUserByUserId, updateUserDetails } = require('./controllers/UserController');
-const { createTimelog, deleteTimelogs, updateTimelog } = require('./controllers/TimelogController');
+const { createTimelog, deleteTimelogs } = require('./controllers/TimelogController');
 const { createScorecard, getScore } = require('./controllers/ScorecardController');
 const {sendmail,verifymail,reset_pass} = require('./mail/mail');
 const {qrgen,set2fa} = require('./mail/qrauthenticator');
@@ -32,7 +32,6 @@ app.put('/users/:userid', updateUserDetails);
 // Timelog Routes
 app.post('/timelog', createTimelog);
 app.post('/deletetimelog', deleteTimelogs);
-app.put('/updatetimelog', updateTimelog);
 
 // Scorecard Routes
 app.post('/scorecard', createScorecard);

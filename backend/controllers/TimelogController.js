@@ -6,19 +6,7 @@ const createTimelog = async (req, res) => {
   try {
     const { userid, date, task, duration, status } = req.body;
 
-    // Check if a timelog with the same combination already exists
-    const existingTimelog = await Timelog.findOne({
-      where: {
-        userid,
-        date,
-        task,
-        duration: parseFloat(duration), // Convert to decimal for matching
-      },
-    });
-
-    if (existingTimelog) {
-      return res.status(400).json({ error: 'Duplicate entry. This combination already exists.' });
-    }
+    
 
     // Check if a user with the specified userid exists
     const existingUser = await User.findOne({
@@ -28,6 +16,24 @@ const createTimelog = async (req, res) => {
     if (!existingUser) {
       return res.status(400).json({ error: 'User not found.' });
     }
+
+    // Check if a timelog with the same combination already exists
+    let existingTimelog = await Timelog.findOne({
+      where: {
+        userid,
+        date,
+        task,
+      },
+    });
+
+    if (existingTimelog) {
+      // If timelog exists, update the duration and status
+      existingTimelog.duration = parseFloat(duration);
+      existingTimelog.status = status;
+      await existingTimelog.save();
+
+      return res.status(200).json({ timelog: existingTimelog, message: 'Timelog updated successfully.' });
+    }    
 
     // Create a new timelog if no duplicate entry found and user exists
     const timelog = await Timelog.create({
@@ -69,33 +75,5 @@ const deleteTimelogs = async (req, res) => {
   }
 };
 
-const updateTimelog = async (req, res) => {
-  try {
-    const { userid, date, task, newDuration } = req.body;
 
-
-    // Find the timelog to update
-    const timelogToUpdate = await Timelog.findOne({
-      where: {
-        userid,
-        date,
-        task,
-      },
-    });
-
-    if (!timelogToUpdate) {
-      return res.status(400).json({ error: 'Timelog not found for the specified user, date, and task.' });
-    }
-
-    // Update the duration of the timelog
-    timelogToUpdate.duration = parseFloat(newDuration); // Convert to decimal before saving
-    await timelogToUpdate.save();
-
-    res.status(200).json({ timelogToUpdate });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-};
-
-module.exports = { createTimelog, deleteTimelogs, updateTimelog };
+module.exports = { createTimelog, deleteTimelogs };
