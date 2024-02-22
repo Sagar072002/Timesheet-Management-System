@@ -45,11 +45,11 @@ const Forgotpassmail = ({ func }) => {
     <div className="" >
       <ToastContainer />
       <div className="">
-        <div className=" bg-white rounded-md shadow   min-h-[200px] min-w-[400px] relative ">
+        <div className="mt-5 rounded-md shadow min-h-[200px] min-w-[380px] relative ">
           <h1 className="text-xl font-bold  text-center text-black md:text-2xl pt-5 ">
             Forgot Password
           </h1>
-          <div className="absolute top-2 right-2 mt-2 mr-2 hover:bg-slate-400 hover:text-white rounded-full p-1">
+          <div className="absolute -top-11 -right-6 mr-2 hover:bg-slate-400 hover:text-white rounded-full p-1">
             <RxCross2 className="text-2xl" onClick={func} />
           </div>
           <div className="p-10">

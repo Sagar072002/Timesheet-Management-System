@@ -41,10 +41,16 @@ const Timesheet = () => {
 
   const updateTimeData = (index, dayIndex, value) => {
     const newData = [...timeData];
-    if (!newData[index]) newData[index] = Array(5).fill('');
-    newData[index][dayIndex] = value;
+    if (!newData[index]) newData[index] = [];
+    if (dayIndex === 0) {
+      newData[index][0] = value; // Update task name if dayIndex is 0
+    } else {
+      if (!newData[index][dayIndex]) newData[index][dayIndex] = ''; // Initialize day data if not already present
+      newData[index][dayIndex] = value; // Update duration
+    }
     setTimeData(newData);
   };
+  
 
   const addRow = () => {
     setRowCount(rowCount + 1);
@@ -108,7 +114,7 @@ const Timesheet = () => {
         //  )
         if(response.status===200){
    
-         toast.success("delete successful!");
+         toast.success("Deleted successfully");
        }
      
       }
@@ -153,16 +159,16 @@ const Timesheet = () => {
     const currentDay = currentDate.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
   
     // Check if the current day is Friday (day index 5)
-    if (currentDay === 3) {
-      const isFridayFieldsFilled = timeData.every(row => row[3] !== '');
+    if (currentDay === 4) {
+      const isFridayFieldsFilled = timeData.every(row => row[4] !== '');
       if (!isFridayFieldsFilled) {
-        toast.error("Please fill in the fields for Wednesday before submitting.");
+        toast.error("Please fill in the fields for thursday before submitting.");
         return;
       }
       const submissionTime = currentDate.getHours() * 60 + currentDate.getMinutes(); // Convert current time to minutes
 
       // Check if submission time is before 8:50 AM (530 minutes)
-      const bonusPoints = submissionTime < (8 * 60 + 45) ? 10 : 0;
+      const bonusPoints = submissionTime < (11 * 60 + 45) ? 10 : 0;
   
       const isAnyTaskFilled = timeData.every(row => {
         const taskName = row[0];
@@ -175,7 +181,9 @@ const Timesheet = () => {
         const durations = row.slice(1);
         return durations.some((duration, index) => duration !== '' && taskName === '');
       });
-  
+     
+    
+    
       if (isAnyTaskFilled && !isAnyDurationFilledWithoutTaskName) {
         const isTimesheetSaved = timesheets.some(timesheet => timesheet.weekRange === `${weekDates.monday} - ${weekDates.friday}`);
         if (isTimesheetSaved) {
@@ -192,10 +200,10 @@ const Timesheet = () => {
          setUserScore(updatedUserScore);
          
          // Print bonus points in the console
-         console.log(`Bonus Points: ${bonusPoints}`);
+         //console.log(`Bonus Points: ${bonusPoints}`);
  
          // Print current week and week number in the console
-         console.log(`Week Number: ${weekNumber}, Current Week: ${weekDates.monday} - ${weekDates.friday}`);
+         //console.log(`Week Number: ${weekNumber}, Current Week: ${weekDates.monday} - ${weekDates.friday}`);
          //console.log(bonusPoints,weekNumber,weekDates.monday,weekDates.friday,sessionStorage.getItem("userName"))
 
           try{
@@ -248,7 +256,7 @@ const Timesheet = () => {
   };
   
   const [isFirstEntry, setIsFirstEntry] = useState(true);
-  const handleSave = () => {
+  const handleSave = async() => {
     const isAnyTaskFilled = timeData.every(row => {
       const taskName = row[0];
       const durations = row.slice(1);
@@ -266,40 +274,83 @@ const Timesheet = () => {
       const durations = row.slice(1);
       return durations.some(duration => duration !== '') && taskName !== '';
     });
+
+
   
     if (isAnyTaskFilled && !isAnyDurationFilledWithoutTaskName && isAnyTaskWithFilledDuration) {
+      // Process the timesheet data for saving
       const existingTimesheetIndex = timesheets.findIndex(timesheet => timesheet.weekRange === `${weekDates.monday} - ${weekDates.friday}`);
-      if (existingTimesheetIndex !== -1) {
-        const updatedTimesheets = [...timesheets];
-        const updatedTaskData = timeData.map((taskData, index) => ({
-          task: taskData[0] || '',
-          durations: taskData ? taskData.slice(1) : [],
-        }));
-        const existingTaskData = updatedTimesheets[existingTimesheetIndex].tasks;
-  
-        let isNewEntry = true;
-        let isUpdatedData = false;
-        updatedTaskData.forEach((task, index) => {
-          const existingTask = existingTaskData[index];
-          if (existingTask) {
-            // Check if durations are the same
-            if (JSON.stringify(existingTask.durations) === JSON.stringify(task.durations)) {
-              isNewEntry = false; // If durations are the same, it's not a new entry
-            } else {
-              isUpdatedData = true; // If durations are different, it's an updated entry
-            }
+      const updatedTaskData = timeData.map((taskData, index) => ({
+        task: taskData[0] || '',
+        durations: taskData.slice(1).map(duration => duration === '' ? '0' : duration), // Treat empty duration as zero
+        day: taskData.slice(1).map((duration, dayIndex) => {
+          if (duration !== '') {
+            const currentDate = new Date(weekDates.monday);
+            currentDate.setDate(currentDate.getDate() + dayIndex);
+            return currentDate.toLocaleDateString('en-GB');
           }
-        });
+        }).filter(date => date !== undefined)
+      }));
   
-        if (isNewEntry) {
-          setIsFirstEntry(false);
-          toast.info("New entry added to timesheet");
-        } else if (isUpdatedData) {
-          toast.info("Timesheet data updated");
+      for (const task of updatedTaskData)
+      {
+        const { day, durations, task: taskName } = task;
+        //console.log("taskName",taskName)
+        for (let i = 0; i < day.length; i++) {
+          const duration = durations[i];
+          var date = day[i];
+          var parts = date.split('/');
+          var date = `${parts[2]}-${parts[1]}-${parts[0]}`;
+
+          console.log("date",date)
+          console.log("duration",duration)
+          console.log("taskName",taskName)
+          //api calling
+
+          try{
+            const response = await axios.post('http://localhost:3000/timelog',
+              {
+                "userid": sessionStorage.getItem("userName"), 
+                "date": date,
+                "task": taskName,
+                "duration": duration,
+                "status": "save",
+              }     
+           
+            );
+         
+            const data= response.data;
+            console.log(data)
+            if(response.status!==200){
+              // response.status
+              // console.log("*********",response.status,response.statusText,data.message,data.errors)
+              console.log(
+                `${response.status}\n${response.statusText}\n${data.message}`
+             )
+            }
+       
+              // response.status
+            //   toast.success(
+            //     `${response.status}\n${response.statusText}\n${data.message}`
+            //  )
+            if(response.status===200){
+       
+             toast.success("database row created successful!");
+           }
+         
+            }
+            catch(error){
+              toast.error("Error in creating database row!")
+            }
+
         }
+      }
+      if (existingTimesheetIndex !== -1) {
+        const existingTimesheet = timesheets[existingTimesheetIndex];
   
+        const updatedTimesheets = [...timesheets];
         updatedTimesheets[existingTimesheetIndex] = {
-          ...updatedTimesheets[existingTimesheetIndex],
+          ...existingTimesheet,
           tasks: updatedTaskData,
         };
         setTimesheets(updatedTimesheets);
@@ -308,23 +359,15 @@ const Timesheet = () => {
         const newTimesheet = {
           timesheetNumber: timesheets.length > 0 ? timesheets[timesheets.length - 1].timesheetNumber + 1 : 1,
           weekRange: `${weekDates.monday} - ${weekDates.friday}`,
-          tasks: timeData.map((taskData, index) => ({
-            task: taskData[0] || '',
-            durations: taskData ? taskData.slice(1) : [],
-          })),
+          tasks: updatedTaskData,
         };
-
-        console.log("Values being saved in the timesheet card:");
-        console.log("timesheetNumber:", newTimesheet.timesheetNumber);
-        console.log("weekRange:", newTimesheet.weekRange);
-        console.log("tasks:", newTimesheet.tasks);
-
+  
         setTimesheets([...timesheets, newTimesheet]);
         setIsFirstEntry(false);
         toast.success("Timesheet saved successfully");
         if (isFirstEntry) {
           setIsFirstEntry(false);
-          toast.info("New entry added to timesheet");
+          // toast.info("New entry added to timesheet");
         }
       }
     } else if (!isAnyTaskFilled && isAnyDurationFilledWithoutTaskName) {
@@ -336,11 +379,15 @@ const Timesheet = () => {
     }
   };
   
+ const handletimesheetlist=()=>{
+  alert("hello")
+ }
 
 
   return (
-    <div className="w-full mt-7">
+    <div className="w-full mt-20">
       <ToastContainer/>
+      
       <div className=" my-10 mx-5 text-white font-bold text-xl">
       <p> Current Week: <span className="font-medium text-lg text-cyan-400">{weekDates.monday} - {weekDates.friday}</span></p> 
       <p> Total score: <span className="font-medium text-lg text-cyan-400">{userScore}</span> </p> 
@@ -388,19 +435,33 @@ const Timesheet = () => {
   {[...Array(rowCount)].map((_, index) => (
     <tr key={index} className="bg-white">
       <th scope="row" className="px-3 py-4 font-medium text-gray-900 whitespace-nowrap ">
-      <input
+      {/* <input
   type="text"
   className="mt-4 text-center bg-slate-100 h-12 w-full border border-gray-300"
   value={timeData[index] ? timeData[index][0] : ''} 
   onChange={(e) => updateTimeData(index, 0, e.target.value)}
+/> */}
+<input
+  type="text"
+  className="mt-4 text-center bg-slate-100 h-12 w-full border border-gray-300"
+  value={timeData[index]?.[0] || ''} 
+  onChange={(e) => updateTimeData(index, 0, e.target.value)}
 />
+
 </th>
 {[0, 1, 2, 3, 4].map(dayIndex => (
   <td key={dayIndex} className="">
-    <input
+    {/* <input
   type="number"
   className="mt-4 ml-8 w-3/4 h-12 text-center bg-slate-100 border border-gray-300"
   value={timeData[index] ? timeData[index][dayIndex + 1] : ''} 
+  onChange={(e) => updateTimeData(index, dayIndex + 1, e.target.value)}
+  disabled={dayIndex >= currentDay}
+/> */}
+<input
+  type="number"
+  className="mt-4 ml-8 w-3/4 h-12 text-center bg-slate-100 border border-gray-300"
+  value={timeData[index]?.[dayIndex + 1] || ''} 
   onChange={(e) => updateTimeData(index, dayIndex + 1, e.target.value)}
   disabled={dayIndex >= currentDay}
 />
@@ -439,19 +500,58 @@ const Timesheet = () => {
         <button type="button" className='bg-cyan-500 hover:bg-cyan-400 px-8 py-3 text-white rounded-sm' onClick={handleSave}>Save</button>
         <button
   type="submit"
-  className={`px-8 py-3 rounded-sm ${currentDay !== 3 ? 'bg-gray-200 text-slate-700 cursor-not-allowed' : 'bg-cyan-500 text-white hover:bg-cyan-400'}`}
+  className={`px-8 py-3 rounded-sm ${currentDay !== 4 ? 'bg-gray-200 text-slate-700 cursor-not-allowed' : 'bg-cyan-500 text-white hover:bg-cyan-400'}`}
   onClick={handleSubmit}
-  disabled={currentDay !== 3} // Disabling the button programmatically as well
+  disabled={currentDay !== 4} // Disabling the button programmatically as well
 >
   Submit
 </button>
       </div>
-      <div className=''>
-        <p className='text-white font-bold text-2xl my-12  text-center uppercase'>List of Timesheets</p>
-        {timesheets.map(timesheet => (
-          <TimesheetList key={timesheet.timesheetNumber} timesheet={timesheet} />
-        ))}
+      <button  className='text-white border-2 px-5 py-2 rounded-md' onClick={handletimesheetlist}>View Timesheet List</button>
+      <div >
+  <p  className='text-white font-bold text-2xl my-12 text-center uppercase' >List of Timesheets</p>
+  {timesheets.map(timesheet => (
+    
+  <div key={timesheet.timesheetNumber} className="mb-4 bg-white pt-2">
+    <p className="text-black font-bold text-lg my-2 text-center">Timesheet for {timesheet.weekRange}</p>
+    <div className=' flex gap-3 '>
+    {timesheet.tasks.map((task, index) => (
+  <div key={index} className="mb-4 rounded-md p-4">
+    {task.durations.some(duration => parseFloat(duration) !== 0) && ( // Check if any duration is not zero
+      <div className="flex flex-col bg-gray-800 p-3 rounded-md mb-2">
+        <p className="text-white mb-1 font-bold">Task Name: <span className='font-medium'>{task.task}</span> </p>
+        {task.durations.map((duration, dayIndex) => {
+          if (parseFloat(duration) !== 0) { // Only render if duration is not zero
+            const currentDate = new Date(weekDates.monday);
+            currentDate.setDate(currentDate.getDate() + dayIndex);
+            const year = currentDate.getFullYear();
+            const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+            const day = currentDate.getDate().toString().padStart(2, '0');
+            const formattedDate = `${day}-${month}-${year}`;
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const dayName = days[currentDate.getDay()];
+            return (
+              <div key={dayIndex} className="flex gap-5 justify-between text-white">
+                <p>{dayName}</p>
+                <p> {formattedDate}</p>
+                <p>{duration} hr</p>
+              </div>
+            );
+          } else {
+            return null;
+          }
+        })}
       </div>
+    )}
+  </div>
+))}
+</div>
+  </div>
+))}
+
+
+</div>
+
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import "../index.css"
 import {FaUser} from  "react-icons/fa"
-import ViewTimesheet from "../components/ViewTimesheet";
+import ViewTimesheet from "../components/ViewScorecard";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -115,14 +115,14 @@ const Admin = () => {
   
   
   return (
-    <div className="relative h-full  flex">
+    <div className="relative mt-10 flex">
       <ToastContainer />
-      <div className="back p-4 pt-6 bg-blue-gray-200 w-full bg-gray-300">
+      <div className=" p-4 pt-6 bg-blue-gray-200 w-full ">
         <div className="flex justify-between px-5">
           <p></p>
           <h1 className="uppercase text-center pt-4 text-3xl font-extrabold text-gray-900  md:text-5xl lg:text-5xl"><span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-500 from-sky-500">Admin Dashboard</span> </h1>
 
-           <span className="text-lg text-white mr-2 absolute right-20 top-8">
+           <span className="text-lg text-white mr-2 absolute right-20 top-12 font-bold">
             Hii, {JSON.parse(sessionStorage.getItem("data")).name}
           </span> 
           {/* <img
@@ -133,7 +133,7 @@ const Admin = () => {
           /> */}
           <div className="border-white  rounded-full p-2">
                           <FaUser             onClick={toggleProfileVisibility}
-            className="text-2xl text-white"
+            className="text-2xl absolute top-12 right-12 text-white"
            />
 </div>
         </div>

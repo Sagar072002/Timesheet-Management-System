@@ -1,18 +1,34 @@
 import authService from "./Auth";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaLock, FaUser } from "react-icons/fa";
+import { FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import "../index.css";
 import Fpm from "../components/forgotpassmail";
+import { MdEmail } from 'react-icons/md';
 
 const Login = () => {
   const [access1, setAccess1] = useState("");
   const [data, setData] = useState("");
   const [selectedOption, setSelectedOption] = useState('');
   const [isvisible,setIsvisible]=useState(false)
+  const [active, setActive] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // State to manage password visibility
+
+  const handleRegisterClick = () => {
+    setActive(true);
+  };
+
+  const handleLoginClick = () => {
+    console.log(active)
+    setActive(false);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const n = useNavigate();
   function fp(){
@@ -111,8 +127,18 @@ const Login = () => {
   }, [access1]);
 
   const handleLogin = async () => {
-    const uemail = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    var uemail=""
+    var password=""
+    if(active)
+    {
+      uemail = document.getElementById("email1").value;
+     password= document.getElementById("password1").value;
+
+    }
+    else{
+      uemail = document.getElementById("email").value;
+      password = document.getElementById("password").value;
+    }
     // toast.error(authService.login(username, password));
     try {
       if (uemail === "") toast.error("email id cannot be empty");
@@ -199,95 +225,63 @@ const Login = () => {
   };
   return (
     <>
-      <section className="back">
+      <section className="">
         <ToastContainer />
 
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <div className="w-full border-2 rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
-            <div className=" space-y-4  sm:px-8 sm:py-4">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-white md:text-2xl ">
-                Sign in
-              </h1>
-              <div className="space-y-4 md:space-y-4">
-                <div>
-                  <span className="text-white text-sm font-medium ">Login as</span>  
-                  <div className="flex gap-10 my-4">
-                    <div
-                      className={`flex justify-center  items-center w-40 h-20 border-white border hover:bg-cyan-600 hover:border-transparent hover:cursor-pointer text-white font-medium rounded-sm ${
-                        selectedOption === "Employee" ? "bg-cyan-600 border-transparent" : ""
-                      }`}
-                      onClick={() => handleEmployeeSelect("Employee")}
-                    >
-                      Employee
-                    </div>
-                    <div
-                      className={`flex justify-center items-center w-40 h-20 border-white border hover:bg-cyan-600 hover:border-transparent hover:cursor-pointer text-white font-medium rounded-sm ${
-                        selectedOption === "Admin" ? "bg-cyan-600 border-transparent" : ""
-                      }`}
-                      onClick={() => handleEmployeeSelect("Admin")}
-                    >
-                      Admin
-                    </div>{" "}
-                  </div>
-                  <label
-                    htmlFor="email"
-                    className="text-white block mb-2 text-sm font-medium  "
-                  >
-                    Email <span className="text-red-600"></span>
-                  </label>
-                  <div className="flex bg-slate-50 border p-3 rounded">
-                    <FaUser className="mr-3" />
+        <div className={`wrapper ${active ? 'active' : ''}`}>
+      <span className="bg-animate"></span>
+      <span className="bg-animate2"></span>
+      <div className="form-box login">
+        <h2 className="animation mb-5" style={{ '--i': 0, '--j': 21 }}>Sign in</h2>
 
-                    <input
-                      type="text"
-                      name="email"
-                      id="email"
-                      className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full "
-                      placeholder="Your user id"
-                      required=""
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="text-white block mb-2 text-sm font-medium  "
-                  >
-                    Password
-                  </label>
-                  <div className="flex bg-slate-50 border p-3 rounded mb-3">
-                    <FaLock className="mr-3" />
-
-                    <input
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder="••••••••"
-                      className="bg-transparent border-none border-b-gray-300 text-gray-900 sm:text-sm -md outline-none block w-full "
-                      required=""
-                    />
-                  </div>
-                </div>
-                {isvisible && (
-  <div className="bg-transparent fixed inset-0 flex items-center justify-center z-50 backdrop-filter backdrop-blur-sm">
-    <Fpm  func={fp}/>
+          <div className="input-box animation" style={{ '--i': 1, '--j': 22 }}>
+            <label htmlFor="">Email</label>
+            <div className='flex mt-2 bg-white rounded-sm justify-center items-center'>
+              <MdEmail className='mx-3 mr-1 text-xl' />
+              <input type="email" name="email" id="email" />
+            </div>
+          </div>
+          <div className="input-box animation" style={{ '--i': 2, '--j': 23 }}>
+            <label htmlFor="">Password</label>
+            <div className='flex mt-2 bg-white rounded-sm justify-center items-center'>
+              <FaLock className='mx-3 mr-1 text-xl' />
+              <input
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                id="password"
+              />
+              {showPassword ? (
+                <FaEyeSlash
+                  className='mx-3 text-xl cursor-pointer'
+                  onClick={togglePasswordVisibility}
+                />
+              ) : (
+                <FaEye
+                  className='mx-3 text-xl cursor-pointer'
+                  onClick={togglePasswordVisibility}
+                />
+              )}
+            </div>
+          </div>
+          {isvisible && (
+  <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-filter backdrop-blur-sm">
+    <div className="bg-white p-8 rounded-lg shadow-md">
+      <Fpm func={fp} />
+    </div>
   </div>
 )}
+
 <button
               onClick={fp}
-              className="text-sm font-medium text-cyan-500 hover:underline "
+              className="text-sm -ml-20 mb-3 font-bold animation text-cyan-500 hover:underline "
+              style={{ '--i': 3, '--j': 24 }}
             >
               Forgot password?
             </button>
-               {/* <span className="text-cyan-500  font-bold hover:underline hover:cursor-pointer text-sm  ">Forgot password?</span> */}
-                <button
-                  type="submit"
-                  onClick={handleLogin}
-                  className="w-full  text-white bg-cyan-600 hover:bg-cyan-500 font-semibold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                >
-                  Sign in
-                </button>
-                <p className="text-md font-medium text-white">
+          <button type="submit" className="btn animation" style={{ '--i': 4, '--j': 25 }} onClick={handleLogin}>Login</button>
+          <div className="logreg-link animation" style={{ '--i': 5, '--j': 26 }}>
+          
+            <p className="text-md font-medium text-white">
                   Don’t have an account yet ? &nbsp;
                   <Link
                     to="/register"
@@ -296,10 +290,87 @@ const Login = () => {
                     Sign up
                   </Link>
                 </p>
-              </div>
+                
+          </div>
+
+      </div>
+      <div className="info-text login">
+        <h2 className="animation" style={{ '--i': 0, '--j': 20 }}>Employee Login</h2>
+        <p className="animation text-lg  text-slate-800 font-bold mt-6 mr-10" style={{ '--i': 1,'--j':21 }}>Are you an admin?
+              <a className="register-link hover:cursor-pointer hover:underline text-white font-medium ml-2" onClick={handleRegisterClick}>Sign in</a>
+            </p>
+      </div>
+      <div className="form-box register">
+        <h2 className="animation mb-2" style={{ '--i': 0, '--j': 21 }}>Sign in</h2>
+
+          <div className="input-box animation" style={{ '--i': 1, '--j': 22 }}>
+            <label htmlFor="">Email</label>
+            <div className='flex mt-2 bg-white rounded-sm justify-center items-center'>
+              <MdEmail className='mx-3 mr-1 text-xl' />
+              <input type="email" name="email" id="email" />
             </div>
           </div>
-        </div>
+          <div className="input-box animation" style={{ '--i': 2, '--j': 23 }}>
+            <label htmlFor="">Password</label>
+            <div className='flex mt-2 bg-white rounded-sm justify-center items-center'>
+              <FaLock className='mx-3 mr-1 text-xl' />
+              <input
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                id="password"
+              />
+              {showPassword ? (
+                <FaEyeSlash
+                  className='mx-3 text-xl cursor-pointer'
+                  onClick={togglePasswordVisibility}
+                />
+              ) : (
+                <FaEye
+                  className='mx-3 text-xl cursor-pointer'
+                  onClick={togglePasswordVisibility}
+                />
+              )}
+            </div>
+          </div>
+          {isvisible && (
+  <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-filter backdrop-blur-sm">
+    <div className="bg-white p-8 rounded-lg ">
+      <Fpm func={fp} />
+    </div>
+  </div>
+)}
+
+<button
+              onClick={fp}
+              className="text-sm -ml-20 mb-3 font-bold animation text-cyan-500 hover:underline "
+              style={{ '--i': 3, '--j': 24 }}
+            >
+              Forgot password?
+            </button>
+          <button type="submit" className="btn animation" style={{ '--i': 4, '--j': 25 }} onClick={handleLogin}>Login</button>
+          <div className="logreg-link animation" style={{ '--i': 5, '--j': 26 }}>
+          
+            <p className="text-md font-medium text-white">
+                  Don’t have an account yet ? &nbsp;
+                  <Link
+                    to="/register"
+                    className="font-bold text-cyan-500 hover:underline "
+                  >
+                    Sign up
+                  </Link>
+                </p>
+                
+          </div>
+
+      </div>
+      <div className="info-text register">
+        <h2 className="animation" style={{ '--i': 17, '--j': 0 }}>Admin Login</h2>
+       
+            <p className="animation text-lg  text-slate-800 font-bold mt-6 mr-10" style={{ '--i': 18,'--j':1 }}>Are you an Employee?
+              <a className="login-link hover:cursor-pointer hover:underline text-white font-medium ml-2" onClick={handleLoginClick}>Sign in</a>
+            </p>
+      </div>
+    </div>
       </section>
     </>
   );
