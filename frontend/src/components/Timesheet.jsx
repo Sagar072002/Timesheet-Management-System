@@ -3,6 +3,7 @@ import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
 import TimesheetList from '../pages/TimesheetList';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import {useNavigate} from  "react-router-dom"
 
 const Timesheet = () => {
   const [rowCount, setRowCount] = useState(1);
@@ -12,6 +13,7 @@ const Timesheet = () => {
   const [isAnyFieldFilled, setIsAnyFieldFilled] = useState(false);
   const [userScore, setUserScore] = useState(0); // Initialize user score with base value
 
+  const navigate=useNavigate()
   const currentDate = new Date();
   const currentDay = currentDate.getDay(); // Define currentDay
   useEffect(() => {
@@ -380,7 +382,8 @@ const Timesheet = () => {
   };
   
  const handletimesheetlist=()=>{
-  alert("hello")
+  // alert("hello")
+  navigate("/timesheetlist")
  }
 
 
@@ -509,7 +512,7 @@ const Timesheet = () => {
       </div>
       <button  className='text-white border-2 px-5 py-2 rounded-md' onClick={handletimesheetlist}>View Timesheet List</button>
       <div >
-  <p  className='text-white font-bold text-2xl my-12 text-center uppercase' >List of Timesheets</p>
+  <p  className='text-white font-bold text-2xl my-12 text-center uppercase' >Current Timesheet</p>
   {timesheets.map(timesheet => (
     
   <div key={timesheet.timesheetNumber} className="mb-4 bg-white pt-2">
