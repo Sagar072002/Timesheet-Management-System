@@ -21,6 +21,10 @@ const Timesheet = () => {
     setIsAnyFieldFilled(filled);
   }, [timeData]);
 
+  useEffect(() => { 
+    //fetchTotalScore();
+  }, []);
+
   const getWeekDates = (offset = 0) => {
     const today = new Date();
     const dayOfWeek = today.getDay();
@@ -44,15 +48,140 @@ const Timesheet = () => {
   const updateTimeData = (index, dayIndex, value) => {
     const newData = [...timeData];
     if (!newData[index]) newData[index] = [];
-    if (dayIndex === 0) {
-      newData[index][0] = value; // Update task name if dayIndex is 0
-    } else {
-      if (!newData[index][dayIndex]) newData[index][dayIndex] = ''; // Initialize day data if not already present
-      newData[index][dayIndex] = value; // Update duration
-    }
+    if (!newData[index][dayIndex]) newData[index][dayIndex] = '';
+    if (dayIndex === 0 && !newData[index][dayIndex]) newData[index][dayIndex] = value; // Update task name only if not already present
+    else newData[index][dayIndex] = value; // Update day data
     setTimeData(newData);
   };
+
   
+  //get total score of the user
+  const fetchTotalScore = async () => {
+    var inputDate = new Date(weekDates.monday);
+    console.log("inputDatescore",inputDate)
+    // Format the Date object to "YYYY-MM-DD" format
+    const sdate = `${inputDate.getFullYear()}-${(inputDate.getMonth() + 1)
+      .toString()
+      .padStart(2, '0')}-${inputDate.getDate().toString().padStart(2, '0')}`;
+    console.log("sdate",sdate)
+    try{
+      const response = await axios.post('http://localhost:3000/totalscore',
+        {
+          "userid": sessionStorage.getItem("userName"),
+          "startDate": sdate,
+        }     
+    
+      );
+   
+      const totalscore= response.data;
+      console.log("total score",totalscore)
+      setUserScore(totalscore.totalScore)
+      console.log("score",totalscore.totalScore)
+      if(response.status!==200){
+        // response.status
+        // console.log("*********",response.status,response.statusText,data.message,data.errors)
+        console.log(
+          `${response.status}\n${response.statusText}\n${totalscore.message}`
+       )
+      }
+ 
+        // response.status
+      //   toast.success(
+      //     `${response.status}\n${response.statusText}\n${data.message}`
+      //  )
+      if(response.status===200){
+ 
+       toast.success("fetch score successfully");
+     }
+   
+    }
+      catch(error){
+        toast.error("Error in fetching score")
+      }
+  }
+
+  //get week range(submitted timesheet) of the user
+  const fetchWeekRange = async () => {
+    var inputDate = new Date(weekDates.monday);
+    console.log("inputDatescore",inputDate)
+    // Format the Date object to "YYYY-MM-DD" format
+    const sdate = `${inputDate.getFullYear()}-${(inputDate.getMonth() + 1)
+      .toString()
+      .padStart(2, '0')}-${inputDate.getDate().toString().padStart(2, '0')}`;
+    console.log("sdate",sdate)
+    try{
+      const response = await axios.post('http://localhost:3000/daterange',
+        {
+          "userid": sessionStorage.getItem("userName"),
+          "start_date": sdate,
+        }     
+    
+      );
+   
+      const data= response.data;
+      console.log("week_ranges",data)
+
+      if(response.status!==200){
+        // response.status
+        // console.log("*********",response.status,response.statusText,data.message,data.errors)
+        console.log(
+          `${response.status}\n${response.statusText}\n${data.message}`
+       )
+      }
+ 
+        // response.status
+      //   toast.success(
+      //     `${response.status}\n${response.statusText}\n${data.message}`
+      //  )
+      if(response.status===200){
+ 
+       toast.success("fetch week range successfully");
+     }
+   
+    }
+      catch(error){
+        toast.error("Error in fetching week range")
+      }
+  }
+
+  //get taskdetails of the user
+  const fetchTaskDetails = async () => {
+    
+    try{
+      const response = await axios.post('http://localhost:3000/gettaskdetails',
+        {
+          // "userid": sessionStorage.getItem("userName"),
+          // "startDate": sdate,
+          // "endDate": edate
+        }     
+    
+      );
+   
+      const data= response.data;
+      console.log("task details",data)
+
+      if(response.status!==200){
+        // response.status
+        // console.log("*********",response.status,response.statusText,data.message,data.errors)
+        console.log(
+          `${response.status}\n${response.statusText}\n${data.message}`
+       )
+      }
+ 
+        // response.status
+      //   toast.success(
+      //     `${response.status}\n${response.statusText}\n${data.message}`
+      //  )
+      if(response.status===200){
+ 
+       toast.success("fetch task details successfully");
+     }
+   
+    }
+      catch(error){
+        toast.error("Error in fetching task details")
+      }
+  }
 
   const addRow = () => {
     setRowCount(rowCount + 1);
@@ -161,8 +290,8 @@ const Timesheet = () => {
     const currentDay = currentDate.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
   
     // Check if the current day is Friday (day index 5)
-    if (currentDay === 4) {
-      const isFridayFieldsFilled = timeData.every(row => row[4] !== '');
+    if (currentDay === 6) {
+      const isFridayFieldsFilled = timeData.every(row => row[6] !== '');
       if (!isFridayFieldsFilled) {
         toast.error("Please fill in the fields for thursday before submitting.");
         return;
@@ -284,7 +413,7 @@ const Timesheet = () => {
       const existingTimesheetIndex = timesheets.findIndex(timesheet => timesheet.weekRange === `${weekDates.monday} - ${weekDates.friday}`);
       const updatedTaskData = timeData.map((taskData, index) => ({
         task: taskData[0] || '',
-        durations: taskData.slice(1).map(duration => duration === '' ? '0' : duration), // Treat empty duration as zero
+        durations: taskData.slice(1).filter(duration => duration !== ''), // Filter out empty durations
         day: taskData.slice(1).map((duration, dayIndex) => {
           if (duration !== '') {
             const currentDate = new Date(weekDates.monday);
@@ -293,7 +422,7 @@ const Timesheet = () => {
           }
         }).filter(date => date !== undefined)
       }));
-  
+      console.log("updatedTaskData",updatedTaskData)
       for (const task of updatedTaskData)
       {
         const { day, durations, task: taskName } = task;
@@ -384,6 +513,7 @@ const Timesheet = () => {
  const handletimesheetlist=()=>{
   // alert("hello")
   navigate("/timesheetlist")
+  console.log(weekDates.monday,weekDates.friday)
  }
 
 
@@ -503,16 +633,18 @@ const Timesheet = () => {
         <button type="button" className='bg-cyan-500 hover:bg-cyan-400 px-8 py-3 text-white rounded-sm' onClick={handleSave}>Save</button>
         <button
   type="submit"
-  className={`px-8 py-3 rounded-sm ${currentDay !== 4 ? 'bg-gray-200 text-slate-700 cursor-not-allowed' : 'bg-cyan-500 text-white hover:bg-cyan-400'}`}
+  className={`px-8 py-3 rounded-sm ${currentDay !== 6 ? 'bg-gray-200 text-slate-700 cursor-not-allowed' : 'bg-cyan-500 text-white hover:bg-cyan-400'}`}
   onClick={handleSubmit}
-  disabled={currentDay !== 4} // Disabling the button programmatically as well
+  disabled={currentDay !== 6} // Disabling the button programmatically as well
 >
   Submit
 </button>
+<button className='bg-white' onClick={fetchWeekRange}>range</button>
+<button  className='bg-white' onClick={fetchTotalScore}>totscore</button>
       </div>
-      <button  className='text-white border-2 px-5 py-2 rounded-md' onClick={handletimesheetlist}>View Timesheet List</button>
-      <div >
-  <p  className='text-white font-bold text-2xl my-12 text-center uppercase' >Current Timesheet</p>
+      <button  className='text-white border-2 px-5 py-2 rounded-md' onClick={fetchTotalScore}>View Previous Timesheet List</button>
+      {/* <div >
+  <p  className='text-white font-bold text-2xl my-12 text-center uppercase' >View Previous Timesheet List</p>
   {timesheets.map(timesheet => (
     
   <div key={timesheet.timesheetNumber} className="mb-4 bg-white pt-2">
@@ -552,8 +684,25 @@ const Timesheet = () => {
   </div>
 ))}
 
+<div className="flex justify-center mt-10 align-center">
+      <select
+        className="bg-white rounded-md outline-none p-3 w-3/5 border"
+        name="month"
+        id="month"
+      >
+        <option value="">Select week range</option>
+        <option value="Male">Mon Feb 19 2024 - Fri Feb 23 2024</option>
+        <option value="Female">Mon Feb 19 2024 - Fri Feb 23 2024</option>
+        <option value="Other">Mon Feb 19 2024 - Fri Feb 23 2024</option>
+        <option value="Other">Mon Feb 19 2024 - Fri Feb 23 2024</option>
+        <option value="Other">Mon Feb 19 2024 - Fri Feb 23 2024</option>
+        <option value="Other">Mon Feb 19 2024 - Fri Feb 23 2024</option>
+        <option value="Other">Mon Feb 19 2024 - Fri Feb 23 2024</option>
 
-</div>
+
+      </select>
+    </div>
+</div> */}
 
     </div>
   );

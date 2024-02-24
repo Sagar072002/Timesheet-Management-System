@@ -6,8 +6,6 @@ const createTimelog = async (req, res) => {
   try {
     const { userid, date, task, duration, status } = req.body;
 
-    
-
     // Check if a user with the specified userid exists
     const existingUser = await User.findOne({
       where: { userid },
@@ -75,5 +73,28 @@ const deleteTimelogs = async (req, res) => {
   }
 };
 
+const getTaskDetails = async (req, res) => {
+  try {
+    const { userid, startDate, endDate } = req.body;
 
-module.exports = { createTimelog, deleteTimelogs };
+    // Retrieve task details between startDate and endDate
+    const taskDetails = await Timelog.findAll({
+      attributes: ['task', 'duration', 'date'],
+      where: {
+        userid,
+        date: {
+          [Op.gte]: startDate,
+          [Op.lte]: endDate,
+        },
+      },
+    });
+
+    res.status(200).json({ taskDetails });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+module.exports = { createTimelog, deleteTimelogs, getTaskDetails };
+

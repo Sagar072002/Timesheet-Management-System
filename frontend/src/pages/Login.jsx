@@ -173,12 +173,37 @@ const Login = () => {
 
           // throw new Error("Request failed");
         }
+        
+        if(response.data.user.is_admin!==active){
+          if(active){
+            toast.error("Invalid User")
+            setTimeout(() => {
+              toast.error("Account not found in Admin Data");
+            }, 500);
+            setTimeout(() => {
+              toast.info("Try as an Employee")
+            }, 1500);
+            return false
+          }
+          else{
+            toast.error("Invalid User")
+            setTimeout(() => {
+              toast.error("Account not found in  Employee Data")
+            }, 500);
+            setTimeout(() => {
+              toast.info("Try as an Admin")
+            }, 1500);
+            return false
+
+          }
+        }
         sessionStorage.setItem("data", JSON.stringify(response.data.user));
         const d = JSON.parse(sessionStorage.getItem("data"));
         console.log("session", d, response.data.user);
         const responseData = response.data.user;
         setData(responseData);
         console.log("data",data)
+        console.log("data",responseData.is_admin,active)
         // toast.error("15");
         // console.log(responseData);
         if (response.status === 200) {
@@ -307,7 +332,7 @@ const Login = () => {
             <label htmlFor="">Email</label>
             <div className='flex mt-2 bg-white rounded-sm justify-center items-center'>
               <MdEmail className='mx-3 mr-1 text-xl' />
-              <input type="email" name="email" id="email" />
+              <input type="email" name="email1" id="email1" />
             </div>
           </div>
           <div className="input-box animation" style={{ '--i': 2, '--j': 23 }}>
@@ -316,8 +341,8 @@ const Login = () => {
               <FaLock className='mx-3 mr-1 text-xl' />
               <input
                 type={showPassword ? 'text' : 'password'}
-                name="password"
-                id="password"
+                name="password1"
+                id="password1"
               />
               {showPassword ? (
                 <FaEyeSlash
@@ -377,6 +402,11 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
+
+
 
 
 
