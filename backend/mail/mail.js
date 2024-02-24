@@ -5,7 +5,7 @@ const client_id =
 const client_sec = "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";
 const redirect_uri = "https://developers.google.com/oauthplayground";
 const refresh_token =
-  "1//04APhpC4WQJ5kCgYIARAAGAQSNwF-L9Ir5ZkwLb6KMnhHLjuv-F2TXn8QbunG7xg2Ly2ZT3rC-G8QoLa9cc9qavhIGUNjM1NFXvs";
+  "1//040aew2BFHmAFCgYIARAAGAQSNwF-L9IrnN4eexX-QXhNc-RWlz46OhsrC_KGdmXd8SmxEeFG_6rrtgPfiy4V6vj9F_rx36C1KFE";
 const oauth2Client = new google.auth.OAuth2(
   client_id,
   client_sec,
@@ -62,9 +62,11 @@ async function sendmail(req, res) {
     }
     user.reset_link = true;
     await user.save();
+    console.log("hell")
     user = await User.findOne({ where: { email } }).catch(e=>console.log(e));
     const duration = user.updatedAt;
     const key = user.password;
+    console.log("hell1")
     const access_token = await oauth2Client.getAccessToken();
     console.log(access_token);
     const transporter = nodemailer.createTransport({
@@ -90,7 +92,7 @@ async function sendmail(req, res) {
     console.log("sent");
     return res.status(200).json({ response: info });}
   } catch (error) {
-    console.log(error.message);
+    console.log(error.message,"error");
     return res.status(500).json({ error: error.message });
   }
 }
