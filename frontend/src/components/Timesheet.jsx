@@ -21,9 +21,7 @@ const Timesheet = () => {
     setIsAnyFieldFilled(filled);
   }, [timeData]);
 
-  useEffect(() => { 
-    //fetchTotalScore();
-  }, []);
+
 
   const getWeekDates = (offset = 0) => {
     const today = new Date();
@@ -56,49 +54,49 @@ const Timesheet = () => {
 
   
   //get total score of the user
-  const fetchTotalScore = async () => {
-    var inputDate = new Date(weekDates.monday);
-    console.log("inputDatescore",inputDate)
-    // Format the Date object to "YYYY-MM-DD" format
-    const sdate = `${inputDate.getFullYear()}-${(inputDate.getMonth() + 1)
-      .toString()
-      .padStart(2, '0')}-${inputDate.getDate().toString().padStart(2, '0')}`;
-    console.log("sdate",sdate)
-    try{
-      const response = await axios.post('http://localhost:3000/totalscore',
-        {
-          "userid": sessionStorage.getItem("userName"),
-          "startDate": sdate,
-        }     
+  // const fetchTotalScore = async () => {
+  //   var inputDate = new Date(weekDates.monday);
+  //   console.log("inputDatescore",inputDate)
+  //   // Format the Date object to "YYYY-MM-DD" format
+  //   const sdate = `${inputDate.getFullYear()}-${(inputDate.getMonth() + 1)
+  //     .toString()
+  //     .padStart(2, '0')}-${inputDate.getDate().toString().padStart(2, '0')}`;
+  //   console.log("sdate",sdate)
+  //   try{
+  //     const response = await axios.post('http://localhost:3000/totalscore',
+  //       {
+  //         "userid": sessionStorage.getItem("userName"),
+  //         "startDate": sdate,
+  //       }     
     
-      );
+  //     );
    
-      const totalscore= response.data;
-      console.log("total score",totalscore)
-      setUserScore(totalscore.totalScore)
-      console.log("score",totalscore.totalScore)
-      if(response.status!==200){
-        // response.status
-        // console.log("*********",response.status,response.statusText,data.message,data.errors)
-        console.log(
-          `${response.status}\n${response.statusText}\n${totalscore.message}`
-       )
-      }
+  //     const totalscore= response.data;
+  //     console.log("total score",totalscore)
+  //     setUserScore(totalscore.totalScore)
+  //     console.log("score",totalscore.totalScore)
+  //     if(response.status!==200){
+  //       // response.status
+  //       // console.log("*********",response.status,response.statusText,data.message,data.errors)
+  //       console.log(
+  //         `${response.status}\n${response.statusText}\n${totalscore.message}`
+  //      )
+  //     }
  
-        // response.status
-      //   toast.success(
-      //     `${response.status}\n${response.statusText}\n${data.message}`
-      //  )
-      if(response.status===200){
+  //       // response.status
+  //     //   toast.success(
+  //     //     `${response.status}\n${response.statusText}\n${data.message}`
+  //     //  )
+  //     if(response.status===200){
  
-       toast.success("fetch score successfully");
-     }
+  //      toast.success("fetch score successfully");
+  //    }
    
-    }
-      catch(error){
-        toast.error("Error in fetching score")
-      }
-  }
+  //   }
+  //     catch(error){
+  //       toast.error("Error in fetching score")
+  //     }
+  // }
 
   //get week range(submitted timesheet) of the user
   const fetchWeekRange = async () => {
@@ -640,9 +638,9 @@ const Timesheet = () => {
   Submit
 </button>
 <button className='bg-white' onClick={fetchWeekRange}>range</button>
-<button  className='bg-white' onClick={fetchTotalScore}>totscore</button>
+{/* <button  className='bg-white' onClick={fetchTotalScore}>totscore</button> */}
       </div>
-      <button  className='text-white border-2 px-5 py-2 rounded-md' onClick={fetchTotalScore}>View Previous Timesheet List</button>
+      <button  className='text-white border-2 px-5 py-2 rounded-md' >View Previous Timesheet List</button>
       {/* <div >
   <p  className='text-white font-bold text-2xl my-12 text-center uppercase' >View Previous Timesheet List</p>
   {timesheets.map(timesheet => (

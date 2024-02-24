@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import "../index.css";
 import { FaUser } from "react-icons/fa";
-import ViewTimesheet from "../components/ViewTimesheet";
+// import ViewScorecard from "./components/ViewScorecard";
 import { RxCross2 } from "react-icons/rx";
 import Twofa from "./twofa";
 const Admin = () => {

@@ -91,37 +91,37 @@ const getScore = async (req, res) => {
   }
 };
 
-const totalScore = async (req, res) => {
-  try {
-    const { userid, startDate } = req.body;
+// const totalScore = async (req, res) => {
+//   try {
+//     const { userid, startDate } = req.body;
 
-    // Calculate the week number for the provided start date
-    console.log("start_date", startDate);
-    const startWeekNumber = getWeekNumber(new Date(startDate));
+//     // Calculate the week number for the provided start date
+//     console.log("start_date", startDate);
+//     const startWeekNumber = getWeekNumber(new Date(startDate));
 
-    console.log("userid", userid);
-    console.log("startWeekNumber", startWeekNumber);
+//     console.log("userid", userid);
+//     console.log("startWeekNumber", startWeekNumber);
 
-    // Fetch scorecards for the specified user and weeks before the provided start date
-    const scorecards = await Scorecard.findAll({
-      where: {
-        userid,
-        week_number: {
-          [Op.lt]: startWeekNumber,
-        },
-      },
-      order: [['week_number', 'ASC']], // Order by week_number in ascending order
-    });
+//     // Fetch scorecards for the specified user and weeks before the provided start date
+//     const scorecards = await Scorecard.findAll({
+//       where: {
+//         userid,
+//         week_number: {
+//           [Op.lt]: startWeekNumber,
+//         },
+//       },
+//       order: [['week_number', 'ASC']], // Order by week_number in ascending order
+//     });
 
-    // Calculate the total score from the fetched scorecards
-    const totalScore = scorecards.reduce((acc, scorecard) => acc + scorecard.score, 0);
+//     // Calculate the total score from the fetched scorecards
+//     const totalScore = scorecards.reduce((acc, scorecard) => acc + scorecard.score, 0);
 
-    res.status(200).json({ totalScore });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-};
+//     res.status(200).json({ totalScore });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// };
 
 
 const getDateRange = async (req, res) => {
@@ -156,4 +156,4 @@ const getDateRange = async (req, res) => {
 };
 
 
-module.exports = { createScorecard, getScore, totalScore, getDateRange };
+module.exports = { createScorecard, getScore, getDateRange };

@@ -10,24 +10,30 @@ const {
   getUserByUserId,
   updateUserDetails,
 } = require("./controllers/UserController");
-const {
-  createTimelog,
-  deleteTimelogs,
-  updateTimelog,
-} = require("./controllers/TimelogController");
-const {
-  createScorecard,
-  getScore,
-} = require("./controllers/ScorecardController");
+// const {
+//   createTimelog,
+//   deleteTimelogs,
+//   updateTimelog,
+// } = require("./controllers/TimelogController");
+// const {
+//   createScorecard,
+//   getScore,
+// } = require("./controllers/ScorecardController");
 const {
   sendmail,
   verifymail,
   reset_pass,
   sendbulkmail,
 } = require("./mail/mail");
+const { createTimelog, deleteTimelogs, getTaskDetails } = require('./controllers/TimelogController');
+const { createScorecard, getScore, getDateRange } = require('./controllers/ScorecardController');
 const { qrgen, set2fa } = require("./mail/qrauthenticator");
 const { User } = require("./db");
 const { Scorecard } = require("./db");
+
+
+
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -58,7 +64,7 @@ app.post('/gettaskdetails', getTaskDetails);
 //scorecard Routes
 app.post("/scorecard", createScorecard);
 app.post("/getscore", getScore);
-app.post('/totalscore',totalScore)
+// app.post('/totalscore',totalScore)
 app.post('/daterange',getDateRange)
 
 
