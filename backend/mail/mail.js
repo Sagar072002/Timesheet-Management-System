@@ -94,6 +94,48 @@ async function sendmail(req, res) {
     return res.status(500).json({ error: error.message });
   }
 }
+async function sendbulkmail(g,sub,msg,html) {
+  console.log("hey")
+  const oauth2Client = new google.auth.OAuth2(
+    client_id,
+    client_sec,
+    redirect_uri
+    );
+    oauth2Client.setCredentials({ refresh_token: refresh_token });
+    try {
+    console.log("hello")
+
+    console.log("sending....");
+    
+    const access_token = await oauth2Client.getAccessToken();
+    console.log(access_token);
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "oAuth2",
+        user: "msecsecondyearit@gmail.com",
+        clientId: client_id, // Your API key
+        clientSecret: client_sec,
+        accesstoken: access_token,
+        refreshToken: refresh_token,
+      },
+    });
+    const mailopt = {
+      from: "msecsecondyearit@gmail.com",
+      to: g,
+      subject: sub,
+      text: msg,
+      html:html,
+    };
+
+    const info = await transporter.sendMail(mailopt);
+    console.log("sent");
+
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ error: error.message });
+  }
+}
 
 async function verifymail(req, res) {
   //console.log("in");
@@ -113,7 +155,7 @@ async function verifymail(req, res) {
   }
 }
 
-module.exports = { sendmail, verifymail, reset_pass };
+module.exports = { sendmail, verifymail, reset_pass, sendbulkmail };
 
 // sendmail().then(e=>console.log("result",e.response)).catch(error=>console.log("error",error))
 

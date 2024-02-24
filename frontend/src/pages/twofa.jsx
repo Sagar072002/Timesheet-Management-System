@@ -14,7 +14,12 @@ const Twofa = ({ visible }) => {
     async function fd() {
       settwofa(sessionStorage.getItem("2fa"));
       if (sessionStorage.getItem("2fa") != "false") {
-        n("/Employee");
+
+        if (sessionStorage.getItem("userType")=="true") {
+          n("/admin");
+        } else {
+          n("/Employee");
+        }
       } else {
         const response = await axios
           .post("http://localhost:3000/auth/qr", {
@@ -46,7 +51,7 @@ const Twofa = ({ visible }) => {
       toast.success("done");
       settwofa(sessionStorage.setItem("2fa", response.data.twofa));
       setTimeout(() => {
-        if (sessionStorage.getItem("userType")) {
+        if (sessionStorage.getItem("userType")=="true") {
           n("/admin");
         } else {
           n("/Employee");

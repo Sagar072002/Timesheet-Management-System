@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 
-const Detail = ({ employee }) => {
+const Detail = ({ employee ,func}) => {
   const [isVisible, setIsVisible] = useState(true);
 
   const handleCrossClick = () => {
     setIsVisible(false);
+    func()
   };
 
   if (!isVisible) {

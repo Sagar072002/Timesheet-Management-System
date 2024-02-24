@@ -79,7 +79,7 @@ const Forgotpass = () => {
     }
     else if(!passregex.test(pass)){
       toast.warning("Enter a vaild Password")
-      toast.info("Password must have \n\nAt least one lowercase letter \n\nAt least one uppercase letter\n\nAt least one digit\n\n At least one special character from the set @$!%*?&\n\nMinimum length of 8 characters.", { autoClose: false, escape: false });
+      toast.info("Password must have \n\nAt least one lowercase letter \n\nAt least one uppercase letter\n\nAt least one digit\n\n At least one special character from the set @$!%*?&\n\nMinimum length of 8 characters.", {  escape: false });
       return false
     }
     else{

@@ -10,6 +10,7 @@ const EmployeeCard = ({ employeeData }) => {
 
   const handleDetailToggle = () => {
     setIsDetailVisible(!isDetailVisible);
+    console.log(isDetailVisible)
   };
 
   const handleShowDetails = () => {
@@ -56,17 +57,33 @@ const EmployeeCard = ({ employeeData }) => {
         >
 Scorecard        </button>
       </div>
+      <div
+          className={
+            isDetailVisible 
+              ? `bg-transparent fixed inset-0 flex z-50 backdrop-filter backdrop-blur-sm`
+              : ""
+          }
+        >
+      <div
+          className={
+            isTimesheetVisible 
+              ? `bg-transparent fixed inset-0 flex z-50 backdrop-filter backdrop-blur-sm`
+              : ""
+          }
+        >
 
       {isDetailVisible && (
         <div className="fixed -top-24 left-1/3 z-10">
-          <Detail employee={selectedEmployee} />
+          <Detail employee={selectedEmployee} func={handleShowDetails} />
         </div>
       )}
       {isTimesheetVisible && (
         <div className="fixed w-1/2 top-1/4 max-h-[400px] left-1/3 z-10">
-          <ViewTimesheet employee={employeeData}/>
+          <ViewTimesheet employee={employeeData} func={handleShowTimesheetDetails}/>
         </div>
       )}
+      </div>
+      </div>
     </div>
   );
 };

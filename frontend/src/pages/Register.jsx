@@ -37,35 +37,65 @@ const Register = () => {
      
     if(name===""){
 toast.error("Name cannot be empty")
+return false
     }
     if(empid===""){
 toast.error("Employee ID cannot be empty")
+return false
     }
     if(gender===""){
 toast.error("Gender cannot be empty")
+return false
     }
     if(pass1===""){
 toast.error("Password cannot be empty")
+return false
     }
     if(pass2===""){
 toast.error("Confirm Password cannot be empty")
+return false
     }
     if(email===""){
 toast.error("Email cannot be empty")
+return false
     }
     if(ph===""){
 toast.error("Phone cannot be empty")
+return false
     }
     if(age===""){
 toast.error("Age cannot be empty")
+return false
     }
     if(add===""){
 toast.error("Address cannot be empty")
+return false
 }
 if(pass1!==pass2){
       toast.error("Passwords do not match")
+      return false
 
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailRegex.test(email)){
+      toast.error("Enter a vaild Email")
+      return false
+    }
+    if(ph.length<10){
+      toast.error("Enter a vaild Phone Number")
+      return false
+    }
+    if(age>="60" || age<"18" ){
+      toast.error("Enter a vaild Age")
+      return false
+    }
+    const passregex=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+    if(!passregex.test(pass1)){
+      toast.error("Enter a vaild Password")
+      toast.info("Password must have \n\nAt least one lowercase letter \n\nAt least one uppercase letter\n\nAt least one digit\n\n At least one special character from the set @$!%*?&\n\nMinimum length of 8 characters.",);
+      return false
+    }
+    return false
     // if(!document.getElementById('employeeid').value.startsWith("A") && !document.getElementById('employeeid').value.startsWith("E")){
     //   toast.error("User ID should start with either 'A' or 'E'")
     // }

@@ -3,12 +3,13 @@ import { RxCross2 } from 'react-icons/rx';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const ViewTimesheet = ({ employee }) => {
+const ViewTimesheet = ({ employee,func}) => {
     const [isVisible, setIsVisible] = useState(true);
     const [fetchedData, setFetchedData] = useState(null); // State to store fetched data
 
     const handleCrossClick = () => {
         setIsVisible(false);
+        func()
     };
 
     if (!isVisible) {

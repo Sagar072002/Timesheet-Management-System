@@ -6,7 +6,7 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Profile = ({profilevalue,onUpdateProfile}) => {
+const Profile = ({profilevalue,onUpdateProfile,func}) => {
     const [isVisible, setIsVisible] = useState(true);
     const [isEditable, setIsEditable] = useState(false); // State to track if fields are editable
     const [editedProfile, setEditedProfile] = useState({ ...profilevalue });
@@ -29,6 +29,7 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
     }, [profilevalue]);
   
     const handleCrossClick = () => {
+      func()
       setIsVisible(false);
     };
   
@@ -41,7 +42,7 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
       onUpdateProfile(editedProfile); // Update profile value in parent component
       setEditedProfile({ ...editedProfile }); // Reset edited profile
       handleInputChange({ target: { name: '', value: '' } });
-      toast.success("Updated successfully")
+      // toast.success("Updated successfully")
       updateDatabase();
     };
     
@@ -81,7 +82,7 @@ const Profile = ({profilevalue,onUpdateProfile}) => {
     
          //toast.success("Registration successful!");
         
-         console.log('updated successfully');
+         toast.success('updated successfully');
 
         }
         

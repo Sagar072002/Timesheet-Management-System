@@ -6,9 +6,9 @@ import axios from 'axios';
 import { MdEmail } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 
-const Forgotpassmail = ({ func }) => {
+const Forgotpassmail = ({ func,mail }) => {
   const mailsend= async ()=>{
-    const email=document.getElementById('email1').value
+    const email=document.getElementById(mail).value
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if(email.length===0){
       toast.warning("Empty Field")
@@ -19,6 +19,7 @@ const Forgotpassmail = ({ func }) => {
     }
     else
     {
+      console.log(mail,email)
       toast("Sending...")
 
     // document.getElementById()
@@ -54,7 +55,7 @@ const Forgotpassmail = ({ func }) => {
           </div>
           <div className="p-10">
             <label
-              htmlFor="email1"
+              htmlFor={mail}
               className="text-black block mb-2 text-sm font-medium  "
             >
               Email ID <span className="text-red-600"></span>
@@ -64,8 +65,8 @@ const Forgotpassmail = ({ func }) => {
               <input
                 type="email"
                 pattern=".+@example\.com"
-                name="email1"
-                id="email1"
+                name={mail}
+                id={mail}
                 className="bg-transparent border-none border-b-gray-500 text-gray-900 sm:text-sm -md outline-none block w-full "
                 placeholder="Your email id"
                 required

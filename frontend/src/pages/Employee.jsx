@@ -88,10 +88,10 @@ const Employee = () => {
   };
 
   const [isProfileDivVisible, setProfileDivVisible] = useState(false);
-  const [eg, seteg] = useState(false);
+  
 
   const toggleProfileDivVisibility = () => {
-    seteg(!eg)
+
       setProfileDivVisible(!isProfileDivVisible);
   };
 
@@ -124,6 +124,7 @@ const Employee = () => {
             className=" w-8 h-8  text-white text-xl absolute right-14 top-12"
           />
         </div>
+        <div className={ isProfileVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:isProfileDivVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:"bg-transparent fixed flex"}>
         {isProfileVisible && (
           <div className=" bg-slate-200 z-10 border border-slate-400 rounded absolute right-0 top-15 max-w-[500px] p-5 pt-2 h-32">
             <div className="border-white  bg-slate-600 rounded-full p-2 flex justify-center">
@@ -152,15 +153,16 @@ const Employee = () => {
           </div>
         )}
         {isProfileDivVisible && (
-          // <div className=" bg-transparent absolute left-1/2 -top-8 w-20 z-10 ">
-          <div className={`absolute inset-0 z-50 flex items-center justify-center ${eg ? 'backdrop-filter backdrop-blur-lg' : ''}`}>
+          <div className=" bg-transparent absolute left-1/2 -top-16 w-20 z-10 ">
+          {/* <div className={`absolute inset-0 z-50 flex items-center justify-center ${eg ? 'backdrop-filter backdrop-blur-lg' : ''}`}> */}
             <Profile
               profilevalue={profilevalue.user}
               onUpdateProfile={updateProfileValue}
+              func={toggleProfileDivVisibility}
             />
           </div>
         )}
-       
+       </div>
 
 
       </div>
