@@ -35,29 +35,31 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(cors());
 
-// Routes
-app.get("/", (req, res) => res.send("Hello Done Succesfully"));
-app.post("/mail/forgotpassword", sendmail); // Send Reset/Forgot password mail
-app.post("/mail/verifyforgot", verifymail); // to verify user link mail
-app.post("/mail/reset", reset_pass); // Send Reset/Forgot password mail
-app.post("/auth/qr", qrgen);
-app.post("/auth/set2fa", set2fa);
+//mail Routes
+app.get("/",(req,res)=>res.send("Hello Done Succesfully"))
+app.post('/mail/forgotpassword', sendmail);   // Send Reset/Forgot password mail
+app.post('/mail/verifyforgot', verifymail);   // to verify user link mail
+app.post('/mail/reset', reset_pass);   // Send Reset/Forgot password mail
+app.post('/auth/qr',qrgen)
+app.post('/auth/set2fa',set2fa)
 
-//user routes
-app.post("/register", createUser);
-app.post("/login", loginUser);
-app.get("/users", getAllUsers);
-app.get("/users/:userid", getUserByUserId);
-app.put("/users/:userid", updateUserDetails);
+//user Routes
+app.post('/register', createUser);
+app.post('/login', loginUser);
+app.get('/users', getAllUsers);             
+app.get('/users/:userid', getUserByUserId);  
+app.put('/users/:userid', updateUserDetails);   
 
-// Timelog Routes
-app.post("/timelog", createTimelog);
-app.post("/deletetimelog", deleteTimelogs);
-app.put("/updatetimelog", updateTimelog);
+//timelog Routes
+app.post('/timelog', createTimelog);
+app.post('/deletetimelog', deleteTimelogs);
+app.post('/gettaskdetails', getTaskDetails);
 
-// Scorecard Routes
+//scorecard Routes
 app.post("/scorecard", createScorecard);
 app.post("/getscore", getScore);
+app.post('/totalscore',totalScore)
+app.post('/daterange',getDateRange)
 
 
 //user Score

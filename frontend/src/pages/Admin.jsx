@@ -112,7 +112,7 @@ const Admin = () => {
   };
 
   return (
-    <div className="relative h-full  flex">
+    <div className="relative mt-10 flex">
       <ToastContainer />
       <Twofa className="w-full bg-white" visible={sessionStorage.getItem("2fa")}/>
       <div className="back p-4 pt-6 bg-blue-gray-200 w-full bg-gray-300">
@@ -124,7 +124,7 @@ const Admin = () => {
             </span>{" "}
           </h1>
 
-          <span className="text-lg text-white mr-2 absolute right-20 top-16">
+           <span className="text-lg text-white mr-2 absolute right-20 top-12 font-bold">
             Hii, {JSON.parse(sessionStorage.getItem("data")).name}
           </span>
           {/* <img
@@ -133,12 +133,11 @@ const Admin = () => {
             className="w-10 h-10 mix-blend-color-burn"
             alt=""
           /> */}
-          <div className="border-white  rounded-full p-2 mt-8">
-            <FaUser
-              onClick={toggleProfileVisibility}
-              className="text-2xl text-white"
-            />
-          </div>
+          <div className="border-white  rounded-full p-2">
+                          <FaUser             onClick={toggleProfileVisibility}
+            className="text-2xl absolute top-12 right-12 text-white"
+           />
+</div>
         </div>
         <div
           className={

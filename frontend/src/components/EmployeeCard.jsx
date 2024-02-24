@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Detail from "./Detail";
-import ViewTimesheet from "./ViewTimesheet";
+import ViewTimesheet from "./ViewScorecard";
 
 const EmployeeCard = ({ employeeData }) => {
   const [isDetailVisible, setIsDetailVisible] = useState(false);
