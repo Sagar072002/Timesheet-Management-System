@@ -42,11 +42,19 @@ const Timesheet = () => {
         toast.error(error.message);
       });
     if (response.status === 200) {
-      setviewtimedata(response.data)
-      console.log(response.data.taskDetails)
-      
       setviewtime(true);
+      const g = {};
+
+      const d = response.data.taskDetails.map((e) => {
+        if (e.date in g) {
+          g[e.date].push([e.task, e.duration]);
+        } else {
+          g[e.date] = [[e.task, e.duration]];
+        }
+      });
+      setviewtimedata(JSON.stringify(g));
     }
+    console.log(viewtimedata);
   };
   const getWeekDates = (offset = 0) => {
     const today = new Date();
@@ -809,7 +817,15 @@ const Timesheet = () => {
         </button>
       </div>
       {viewtime ? (
-        <div className="text-black">{}</div>
+        <div className="flex flex-row items-center justify-evenly">
+          {Object.keys(JSON.parse(viewtimedata)).map((e) => {
+            console.log(JSON.parse(viewtimedata)[e]);
+            // map((val) => {
+            //   <li>val[0],val[1]</li>
+            // })
+            return <div>{e}</div>;
+          })}
+        </div>
       ) : (
         <div className="text-black">HEllo</div>
       )}
