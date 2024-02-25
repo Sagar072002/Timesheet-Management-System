@@ -27,7 +27,7 @@ const EmployeeCard = ({ employeeData }) => {
   };
 
   return (
-    <div className="mt-6 border px-6 shadow-md transition-all rounded-md bg-white hover:cursor-pointer p-4 ">
+    <div className="mt-6 border px-6 shadow-md transition-all rounded-md bg-white hover:cursor-pointer p-4 w-96 overflow-hidden">
       <div className="flex gap-5">
         <div>
           <p className="leading-7 font-bold">Name:</p>
@@ -73,12 +73,12 @@ Scorecard        </button>
         >
 
       {isDetailVisible && (
-        <div className="fixed -top-24 left-1/3 z-10">
+        <div className="fixed -top-18 left-1/3 z-10">
           <Detail employee={selectedEmployee} func={handleShowDetails} />
         </div>
       )}
       {isTimesheetVisible && (
-        <div className="fixed w-1/2 top-1/4 max-h-[400px] left-1/3 z-10">
+        <div className="fixed w-1/2 top-1/4 max-h-[400px] left-1/4 z-10">
           <ViewTimesheet employee={employeeData} func={handleShowTimesheetDetails}/>
         </div>
       )}

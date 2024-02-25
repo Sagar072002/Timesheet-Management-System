@@ -126,28 +126,29 @@ const getScore = async (req, res) => {
 
 const getDateRange = async (req, res) => {
   try {
-    const { userid, start_date } = req.body;
+    const { userid } = req.body;
 
     // Calculate the week number for the provided start date
-    const startWeekNumber = getWeekNumber(new Date(start_date));
+    //const startWeekNumber = getWeekNumber(new Date(start_date));
 
     console.log("userid", userid);
-    console.log("startWeekNumber", startWeekNumber);
+    //console.log("startWeekNumber", startWeekNumber);
 
     // Fetch scorecards for the specified user and weeks before the provided start date
     const scorecards = await Scorecard.findAll({
       where: {
         userid,
-        week_number: {
-          [Op.lt]: startWeekNumber,
-        },
+        // week_number: {
+        //   [Op.lt]: startWeekNumber,
+        // },
       },
-      order: [['week_number', 'ASC']], // Order by week_number in ascending order
+      //order: [['week_number', 'ASC']], // Order by week_number in ascending order
     });
 
     // Extract date ranges from the fetched scorecards
-    const dateRanges = scorecards.map((scorecard) => scorecard.date_range);
-
+    let dateRanges = scorecards.map((scorecard) => scorecard.date_range);
+    dateRanges = dateRanges.sort((a, b) => new Date(a.split(' - ')[0]) - new Date(b.split(' - ')[0]));
+    
     res.status(200).json({ dateRanges });
   } catch (error) {
     console.error(error);

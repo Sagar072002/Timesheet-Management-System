@@ -11,21 +11,21 @@ html, body {
     background: linear-gradient(170deg, rgba(49, 57, 73, 0.8) 20%, rgba(49, 57, 73, 0.5) 20%, rgba(49, 57, 73, 0.5) 35%, rgba(41, 48, 61, 0.6) 35%, rgba(41, 48, 61, 0.8) 45%, rgba(31, 36, 46, 0.5) 45%, rgba(31, 36, 46, 0.8) 75%, rgba(49, 57, 73, 0.5) 75%), linear-gradient(45deg, rgba(20, 24, 31, 0.8) 0%, rgba(41, 48, 61, 0.8) 50%, rgba(82, 95, 122, 0.8) 50%, rgba(133, 146, 173, 0.8) 100%) #313949;
 }
 
-
-/* body{
+*/
+ .logindiv{
   display:flex;
   justify-content: center;
   align-items: center;
   min-height:100vh;
   background: #081b29; 
-} */
+} 
 .wrapper{
   position:relative;
   width:750px;
   height:450px;
   border-radius: 7px;
-  background:transparent;
-  border:1.5px solid #0ef;
+  background:#081b29;
+  /* border:1.5px solid #0ef; */
   /* box-shadow: 0 0 25px #0ef; */
   overflow: hidden;
 }
@@ -139,7 +139,7 @@ top:10%;
   height:50px;
   margin-top:10px;
   background: transparent;
-  border:.1px solid #0ef;
+  /* border:.1px solid #0ef; */
   outline:none;
   border-radius: 40px;
   cursor: pointer;
@@ -259,7 +259,7 @@ top:10%;
   width:850px;
   height:600px;
   background: linear-gradient(45deg,#081b29,#0ef);
-  border-bottom:1.5px solid #0ef;
+  /* border-bottom:1.5px solid #0ef; */
   transform-origin: bottom right;
   transform:rotate(10deg)skewY(40deg);
   transition: 1.5s ease;
@@ -276,7 +276,7 @@ top:10%;
   width:850px;
   height:700px;
   background: #081b29;
-  border-top:1.5px solid #0ef;
+  /* border-top:1.5px solid #0ef; */
   transform-origin: bottom left;
   transform:rotate(0deg)skewY(0deg);
   transition: 1.5s ease;

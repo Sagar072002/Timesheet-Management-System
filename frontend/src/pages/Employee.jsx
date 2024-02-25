@@ -100,7 +100,7 @@ const Employee = () => {
   };
 
   return (
-    <div className="back  w-full p-4 pt-7">
+    <div className="w-full p-4 pt-7" style={{backgroundColor:"#EDF4F2"}}>
       <ToastContainer />
 
         <Twofa className="w-full bg-white" visible={sessionStorage.getItem("2fa")}/>
@@ -114,14 +114,14 @@ const Employee = () => {
           </h1>
 
           <div className="">
-            <span className="text-white font-medium text-lg mr-2 absolute right-28 top-14">
+            <span className="text-slate-700 font-medium text-lg mr-2 absolute right-20 top-14">
               Hii, {JSON.parse(sessionStorage.getItem("data")).name}
             </span>
           </div>
 
           <FaUser
             onClick={toggleProfileVisibility}
-            className=" w-8 h-8  text-white text-xl absolute right-14 top-12"
+            className=" w-8 h-8  text-slate-700 text-xl absolute right-12 top-12"
           />
         </div>
         <div className={ isProfileVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:isProfileDivVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:"bg-transparent fixed flex"}>

@@ -3,7 +3,7 @@ import { RxCross2 } from 'react-icons/rx';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const ViewScorecard = ({ employee }) => {
+const ViewScorecard = ({ employee,func }) => {
     const [isVisible, setIsVisible] = useState(true);
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedMonth, setSelectedMonth] = useState('');
@@ -11,6 +11,7 @@ const ViewScorecard = ({ employee }) => {
 
     const handleCrossClick = () => {
         setIsVisible(false);
+        func();
     };
 
     const handleSubmit = async () => {

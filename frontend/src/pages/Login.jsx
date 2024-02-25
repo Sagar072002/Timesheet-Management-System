@@ -126,6 +126,53 @@ const Login = () => {
     fetchData();
   }, [access1]);
 
+  //getrabge timesheet function
+  const fetchWeekRange = async () => {
+    // var inputDate = new Date(weekDates.monday);
+    // console.log("inputDatescore",inputDate)
+    // // Format the Date object to "YYYY-MM-DD" format
+    // const sdate = `${inputDate.getFullYear()}-${(inputDate.getMonth() + 1)
+    //   .toString()
+    //   .padStart(2, '0')}-${inputDate.getDate().toString().padStart(2, '0')}`;
+    // console.log("sdate",sdate)
+    try{
+      const response = await axios.post('http://localhost:3000/daterange',
+        {
+          "userid": sessionStorage.getItem("userName"),
+          //"start_date": sdate,
+        }     
+    
+      );
+   
+      const data= response.data;
+      console.log("week_ranges",data)
+
+      if(response.status!==200){
+        // response.status
+        // console.log("*********",response.status,response.statusText,data.message,data.errors)
+        console.log(
+          `${response.status}\n${response.statusText}\n${data.message}`
+       )
+      }
+ 
+        // response.status
+      //   toast.success(
+      //     `${response.status}\n${response.statusText}\n${data.message}`
+      //  )
+      if(response.status===200){
+        sessionStorage.setItem("date_ranges",JSON.stringify(data.dateRanges)) 
+        //use josn parse to fetch data 
+        console.log(JSON.parse(sessionStorage.getItem("date_ranges")) )   
+      //  toast.success(`login fetch week range successfully,${data.dateRanges}`);
+     }
+   
+    }
+      catch(error){
+        toast.error("Error in fetching week range")
+      }
+  }
+
+
   const handleLogin = async () => {
     var uemail=""
     var password=""
@@ -221,7 +268,7 @@ const Login = () => {
           });
           // toast.error(scoreresponse.data.score);
           sessionStorage.setItem("score", scoreresponse.data.score);
-
+          fetchWeekRange();
           setTimeout(() => {
             // if(uname.startsWith("A")){
             //   // alert("hello admin")
@@ -256,7 +303,7 @@ const Login = () => {
   };
   return (
     <>
-      <section className="">
+      <section className="logindiv" style={{backgroundColor:"#EDF4F2"}}>
         <ToastContainer />
 
         <div className={`wrapper ${active ? 'active' : ''}`}>

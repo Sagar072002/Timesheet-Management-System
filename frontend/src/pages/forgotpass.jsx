@@ -132,14 +132,14 @@ const Forgotpass = () => {
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div className="w-full border-2 rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
             <div className=" p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-white md:text-2xl ">
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-slate-700 md:text-2xl ">
                 Reset Password
               </h1>
               <div className="space-y-4 md:space-y-6">
                 <div>
                   <label
                     htmlFor="email"
-                    className="text-white block mb-2 text-sm font-medium  "
+                    className="text-slate-700 block mb-2 text-sm font-medium  "
                   >
                     Email ID <span className="text-red-600"></span>
                   </label>
@@ -162,7 +162,7 @@ const Forgotpass = () => {
                     <div>
                       <label
                         htmlFor="password"
-                        className="text-white block mb-2 text-sm font-medium  "
+                        className="text-slate-700 block mb-2 text-sm font-medium  "
                       >
                         Password
                       </label>
@@ -183,7 +183,7 @@ const Forgotpass = () => {
                       <div>
                         <label
                           htmlFor="repassword"
-                          className="text-white block mb-2 text-sm font-medium  "
+                          className="text-slate-700 block mb-2 text-sm font-medium  "
                         >
                           Confirm Password
                         </label>
@@ -216,7 +216,7 @@ const Forgotpass = () => {
                     <div className="space-y-4 md:space-y-6">
                       <label
                         htmlFor="text"
-                        className="text-white block mb-2 text-sm font-medium  "
+                        className="text-slate-700 block mb-2 text-sm font-medium  "
                       >
                         Enter Auth ID (6-Digit code)
                         <span className="text-red-600"></span>
