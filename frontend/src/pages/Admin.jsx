@@ -143,7 +143,7 @@ const Admin = () => {
            />
 </div>
         </div>
-
+        <div className={ isProfileVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:isProfileDivVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:"bg-transparent fixed flex"}>
         {isProfileVisible && (
           <div className=" bg-slate-200 border border-slate-400 rounded absolute right-0 top-19 max-w-[500px] p-5 pt-2 h-32" >
            <div className="border-white  bg-slate-600 rounded-full p-2 flex justify-center">
@@ -167,14 +167,17 @@ const Admin = () => {
             </div>
           </div>
         )}
+        
         {isProfileDivVisible && (
           <div className=" bg-transparent absolute left-1/2 -top-8 w-20 z-10">
             <Profile
              profilevalue={profilevalue.user}
              onUpdateProfile={updateProfileValue} // Pass the function to update profile value
+             func={toggleProfileDivVisibility}
             />
           </div>
         )}
+        </div>
        <div className="mt-4 flex justify-center p-4 ">
   <input
     className="bg-white border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-slate-600 focus:border-slate-600 block w-3/4 p-3.5"

@@ -63,7 +63,6 @@ const Employee = () => {
       //  )
       if (response.status === 200) {
         //toast.success("Registration successful!");
-
         // console.log("Fetched values:");
       }
     } catch (error) {
@@ -88,11 +87,9 @@ const Employee = () => {
   };
 
   const [isProfileDivVisible, setProfileDivVisible] = useState(false);
-  
 
   const toggleProfileDivVisibility = () => {
-
-      setProfileDivVisible(!isProfileDivVisible);
+    setProfileDivVisible(!isProfileDivVisible);
   };
 
   const updateProfileValue = (updatedProfile) => {
@@ -100,10 +97,13 @@ const Employee = () => {
   };
 
   return (
-    <div className="w-full p-4 pt-7" style={{backgroundColor:"#EDF4F2"}}>
+    <div className="w-full p-4 pt-7" style={{ backgroundColor: "#EDF4F2" }}>
       <ToastContainer />
 
-        <Twofa className="w-full bg-white" visible={sessionStorage.getItem("2fa")}/>
+      <Twofa
+        className="w-full bg-white"
+        visible={sessionStorage.getItem("2fa")}
+      />
 
       <div className="">
         <div className="">
@@ -124,47 +124,53 @@ const Employee = () => {
             className=" w-8 h-8  text-slate-700 text-xl absolute right-12 top-12"
           />
         </div>
-        <div className={ isProfileVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:isProfileDivVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:"bg-transparent fixed flex"}>
-        {isProfileVisible && (
-          <div className=" bg-slate-200 z-10 border border-slate-400 rounded absolute right-0 top-15 max-w-[500px] p-5 pt-2 h-32">
-            <div className="border-white  bg-slate-600 rounded-full p-2 flex justify-center">
-              <FaUser
-                onClick={toggleProfileVisibility}
-                className="text-2xl text-white"
+        <div
+          className={
+            isProfileVisible
+              ? `bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`
+              : isProfileDivVisible
+              ? `bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`
+              : "bg-transparent fixed flex"
+          }
+        >
+          {isProfileVisible && (
+            <div className=" bg-slate-200 z-10 border border-slate-400 rounded absolute right-0 top-15 max-w-[500px] p-5 pt-2 h-32">
+              <div className="border-white  bg-slate-600 rounded-full p-2 flex justify-center">
+                <FaUser
+                  onClick={toggleProfileVisibility}
+                  className="text-2xl text-white"
+                />
+              </div>
+              <div className="editprofilediv mt-3 text-lg">
+                <p
+                  className="border-b font-medium border-red-700 py-1 px-2 hover:text-red-700 hover:cursor-pointer"
+                  onClick={function (event) {
+                    toggleProfileDivVisibility();
+                    displayData();
+                  }}
+                >
+                  Edit Profile
+                </p>
+                <button
+                  className="px-4 font-medium hover:text-red-700 hover:cursor-pointer"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          )}
+          {isProfileDivVisible && (
+            <div className=" bg-transparent absolute left-1/2 -top-16 w-20 z-10 ">
+              {/* <div className={`absolute inset-0 z-50 flex items-center justify-center ${eg ? 'backdrop-filter backdrop-blur-lg' : ''}`}> */}
+              <Profile
+                profilevalue={profilevalue.user}
+                onUpdateProfile={updateProfileValue}
+                func={toggleProfileDivVisibility}
               />
             </div>
-            <div className="editprofilediv mt-3 text-lg">
-              <p
-                className="border-b font-medium border-red-700 py-1 px-2 hover:text-red-700 hover:cursor-pointer"
-                onClick={function (event) {
-                  toggleProfileDivVisibility();
-                  displayData();
-                }}
-              >
-                Edit Profile
-              </p>
-              <button
-                className="px-4 font-medium hover:text-red-700 hover:cursor-pointer"
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-        )}
-        {isProfileDivVisible && (
-          <div className=" bg-transparent absolute left-1/2 -top-16 w-20 z-10 ">
-          {/* <div className={`absolute inset-0 z-50 flex items-center justify-center ${eg ? 'backdrop-filter backdrop-blur-lg' : ''}`}> */}
-            <Profile
-              profilevalue={profilevalue.user}
-              onUpdateProfile={updateProfileValue}
-              func={toggleProfileDivVisibility}
-            />
-          </div>
-        )}
-       </div>
-
-
+          )}
+        </div>
       </div>
       <div></div>
 

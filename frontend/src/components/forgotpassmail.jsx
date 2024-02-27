@@ -24,7 +24,7 @@ const Forgotpassmail = ({ func,mail }) => {
 
     // document.getElementById()
     
-    const response = await axios.post('mail/forgotpassword',{"email":email}).catch(e=>toast.error(e.response.data.message));
+    const response = await axios.post('http://localhost:3000/mail/forgotpassword',{"email":email}).catch(e=>toast.error(e.response.data.message));
     console.log(response)
 
     if(response.status===200){

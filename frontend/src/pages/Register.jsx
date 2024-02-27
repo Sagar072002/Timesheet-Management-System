@@ -34,7 +34,7 @@ const Register = () => {
     const age=document.getElementById('age').value
     const add=document.getElementById('address').value
     const admin=document.getElementById('isAdmin').checked
-     
+     console.log("123",add)
     if(name===""){
 toast.error("Name cannot be empty")
 return false
@@ -71,6 +71,10 @@ return false
 toast.error("Address cannot be empty")
 return false
 }
+    if(add.length<20){
+toast.error("Invalid Address")
+return false
+}
 if(pass1!==pass2){
       toast.error("Passwords do not match")
       return false
@@ -81,7 +85,7 @@ if(pass1!==pass2){
       toast.error("Enter a vaild Email")
       return false
     }
-    if(ph.length<10){
+    if(ph.length<10 && ph.length>10){
       toast.error("Enter a vaild Phone Number")
       return false
     }
@@ -89,13 +93,29 @@ if(pass1!==pass2){
       toast.error("Enter a vaild Age")
       return false
     }
+    if(!empid.startsWith('E') && !empid.startsWith('A')){
+      toast.error("Enter a vaild User ID")
+      return false
+    }
+    if(admin===true && empid.startsWith('E')){
+      toast.error("Admin's ID must start with A")
+      toast.error("If employee uncheck check box it")
+      return false
+      
+    }
+    if(admin===false && empid.startsWith('A')){
+      toast.error("Employee's ID must start with E")
+      toast.error("If Admin click check box ")
+      return false
+
+    }
     const passregex=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
     if(!passregex.test(pass1)){
       toast.error("Enter a vaild Password")
       toast.info("Password must have \n\nAt least one lowercase letter \n\nAt least one uppercase letter\n\nAt least one digit\n\n At least one special character from the set @$!%*?&\n\nMinimum length of 8 characters.",);
       return false
     }
-    return false
+    // return false
     // if(!document.getElementById('employeeid').value.startsWith("A") && !document.getElementById('employeeid').value.startsWith("E")){
     //   toast.error("User ID should start with either 'A' or 'E'")
     // }
@@ -205,7 +225,7 @@ if(pass1!==pass2){
                 id="name"
                 className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full  "
                 placeholder="Your Name"
-                required=""
+                required
               />
               </div>
             </div>
@@ -226,7 +246,7 @@ if(pass1!==pass2){
                 id="employeeid"
                 className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full  "
                 placeholder="User ID"
-                required=""
+                required
               />
               </div>
             </div>
@@ -265,7 +285,7 @@ if(pass1!==pass2){
                 id="password"
                 placeholder="••••••••"
                 className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full "
-                required=""
+                required
               />
               </div>
             </div>
@@ -284,7 +304,7 @@ if(pass1!==pass2){
                 id="confirm-password"
                 placeholder="••••••••"
                 className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full "
-                required=""
+                required
               />
                             </div>
 
@@ -310,7 +330,7 @@ if(pass1!==pass2){
                 id="email"
                 className="bg-transparent border-none border-b-gray-300 text-black sm:text-sm -md outline-none block w-full "
                 placeholder="Your Email"
-                required=""
+                required
               />
  </div>
 
@@ -331,7 +351,7 @@ if(pass1!==pass2){
                 id="phone"
                 className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full "
                 placeholder="Your Phone"
-                required=""
+                required
               />
                             </div>
 
@@ -352,7 +372,7 @@ if(pass1!==pass2){
                 id="age"
                 className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full  "
                 placeholder="Your age"
-                required=""
+                required
               />
                             </div>
 
@@ -373,7 +393,7 @@ if(pass1!==pass2){
                 rows={4}
                 placeholder="Your address"
                 className="mb-3 bg-transparent resize-none border-none border-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full p-2.5 "
-                required=""
+                required
                 />
                 </div>
             </div>

@@ -316,7 +316,7 @@ const Login = () => {
             <label htmlFor="">Email</label>
             <div className='flex mt-2 bg-white rounded-sm justify-center items-center'>
               <MdEmail className='mx-3 mr-1 text-xl' />
-              <input type="email" name="email" id="email" />
+              <input type="email" name="email" id="email" placeholder="Your email id"/>
             </div>
           </div>
           <div className="input-box animation" style={{ '--i': 2, '--j': 23 }}>
@@ -324,6 +324,7 @@ const Login = () => {
             <div className='flex mt-2 bg-white rounded-sm justify-center items-center'>
               <FaLock className='mx-3 mr-1 text-xl' />
               <input
+                placeholder="Your Password"
                 type={showPassword ? 'text' : 'password'}
                 name="password"
                 id="password"
@@ -385,7 +386,7 @@ const Login = () => {
             <label htmlFor="">Email</label>
             <div className='flex mt-2 bg-white rounded-sm justify-center items-center'>
               <MdEmail className='mx-3 mr-1 text-xl' />
-              <input type="email" name="email1" id="email1" />
+              <input type="email" name="email1" id="email1"  placeholder="Your email id"/>
             </div>
           </div>
           <div className="input-box animation" style={{ '--i': 2, '--j': 23 }}>
@@ -393,6 +394,7 @@ const Login = () => {
             <div className='flex mt-2 bg-white rounded-sm justify-center items-center'>
               <FaLock className='mx-3 mr-1 text-xl' />
               <input
+                placeholder="Your password"
                 type={showPassword ? 'text' : 'password'}
                 name="password1"
                 id="password1"
