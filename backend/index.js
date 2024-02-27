@@ -169,7 +169,7 @@ app.listen(PORT, async () => {
   // let hours = date.getHours();
   // const formattedTime = date.toLocaleTimeString('en-US');
   // console.log(date.getDay(),hours,minutes,seconds,formattedTime)
-  schedule.scheduleJob("00 15 * * 4", () => {
+  schedule.scheduleJob("00 14 * * 5", () => {
     warning();
     console.log("Warning Mail");
   });
@@ -179,7 +179,7 @@ app.listen(PORT, async () => {
     console.log("Deadline Expired ");
   });
 
-  schedule.scheduleJob("30 18 * * 4", async () => {
-    console.log("Trial");
-  });
+  // schedule.scheduleJob("30 18 * * 4", async () => {
+  //   console.log("Trial");
+  // });
 });
