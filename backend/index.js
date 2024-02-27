@@ -169,7 +169,7 @@ app.listen(PORT, async () => {
   // let hours = date.getHours();
   // const formattedTime = date.toLocaleTimeString('en-US');
   // console.log(date.getDay(),hours,minutes,seconds,formattedTime)
-  schedule.scheduleJob("25 23 * * 4", () => {
+  schedule.scheduleJob("00 15 * * 4", () => {
     warning();
     console.log("Warning Mail");
   });
