@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import {FaUser,FaPhoneAlt,FaBabyCarriage,FaLock,FaSearchLocation} from "react-icons/fa"
 import {MdEmail} from "react-icons/md"
@@ -6,7 +6,6 @@ import {CgGenderMale} from "react-icons/cg"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-
 
 const Register = () => {
    
@@ -20,7 +19,28 @@ const Register = () => {
   // // )
 
   const n=useNavigate()
+  const [image, setImage] = useState(null);
 
+  const handleImageChange = (e) => {
+    try{
+    var reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    var size = e.target.files[0].size;
+    console.log(size/1000)
+    if(size/1000>52){
+      toast.error("Upload an image with file size less than 50kb");
+      return false
+    }
+    reader.onload = () => {
+      setImage(reader.result);
+      //console.log(reader.result,size/1000);
+    };
+   reader.onerror = error => {
+      console.log("error ",error);
+    }}catch{
+
+    }
+  };
 
   const handleregister=async ()=>{
     
@@ -34,7 +54,12 @@ const Register = () => {
     const age=document.getElementById('age').value
     const add=document.getElementById('address').value
     const admin=document.getElementById('isAdmin').checked
+    const im=document.getElementById('photo').value
      console.log("123",add)
+     if(im===""){
+      toast.error("Upload your image");
+      return false
+     }
     if(name===""){
 toast.error("Name cannot be empty")
 return false
@@ -153,6 +178,7 @@ if(pass1!==pass2){
           're_password':pass2,
           'is_admin':admin,
           'reset_link':false,
+          'image':image,
       }     
     );
     
@@ -390,12 +416,18 @@ if(pass1!==pass2){
                 type="text"
                 name="address"
                 id="address"
-                rows={4}
+                rows={1}
                 placeholder="Your address"
                 className="mb-3 bg-transparent resize-none border-none border-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full p-2.5 "
                 required
                 />
-                </div>
+                </div><br></br>
+                <div>
+          <label htmlFor="photo" className="block mb-2 text-sm font-bold text-white">
+            Upload your image
+          </label>
+          <input type="file" id="photo" onChange={handleImageChange} className="block mb-2 text-sm font-bold text-white" />
+        </div>
             </div>
             </div>
             </div>

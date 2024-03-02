@@ -123,6 +123,7 @@ const Employee = () => {
             onClick={toggleProfileVisibility}
             className=" w-8 h-8  text-slate-700 text-xl absolute right-12 top-12"
           />
+          <img src={JSON.parse(sessionStorage.getItem("data")).image}></img>
         </div>
         <div
           className={
