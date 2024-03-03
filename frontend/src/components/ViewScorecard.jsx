@@ -64,7 +64,7 @@ const ViewScorecard = ({ employee,func }) => {
         return null; // If isVisible is false, return null to render nothing
     }
     return (
-        <div className='bg-cyan-600 text-white flex rounded-md p-5 mx-auto min-h-[350px]'>
+        <div className='bg-cyan-600 text-white flex rounded-md p-5 mx-auto min-h-[300px]'>
             <div className="absolute top-2 right-2 mt-2 mr-2 bg-white text-cyan-500 hover:text-slate-700 rounded-full p-1">
                 <RxCross2 className="text-2xl" onClick={handleCrossClick} />
             </div>

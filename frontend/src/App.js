@@ -11,6 +11,7 @@ import Detail from './components/Detail';
 import Timesheet from './components/Timesheet';
 import Scorecard from './components/Scorecard';
 import TimesheetList from './pages/TimesheetList';
+import NewEmploye from './pages/NewEmploye';
 
 
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="/scorecard" element={<Scorecard/>} />
           <Route path="/forgotpass" element={<Forgot/>} />
           <Route path="/timesheetlist" element={<TimesheetList/>} />
+          <Route path="/new" element={<NewEmploye/>} />
 
         </Routes>
     </Router>

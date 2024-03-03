@@ -362,8 +362,8 @@ const Timesheet = () => {
     const currentDay = currentDate.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
 
     // Check if the current day is Friday (day index 5)
-    if (currentDay === 6) {
-      const isFridayFieldsFilled = timeData.every((row) => row[6] !== "");
+    if (currentDay === 5) {
+      const isFridayFieldsFilled = timeData.every((row) => row[5] !== "");
       if (!isFridayFieldsFilled) {
         toast.error(
           "Please fill in the fields for thursday before submitting."
@@ -444,7 +444,7 @@ const Timesheet = () => {
             //     `${response.status}\n${response.statusText}\n${data.message}`
             //  )
             if (response.status === 200) {
-              toast.success("database row created successful!");
+              // toast.success("database row created successful!");
             }
           } catch (error) {
             toast.error("Error in creating database row!");
@@ -553,7 +553,7 @@ const Timesheet = () => {
             //     `${response.status}\n${response.statusText}\n${data.message}`
             //  )
             if (response.status === 200) {
-              toast.success("database row created successful!");
+              // toast.success("database row created successful!");
             }
           } catch (error) {
             toast.error("Error in creating database row!");
@@ -778,12 +778,12 @@ const Timesheet = () => {
         <button
           type="submit"
           className={`px-8 py-3 rounded-sm ${
-            currentDay !== 6
+            currentDay !== 5
               ? "bg-gray-200 text-slate-700 cursor-not-allowed"
               : "bg-cyan-500 text-white hover:bg-cyan-400"
           }`}
           onClick={handleSubmit}
-          disabled={currentDay !== 6} // Disabling the button programmatically as well
+          disabled={currentDay !== 5} // Disabling the button programmatically as well
         >
           Submit
         </button>

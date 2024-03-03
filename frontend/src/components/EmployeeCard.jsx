@@ -78,7 +78,7 @@ Scorecard        </button>
         </div>
       )}
       {isTimesheetVisible && (
-        <div className="fixed w-1/2 top-1/4 max-h-[400px] left-1/4 z-10">
+        <div className="fixed w-1/2 top-20  left-1/4 z-10">
           <ViewTimesheet employee={employeeData} func={handleShowTimesheetDetails}/>
         </div>
       )}
