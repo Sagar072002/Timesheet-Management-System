@@ -39,6 +39,7 @@ const EmployeeCard = ({ employeeData }) => {
           <p className="leading-7 font-medium">{employeeData.name}</p>
           <p className="leading-7 font-medium">{employeeData.userid}</p>
           <p className="leading-7 font-medium">{employeeData.email}</p>
+          <img src={employeeData.image}></img>
           {/* <p className="leading-7 font-medium"></p> */}
         </div>
       </div>

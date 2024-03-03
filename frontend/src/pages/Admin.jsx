@@ -142,6 +142,7 @@ const Admin = () => {
             className="text-2xl absolute top-12 right-12 text-slate-700"
            />
 </div>
+        <img src={JSON.parse(sessionStorage.getItem("data")).image}></img>
         </div>
         <div className={ isProfileVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:isProfileDivVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:"bg-transparent fixed flex"}>
         {isProfileVisible && (

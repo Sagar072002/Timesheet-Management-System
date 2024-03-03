@@ -53,6 +53,9 @@ module.exports = (sequelize) => {
     twofa: {
       default:false,
       type: DataTypes.TEXT
+    },
+    image: {
+      type: DataTypes.STRING
     }
   });
 
