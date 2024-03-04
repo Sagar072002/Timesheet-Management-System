@@ -157,18 +157,18 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
   return (
 
 
-    <>
+    <div >
       <ToastContainer />
       <section className=" ">
     <div className="flex flex-col items-center justify-center px-6 py-1 mx-auto md:h-screen lg:py-0">
     
-      <div className="w-full bg-white rounded-md shadow min-h-[420px] min-w-[550px]  md:mt-0 sm:max-w-md xl:p-0 relative">
+      <div className="w-full bg-white border border-slate-300 rounded-md shadow min-h-[420px] min-w-[550px]  md:mt-0 sm:max-w-md xl:p-0 relative">
           <div className='absolute top-2 right-2 mt-2 mr-2 hover:bg-slate-400 hover:text-white rounded-full p-1'>
             <RxCross2 className='text-2xl'onClick={handleCrossClick}/>
           </div>
-          <div className='flex justify-center'>
+          <div className='flex justify-center pt-4'>
             {image!==null?
-            <div className='relative'>
+            <div className='relative '>
             <img src={image} className="w-32 h-32 object-scale-down shadow-lg rounded-full" onClick={() => { const inputElement = document.getElementById('image1');if (inputElement) {   inputElement.click();  }}}/>
             <input
                 type="file"
@@ -362,7 +362,7 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
     </div>
   </section> 
       
-    </>
+    </div>
     
   
   )

@@ -607,11 +607,11 @@ const Timesheet = () => {
     <div className="w-full mt-20">
       <ToastContainer />
 
-      <div className=" my-10 mx-5 text-slate-700 font-bold text-xl">
+      <div className="flex justify-center my-10 mx-5 text-slate-700 font-bold text-2xl">
         <p>
           {" "}
           Current Week:{" "}
-          <span className="font-medium text-lg text-cyan-400">
+          <span className="font-medium text-xl text-cyan-400">
             {weekDates.monday} - {weekDates.friday}
           </span>
         </p>

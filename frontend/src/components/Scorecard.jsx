@@ -89,7 +89,7 @@ const Scorecard = () => {
       <ToastContainer/>
       <div className={ham?`w-1/6 flex flex-col p-3 bg-cyan-600 bg-opacity-35   h-lvh`:`hidden`}>
       {ham?<RxCross2 className="absolute top-2 left-52 text-3xl" onClick={()=>{setHam(false)}}/>:<></>}
-        <div className=" justify-center relative  rounded-full flex">
+        <div className=" justify-center relative mt-10 mb-4 rounded-full flex">
         {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-32 object-scale-down mt-2 rounded-full"/>:<FaUser className="ml-5 mt-5 w-14 h-14" />}
           
         </div>
@@ -111,7 +111,7 @@ const Scorecard = () => {
 
       </div>
       <div className={ham?"w-5/6":'w-full'}>
-        {ham?<></>:<RxHamburgerMenu className="size-8" onClick={()=>{setHam(true)}}/>}
+        {ham?<></>:<RxHamburgerMenu className="ml-4 mt-4 text-3xl" onClick={()=>{setHam(true)}}/>}
         <div className='flex flex-col w-2/4 items-center mx-auto'>
           <div className="w-2/3 flex flex-col mt-3  gap-2 ">
             <div className="w-full flex flex-col gap-8">

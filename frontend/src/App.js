@@ -4,7 +4,6 @@ import Employee from './pages/Employee';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Contact from './pages/Contact';
 import Forgot from './pages/forgotpass';
 import Profile from './components/Profile';
 import Detail from './components/Detail';
@@ -28,7 +27,6 @@ function App() {
           <Route path="/employee" element={<Employee/>} />
           <Route path="/admin" element={<Admin/>} />
           <Route path="/register" element={<Register/>} />
-          <Route path="/contact" element={<Contact/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/detail" element={<Detail/>} />
           <Route path="/timesheet" element={<Timesheet/>} />

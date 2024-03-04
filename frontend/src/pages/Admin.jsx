@@ -133,7 +133,7 @@ const Admin = () => {
         <div className="flex justify-between px-5">
           <p></p>
           <h1 style={{color:"#66A5AD"}} className="uppercase text-center pt-4 text-3xl font-extrabold text-gray-900  md:text-5xl lg:text-5xl"> Admin Dashboard </h1>
-          <div className="flex flex-row ">
+          <div className="flex items-center">
             <div>
               <span className="text-lg text-slate-700 mr-2 absolute right-20 top-12 font-bold">
                 Hii, {JSON.parse(sessionStorage.getItem("data")).name}
@@ -141,18 +141,18 @@ const Admin = () => {
             </div>
           
             <div className="border-white  rounded-full items-center">
-            {JSON.parse(sessionStorage.getItem('data')).image!==null?<img onClick={toggleProfileVisibility} src={JSON.parse(sessionStorage.getItem('data')).image} className="w-14 h-14  object-scale-down  rounded-full border-2"/>:<FaUser onClick={toggleProfileVisibility} className="text-2xl absolute top-12 right-12 text-slate-700" />}
+            {JSON.parse(sessionStorage.getItem('data')).image!==null?<img onClick={toggleProfileVisibility} src={JSON.parse(sessionStorage.getItem('data')).image} className="w-10 h-10  object-scale-down  rounded-full border-2"/>:<FaUser onClick={toggleProfileVisibility} className="text-2xl absolute top-12 right-12 text-slate-700" />}
             </div>
           </div>
 
         </div>
         <div className={ isProfileVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:isProfileDivVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:"bg-transparent fixed flex"}>
         {isProfileVisible && (
-          <div className=" bg-slate-200 border border-slate-400 rounded absolute right-0 top-19 max-w-[500px] p-5 pt-2 h-32" >
+          <div className=" bg-slate-200 border border-slate-400 rounded absolute right-0 top-19 w-32 p-2 h-28" >
            <div className="border-white flex justify-center">
            {/* {JSON.parse(sessionStorage.getItem('data')).image!==null?<img onClick={toggleProfileVisibility} src={JSON.parse(sessionStorage.getItem('data')).image} className="w-10 h-10  object-scale-down rounded-full"/>:<FaUser onClick={toggleProfileVisibility}  className="text-2xl text-white"   />} */}
-           <div className='absolute top-2 right-2 mr-1 hover:bg-slate-400 hover:text-white rounded-full p-1'>
-            <RxCross2 className='text-2xl'onClick={toggleProfileVisibility}/>
+           <div className='absolute top-0 right-0  hover:bg-slate-400 hover:text-white rounded-full p-1'>
+            <RxCross2 className='text-xl'onClick={toggleProfileVisibility}/>
           </div>
                           {/* <FaUser             onClick={toggleProfileVisibility}  className="text-2xl text-white"   /> */}
 </div>
@@ -174,8 +174,8 @@ const Admin = () => {
         )}
         
         {isProfileDivVisible && (
-          <div className=" bg-transparent absolute left-1/2 -top-8 w-20 z-10">
-            <Adprofile
+          <div className=" bg-transparent absolute left-1/2 -top-14 w-20 z-10">
+            <Adprofile 
              profilevalue={profilevalue.user}
              onUpdateProfile={updateProfileValue} // Pass the function to update profile value
              func={toggleProfileDivVisibility}
