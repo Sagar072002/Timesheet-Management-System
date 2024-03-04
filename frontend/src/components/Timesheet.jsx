@@ -363,7 +363,7 @@ const Timesheet = () => {
 
     // Check if the current day is Friday (day index 5)
     if (currentDay === 5) {
-      const isFridayFieldsFilled = timeData.every((row) => row[5] !== "");
+      const isFridayFieldsFilled = timeData.every((row) => row[6] !== "");
       if (!isFridayFieldsFilled) {
         toast.error(
           "Please fill in the fields for thursday before submitting."
@@ -444,7 +444,7 @@ const Timesheet = () => {
             //     `${response.status}\n${response.statusText}\n${data.message}`
             //  )
             if (response.status === 200) {
-              // toast.success("database row created successful!");
+              toast.success("database row created successful!");
             }
           } catch (error) {
             toast.error("Error in creating database row!");
@@ -553,7 +553,7 @@ const Timesheet = () => {
             //     `${response.status}\n${response.statusText}\n${data.message}`
             //  )
             if (response.status === 200) {
-              // toast.success("database row created successful!");
+              toast.success("database row created successful!");
             }
           } catch (error) {
             toast.error("Error in creating database row!");
@@ -615,13 +615,13 @@ const Timesheet = () => {
             {weekDates.monday} - {weekDates.friday}
           </span>
         </p>
-        <p>
+        {/* <p>
           {" "}
           Total score:{" "}
           <span className="font-medium text-lg text-cyan-400">
-            {sessionStorage.getItem("score")}
+            {sessionStorage.getItem("score")==='null'?0:sessionStorage.getItem("score")}
           </span>{" "}
-        </p>
+        </p> */}
       </div>
 
       <div className="relative  overflow-x-auto shadow-md sm:rounded-md">
@@ -832,8 +832,8 @@ const Timesheet = () => {
   </div>
 ))}
 */}
-<h1 className=" text-slate-700 font-bold text-xl">View Old Timesheet</h1>
-      <div className="flex flex-row w-2/4 items-center justify-around mt-10 align-center">
+{/* <h1 className=" text-slate-700 font-bold text-xl">View Old Timesheet</h1> */}
+      {/* <div className="flex flex-row w-2/4 items-center justify-around mt-10 align-center">
         <select
           className="bg-slate-300 rounded-md outline-1 p-3 w-2/5 border"
           name="month"
@@ -847,12 +847,7 @@ const Timesheet = () => {
               </option>
             );
           })}
-          {/* <option value="Female">Mon Feb 19 2024 - Fri Feb 23 2024</option>
-        <option value="Other">Mon Feb 19 2024 - Fri Feb 23 2024</option>
-        <option value="Other">Mon Feb 19 2024 - Fri Feb 23 2024</option>
-        <option value="Other">Mon Feb 19 2024 - Fri Feb 23 2024</option>
-        <option value="Other">Mon Feb 19 2024 - Fri Feb 23 2024</option>
-        <option value="Other">Mon Feb 19 2024 - Fri Feb 23 2024</option> */}
+
         </select>
 
         <button
@@ -861,7 +856,8 @@ const Timesheet = () => {
         >
           Submit
         </button>
-      </div>
+      </div> 
+    */}
       {viewtime ? (
         <div>
           <div className="relative mt-10  overflow-x-auto shadow-md sm:rounded-md">

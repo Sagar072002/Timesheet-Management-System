@@ -255,7 +255,7 @@ if(pass1!==pass2){
               />
               </div>
             </div>
-            <div>
+            {/* <div>
               <label
                 htmlFor="employeeid"
                 className="block mb-2 text-sm font-bold text-white "
@@ -275,7 +275,7 @@ if(pass1!==pass2){
                 required
               />
               </div>
-            </div>
+            </div> */}
             <div>
               <label
                 htmlFor="gender"
@@ -335,6 +335,14 @@ if(pass1!==pass2){
                             </div>
 
             </div>
+
+
+            <div>
+          <label htmlFor="photo" className="block mb-2 text-sm font-bold text-white">
+            Upload your image
+          </label>
+          <input type="file" id="photo" onChange={handleImageChange} className="block mb-2 text-sm font-bold text-white" />
+        </div>
            </div>
            
            
@@ -416,18 +424,13 @@ if(pass1!==pass2){
                 type="text"
                 name="address"
                 id="address"
-                rows={1}
+                rows={3}
                 placeholder="Your address"
                 className="mb-3 bg-transparent resize-none border-none border-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full p-2.5 "
                 required
                 />
                 </div><br></br>
-                <div>
-          <label htmlFor="photo" className="block mb-2 text-sm font-bold text-white">
-            Upload your image
-          </label>
-          <input type="file" id="photo" onChange={handleImageChange} className="block mb-2 text-sm font-bold text-white" />
-        </div>
+               
             </div>
             </div>
             </div>

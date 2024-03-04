@@ -10,8 +10,11 @@ import Profile from './components/Profile';
 import Detail from './components/Detail';
 import Timesheet from './components/Timesheet';
 import Scorecard from './components/Scorecard';
+import Eg from './components/eg';
 import TimesheetList from './pages/TimesheetList';
-import NewEmploye from './pages/NewEmploye';
+import Newadmin from './pages/Newadmin';
+import Newemp from './pages/NewEmployee';
+import ListTime from './pages/TimesheetList';
 
 
 
@@ -32,7 +35,10 @@ function App() {
           <Route path="/scorecard" element={<Scorecard/>} />
           <Route path="/forgotpass" element={<Forgot/>} />
           <Route path="/timesheetlist" element={<TimesheetList/>} />
-          <Route path="/new" element={<NewEmploye/>} />
+          <Route path="/newadmin" element={<Newadmin/>} />
+          <Route path="/eg" element={<Eg/>} />
+          <Route path="/newemp" element={<Newemp/>} />
+          <Route path="/timesheetList" element={<ListTime/>} />
 
         </Routes>
     </Router>

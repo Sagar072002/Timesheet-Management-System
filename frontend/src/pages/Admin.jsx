@@ -4,7 +4,8 @@
 
 
 import React, { useState, useEffect } from "react";
-import Profile from "../components/Profile";
+import Adprofile from './admin_profile'
+import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
 import EmployeeCard from "../components/EmployeeCard";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -132,27 +133,30 @@ const Admin = () => {
         <div className="flex justify-between px-5">
           <p></p>
           <h1 style={{color:"#66A5AD"}} className="uppercase text-center pt-4 text-3xl font-extrabold text-gray-900  md:text-5xl lg:text-5xl"> Admin Dashboard </h1>
+          <div className="flex flex-row ">
+            <div>
+              <span className="text-lg text-slate-700 mr-2 absolute right-20 top-12 font-bold">
+                Hii, {JSON.parse(sessionStorage.getItem("data")).name}
+              </span> 
+            </div>
+          
+            <div className="border-white  rounded-full items-center">
+            {JSON.parse(sessionStorage.getItem('data')).image!==null?<img onClick={toggleProfileVisibility} src={JSON.parse(sessionStorage.getItem('data')).image} className="w-14 h-14  object-scale-down  rounded-full border-2"/>:<FaUser onClick={toggleProfileVisibility} className="text-2xl absolute top-12 right-12 text-slate-700" />}
+            </div>
+          </div>
 
-           <span className="text-lg text-slate-700 mr-2 absolute right-20 top-12 font-bold">
-            Hii, {JSON.parse(sessionStorage.getItem("data")).name}
-          </span> 
-         
-          <div className="border-white  rounded-full p-2">
-                          <FaUser             onClick={toggleProfileVisibility}
-            className="text-2xl absolute top-12 right-12 text-slate-700"
-           />
-</div>
-        <img src={JSON.parse(sessionStorage.getItem("data")).image}></img>
         </div>
         <div className={ isProfileVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:isProfileDivVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:"bg-transparent fixed flex"}>
         {isProfileVisible && (
           <div className=" bg-slate-200 border border-slate-400 rounded absolute right-0 top-19 max-w-[500px] p-5 pt-2 h-32" >
-           <div className="border-white  bg-slate-600 rounded-full p-2 flex justify-center">
-                          <FaUser             onClick={toggleProfileVisibility}
-            className="text-2xl text-white"
-           />
+           <div className="border-white flex justify-center">
+           {/* {JSON.parse(sessionStorage.getItem('data')).image!==null?<img onClick={toggleProfileVisibility} src={JSON.parse(sessionStorage.getItem('data')).image} className="w-10 h-10  object-scale-down rounded-full"/>:<FaUser onClick={toggleProfileVisibility}  className="text-2xl text-white"   />} */}
+           <div className='absolute top-2 right-2 mr-1 hover:bg-slate-400 hover:text-white rounded-full p-1'>
+            <RxCross2 className='text-2xl'onClick={toggleProfileVisibility}/>
+          </div>
+                          {/* <FaUser             onClick={toggleProfileVisibility}  className="text-2xl text-white"   /> */}
 </div>
-            <div className="editprofilediv mt-3 text-lg">
+            <div className="editprofilediv mt-6 text-lg">
               <p
                 className="border-b font-medium hover:text-red-700 border-red-700 py-1 px-2 hover:cursor-pointer"
                 onClick={() => {
@@ -171,7 +175,7 @@ const Admin = () => {
         
         {isProfileDivVisible && (
           <div className=" bg-transparent absolute left-1/2 -top-8 w-20 z-10">
-            <Profile
+            <Adprofile
              profilevalue={profilevalue.user}
              onUpdateProfile={updateProfileValue} // Pass the function to update profile value
              func={toggleProfileDivVisibility}
@@ -179,6 +183,12 @@ const Admin = () => {
           </div>
         )}
         </div>
+        {/* <div className="flex gap-5 justify-center">
+          <div className="bg-slate-300 text-white rounded-sm w-56 justify-center items-center flex text-lg font-bold h-32">Hey</div>
+          <div className="bg-slate-300 text-white rounded-sm w-56 justify-center items-center flex text-lg font-bold h-32">Hey</div>
+          <div className="bg-slate-300 text-white rounded-sm w-56 justify-center items-center flex text-lg font-bold h-32">Hey</div>
+          
+        </div> */}
        <div className="mt-4 flex justify-center p-4 ">
   <input
     className="bg-white border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-slate-600 focus:border-slate-600 block w-3/4 p-3.5"
@@ -191,7 +201,7 @@ const Admin = () => {
   />
 </div>
 
-<div className="flex flex-wrap justify-start py-1 px-5 ml-10 gap-8">
+<div className="flex flex-wrap justify-center py-1 px-5  gap-10">
   {filteredEmployees.map((employee, index) => (
     <EmployeeCard
       key={index}

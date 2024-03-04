@@ -1,8 +1,64 @@
 import React, { useState } from "react";
 import Detail from "./Detail";
 import ViewTimesheet from "./ViewScorecard";
+import img from "../assets/altimg.jpg"
+import backg from "../assets/bg.jpg"
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import axios  from "axios";
+import { toast } from "react-toastify";
+
 
 const EmployeeCard = ({ employeeData }) => {
+  useEffect(()=>{
+
+    const fetchWeekRange = async () => {
+      console.log(employeeData)
+      // var inputDate = new Date(weekDates.monday);
+      // console.log("inputDatescore",inputDate)
+      // // Format the Date object to "YYYY-MM-DD" format
+      // const sdate = `${inputDate.getFullYear()}-${(inputDate.getMonth() + 1)
+      //   .toString()
+      //   .padStart(2, '0')}-${inputDate.getDate().toString().padStart(2, '0')}`;
+      // console.log("sdate",sdate)
+      try{
+        const response = await axios.post('http://localhost:3000/daterange',
+          {
+            "userid": employeeData.userid,
+            //"start_date": sdate,
+          }     
+      
+        );
+     
+        const data= response.data;
+        console.log("week_ranges",data)
+  
+        if(response.status!==200){
+          // response.status
+          // console.log("*********",response.status,response.statusText,data.message,data.errors)
+          console.log(
+            `${response.status}\n${response.statusText}\n${data.message}`
+         )
+        }
+   
+          // response.status
+        //   toast.success(
+        //     `${response.status}\n${response.statusText}\n${data.message}`
+        //  )
+        if(response.status===200){
+          sessionStorage.setItem(`${employeeData.userid}ranges`,JSON.stringify(data.dateRanges)) 
+          //use josn parse to fetch data 
+          console.log(JSON.parse(sessionStorage.getItem(`${employeeData.userid}ranges`)) )   
+        //  toast.success(`login fetch week range successfully,${data.dateRanges}`);
+       }
+     
+      }
+        catch(error){
+          toast.error("Error in fetching week range")
+        }
+    }
+    fetchWeekRange();
+  },[])
   const [isDetailVisible, setIsDetailVisible] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isTimesheetVisible, setIsTimesheetVisible] = useState(false);
@@ -27,8 +83,19 @@ const EmployeeCard = ({ employeeData }) => {
   };
 
   return (
-    <div className="mt-6 border px-6 shadow-md transition-all rounded-md bg-white hover:cursor-pointer p-4 w-96 overflow-hidden">
-      <div className="flex gap-5">
+    <div className=" w-1/4">
+    <Link to='/newadmin' state={{ employee: employeeData }}>
+    <div className="mt-6 border border-slate-300 transition-all rounded-md bg-white hover:cursor-pointer">
+      <div className="flex flex-col gap-3">
+        <div style={{backgroundColor:"#66A5AD"}} className="w-full bg-gradient-to-r from-teal-100 to-teal-300 pb-4" >
+       
+       {
+        employeeData.image?<img src={employeeData.image} alt=""  className="w-36 mt-3 mx-auto h-36 rounded-full"/>:<img src={img} alt=""  className="w-36 mt-3 mx-auto h-36 rounded-full"/>
+       }
+        
+
+        </div>
+        <div className="flex gap-3 p-2 px-4">
         <div>
           <p className="leading-7 font-bold">Name:</p>
           <p className="leading-7 font-bold">User Id:</p>
@@ -39,12 +106,13 @@ const EmployeeCard = ({ employeeData }) => {
           <p className="leading-7 font-medium">{employeeData.name}</p>
           <p className="leading-7 font-medium">{employeeData.userid}</p>
           <p className="leading-7 font-medium">{employeeData.email}</p>
-          <img src={employeeData.image}></img>
+          {/* <img src={employeeData.image}></img> */}
           {/* <p className="leading-7 font-medium"></p> */}
         </div>
       </div>
-
-      <div className="flex  flex-col gap-1 mt-5 justify-center">
+      <button style={{backgroundColor:"#66A5AD"}} className="rounded-sm bg-pink-500 px-3 py-2 mx-4 mb-4 text-white">Details</button>
+      </div>
+      {/* <div className="flex  flex-col gap-1 mt-5 justify-center">
         <button 
           className='w-full  text-white bg-cyan-600 hover:bg-cyan-500 font-medium rounded-sm text-sm px-5 py-2.5 text-center me-2 mb-2'         
 
@@ -57,8 +125,8 @@ const EmployeeCard = ({ employeeData }) => {
           onClick={handleShowTimesheetDetails}
         >
 Scorecard        </button>
-      </div>
-      <div
+      </div> */}
+      {/* <div
           className={
             isDetailVisible 
               ? `bg-transparent fixed inset-0 flex z-50 backdrop-filter backdrop-blur-sm`
@@ -84,7 +152,9 @@ Scorecard        </button>
         </div>
       )}
       </div>
-      </div>
+      </div> */}
+    </div>
+    </Link>
     </div>
   );
 };

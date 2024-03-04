@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 const createUser = async (req, res) => {
   try {
-    const {
+    var {
       name,
       userid, 
       gender,
@@ -19,6 +19,15 @@ const createUser = async (req, res) => {
       image
     } = req.body;
     const twofa=false;
+    var rowCount = await User.count();
+    rowCount+=100;
+    if(is_admin){
+      userid='A'+rowCount.toString();
+    }
+    else{
+      userid='E'+rowCount.toString();
+    }
+    console.log(userid)
     const user = await User.create({
       name,
       userid, 
@@ -99,7 +108,7 @@ const getUserByUserId = async (req, res) => {
 const updateUserDetails = async (req, res) => {
   try {
     const { userid } = req.params;
-    const { name, gender, email, phone_number, age, address } = req.body;
+    const { name, gender, email, phone_number, age, address,image } = req.body;
 
     const user = await User.findOne({ where: { userid } });
 
@@ -114,6 +123,7 @@ const updateUserDetails = async (req, res) => {
     user.phone_number = phone_number || user.phone_number;
     user.age = age || user.age;
     user.address = address || user.address;
+    user.image = image || user.image;
 
     await user.save();
 

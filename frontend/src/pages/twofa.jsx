@@ -18,7 +18,7 @@ const Twofa = ({ visible }) => {
         if (sessionStorage.getItem("userType")=="true") {
           n("/admin");
         } else {
-          n("/Employee");
+          n("/newemp");
         }
       } else {
         const response = await axios

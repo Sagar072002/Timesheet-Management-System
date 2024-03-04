@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const schedule = require("node-schedule");
 const { sequelize } = require("./db");
+const { Op } = require('sequelize');
 const {
   createUser,
   loginUser,
@@ -29,7 +30,7 @@ const { createTimelog, deleteTimelogs, getTaskDetails } = require('./controllers
 const { createScorecard, getScore, getDateRange } = require('./controllers/ScorecardController');
 const { qrgen, set2fa } = require("./mail/qrauthenticator");
 const { User } = require("./db");
-const { Scorecard } = require("./db");
+const { Sequelize,Scorecard,Timelog } = require("./db");
 
 
 
@@ -70,9 +71,17 @@ app.post('/daterange',getDateRange)
 
 //user Score
 app.post("/userscore",async (req,res)=>{
-  console.log("hell")
+  console.log("hell",req.body.id)
   sum=await Scorecard.sum('score', { where: {"userid":req.body.id} }).catch(e=>res.status(500).json({error:e.message}));
-  return res.status(200).json({score:sum})
+  timesum=await Timelog.sum('duration', { where: {"userid":req.body.id} }).catch(e=>res.status(500).json({error:e.message}));
+  var dt = new Date();
+  var date = dt.toLocaleDateString("en-US", { dateStyle: "short" });
+  dt.setDate(dt.getDate() -7);
+  var stdate = dt.toLocaleDateString("en-US", { dateStyle: "short" });
+  console.log(date,stdate)
+  timeweeksum=await Timelog.sum('duration', { where: {"userid":req.body.id,date: {[Op.between]: [stdate, date],},} }).catch(e=>res.status(500).json({error:e.message}));
+  time_count=await Scorecard.count({where: {"userid":req.body.id}}).catch(e=>res.status(500).json({error:e.message}));
+  return res.status(200).json({score:sum,totaldur:timesum,week:timeweeksum,timeseet_count:time_count})
 })
 
 app.listen(PORT, async () => {
