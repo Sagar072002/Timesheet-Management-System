@@ -11,11 +11,11 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
     const [isVisible, setIsVisible] = useState(true);
     const [isEditable, setIsEditable] = useState(false); // State to track if fields are editable
     const [editedProfile, setEditedProfile] = useState({ ...profilevalue });
-
+    const [d,setd]=useState(JSON.parse(sessionStorage.getItem("data")))
     const n=useNavigate();
     useEffect(
       ()=>{
-        const d = JSON.parse(sessionStorage.getItem("data"));
+        setd(JSON.parse(sessionStorage.getItem("data")))
         console.log("session", d);
         // const d=sessionStorage.getItem("data")
         // console.log(d)
@@ -74,7 +74,7 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
         const named = sessionStorage.getItem("userName");
         const url = `http://localhost:3000/users/${named}`;
         console.log("userid:",named)
-        const d = JSON.parse(sessionStorage.getItem("data"));
+        // const d = JSON.parse(sessionStorage.getItem("data"));
         console.log("edit", d);
         const response = await axios.put(url,
           {
@@ -122,12 +122,17 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
         //   [name]: value,
         // }));
         console.log(name,value)
-        var d = JSON.parse(sessionStorage.getItem("data"));
+        // var d = JSON.parse(sessionStorage.getItem("data"));
+        setd({
+          ...d,
+          [name]: value,
+        })
         sessionStorage.setItem("data",JSON.stringify({
           ...d,
           [name]: value,
         }))
-        d = JSON.parse(sessionStorage.getItem("data"));
+        JSON.parse(sessionStorage.getItem("data"));
+        console.log(d)
 
       }
     };
@@ -143,6 +148,14 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
       }
       reader.onload = () => {
         setImage(reader.result);
+        setd({
+          ...d,
+          [image]: reader.result,
+        })
+        sessionStorage.setItem("data",JSON.stringify({
+          ...d,
+          [image]: reader.result,
+        }))
       };
      reader.onerror = error => {
         console.log("error ",error);
@@ -195,7 +208,7 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
 
                 required=""
               />
-          {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-32 object-scale-down shadow-lg rounded-full" onClick={() => { const inputElement = document.getElementById('image');if (inputElement) {   inputElement.click();  }}} ></img>:<FaUser className="w-32 h-32 object-scale-down shadow-lg rounded-full border-black border-2"  onClick={(e) => handleImageChange(e)}/>}
+          {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-32 object-scale-down shadow-lg rounded-full" onClick={() => { const inputElement = document.getElementById('image');if (inputElement) {   inputElement.click();  }}} ></img>:<FaUser className="w-32 h-32 object-scale-down shadow-lg rounded-full border-black border-2"  onClick={() => { const inputElement = document.getElementById('image');if (inputElement) {   inputElement.click();  }}}/>}
           </>
         }
           </div>
@@ -216,7 +229,7 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
                 name="name"
                 id="name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                value={isEditable ? JSON.parse(sessionStorage.getItem("data")).name|| '' : JSON.parse(sessionStorage.getItem("data")).name || ''}
+                value={isEditable ? d.name|| '' : d.name || ''}
                 // value={isEditable ? editedProfile.name || '' : profilevalue.name || ''}
                 disabled={!isEditable} // Disable if not editable
                 onChange={(e) => handleInputChange(e)}
@@ -236,7 +249,7 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
                 type="text"
                 name="gender"
                 id="gender"
-                value={isEditable ? JSON.parse(sessionStorage.getItem("data")).gender || '' : JSON.parse(sessionStorage.getItem("data")).gender || ''}
+                value={isEditable ? d.gender || '' : d.gender || ''}
                 // value={isEditable ? editedProfile.gender || '' : profilevalue.gender || ''}
                                       disabled={!isEditable} // Disable if not editable
                                       onChange={(e) => handleInputChange(e)}
@@ -258,7 +271,7 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
                 type="text"
                 name="address"
                 id="address"
-                value={isEditable ? JSON.parse(sessionStorage.getItem("data")).address || '' : JSON.parse(sessionStorage.getItem("data")).address || ''}
+                value={isEditable ? d.address || '' : d.address || ''}
                 // value={isEditable ? editedProfile.address || '' : profilevalue.address || ''}
                                       disabled={!isEditable} // Disable if not editable
                                       onChange={(e) => handleInputChange(e)}
@@ -285,7 +298,7 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
                 name="email"
                 id="email"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                value={isEditable ? JSON.parse(sessionStorage.getItem("data")).email || '' : JSON.parse(sessionStorage.getItem("data")).email || ''}
+                value={isEditable ? d.email || '' : d.email || ''}
                 // value={isEditable ? editedProfile.email || '' : profilevalue.email || ''}
                                       disabled={!isEditable} // Disable if not editable
                                       onChange={(e) => handleInputChange(e)}
@@ -305,7 +318,7 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
                 name="phone"
                 id="phone"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                value={isEditable ? JSON.parse(sessionStorage.getItem("data")).phone_number || '' : JSON.parse(sessionStorage.getItem("data")).phone_number || ''}
+                value={isEditable ? d.phone_number || '' : d.phone_number || ''}
                 // value={isEditable ? editedProfile.phone_number || '' : profilevalue.phone_number || ''}
                                       disabled={!isEditable} // Disable if not editable
                                       onChange={(e) => handleInputChange(e)}
@@ -325,7 +338,7 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
                 name="age"
                 id="age"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
-                value={isEditable ? JSON.parse(sessionStorage.getItem("data")).age || '' : JSON.parse(sessionStorage.getItem("data")).age || ''}
+                value={isEditable ? d.age || '' : d.age || ''}
                 // value={isEditable ? editedProfile.age || '' : profilevalue.age || ''}
                                       disabled={!isEditable} // Disable if not editable
                                       onChange={(e) => handleInputChange(e)}
