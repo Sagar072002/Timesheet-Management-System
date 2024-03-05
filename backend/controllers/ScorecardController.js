@@ -73,6 +73,9 @@ const getScore = async (req, res) => {
         week_number: {
           [Op.between]: [startweeknumber, endweeknumber],
         },
+        date_range: {
+          [Op.substring]: `${year}`
+        },
       },
       order: [['week_number', 'ASC']], // Order by week_number in ascending order
     });
