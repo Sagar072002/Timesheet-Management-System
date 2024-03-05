@@ -45,7 +45,8 @@ const Register = () => {
   const handleregister=async ()=>{
     
     const name=document.getElementById('name').value
-    const empid=document.getElementById('employeeid').value
+    const empid=""
+    // document.getElementById('employeeid').value
     const gender=document.getElementById('gender').value
     const pass1=document.getElementById('password').value
     const pass2=document.getElementById('confirm-password').value
@@ -64,10 +65,10 @@ const Register = () => {
 toast.error("Name cannot be empty")
 return false
     }
-    if(empid===""){
-toast.error("Employee ID cannot be empty")
-return false
-    }
+//     if(empid===""){
+// toast.error("Employee ID cannot be empty")
+// return false
+//     }
     if(gender===""){
 toast.error("Gender cannot be empty")
 return false
@@ -118,22 +119,22 @@ if(pass1!==pass2){
       toast.error("Enter a vaild Age")
       return false
     }
-    if(!empid.startsWith('E') && !empid.startsWith('A')){
-      toast.error("Enter a vaild User ID")
-      return false
-    }
-    if(admin===true && empid.startsWith('E')){
-      toast.error("Admin's ID must start with A")
-      toast.error("If employee uncheck check box it")
-      return false
+    // if(!empid.startsWith('E') && !empid.startsWith('A')){
+    //   toast.error("Enter a vaild User ID")
+    //   return false
+    // }
+    // if(admin===true && empid.startsWith('E')){
+    //   toast.error("Admin's ID must start with A")
+    //   toast.error("If employee uncheck check box it")
+    //   return false
       
-    }
-    if(admin===false && empid.startsWith('A')){
-      toast.error("Employee's ID must start with E")
-      toast.error("If Admin click check box ")
-      return false
+    // }
+    // if(admin===false && empid.startsWith('A')){
+    //   toast.error("Employee's ID must start with E")
+    //   toast.error("If Admin click check box ")
+    //   return false
 
-    }
+    // }
     const passregex=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
     if(!passregex.test(pass1)){
       toast.error("Enter a vaild Password")

@@ -14,6 +14,7 @@ import TimesheetList from './pages/TimesheetList';
 import Newadmin from './pages/Newadmin';
 import Newemp from './pages/NewEmployee';
 import ListTime from './pages/TimesheetList';
+import User_prof from './pages/user_profile';
 
 
 
@@ -37,6 +38,7 @@ function App() {
           <Route path="/eg" element={<Eg/>} />
           <Route path="/newemp" element={<Newemp/>} />
           <Route path="/timesheetList" element={<ListTime/>} />
+          <Route path="/userprofile" element={<User_prof/>} />
 
         </Routes>
     </Router>

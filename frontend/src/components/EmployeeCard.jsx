@@ -84,7 +84,7 @@ const EmployeeCard = ({ employeeData }) => {
 
   return (
     <div className=" w-1/4">
-    <Link to='/newadmin' state={{ employee: employeeData }}>
+    <Link to='/userprofile' state={{ employee: employeeData }}>
     <div className="mt-6 border border-slate-300 transition-all rounded-md bg-white hover:cursor-pointer">
       <div className="flex flex-col gap-3">
         <div style={{backgroundColor:"#66A5AD"}} className="w-full bg-gradient-to-r from-teal-100 to-teal-300 pb-4" >
