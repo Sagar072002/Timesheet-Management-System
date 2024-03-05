@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
-import img from "../assets/user_img.jpg";
+import img from "../assets/altimg.jpg";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
@@ -173,26 +173,26 @@ const Userprofile = () => {
     return null; // If isVisible is false, return null to render nothing
   }
   return (
-    <div className="flex flex-col justify-center items-center w-full">
-      <div className=" border-cyan-600  flex items-start p-10 w-full ">
-        <div className="flex justify-center items-center w-full gap-16">
+    <div className="flex flex-col justify-center items-center w-full px-10">
+      <div className=" border-cyan-600   flex items-start p-10 w-full ">
+        <div className="flex justify-center items-center w-full gap-6">
           <div className="flex flex-row justify-center items-center">
-            <div className="">
+            <div className="mr-5">
               {employee.image ? (
                 <img
                   src={employee.image}
                   alt=""
-                  className="w-36 mt-3  h-36 rounded-full"
+                  className="w-36 mt-3  border border-slate-300 h-40 rounded-md"
                 />
               ) : (
                 <img
                   src={img}
                   alt=""
-                  className="w-36 mt-3 mx-auto h-36 rounded-full"
+                  className="w-36 mt-3 border border-slate-300 mx-auto h-40 rounded-md"
                 />
               )}
             </div>
-            <div className="ml-10 font-['Plus Jakarta Sans']  ">
+            {/* <div className="ml-10 font-['Plus Jakarta Sans']  ">
               <div>
                 <p className="capitalize font-bold text-2xl">{employee.name}</p>
                 <p>
@@ -208,13 +208,30 @@ const Userprofile = () => {
                   </span>
                 </p>
               </div>
-            </div>
+            </div> */}
+            <div className="flex gap-6 justify-center items-center p-3 pr-0">
+                <div className="flex flex-col gap-3">
+                <p className="font-medium text-cyan-700">Name: <span className="text-slate-700"> {employee.name}</span></p>
+                <p className="font-medium text-cyan-700">User id: <span className="text-slate-700"> {employee.userid}</span></p>
+                <p className="font-medium text-cyan-700">Email: <span className="text-slate-700"> {employee.email}</span></p>
+                <p className="font-medium text-cyan-700">Gender: <span className="text-slate-700"> {employee.gender}</span></p>
+                </div>
+                <div className="flex flex-col gap-3">
+                <p className="font-medium text-cyan-700">Age: <span className="text-slate-700"> {employee.age}</span></p>
+                <p className="font-medium text-cyan-700">Phone: <span className="text-slate-700"> {employee.phone_number}</span></p>
+                <p className="font-medium text-cyan-700">Address: <span className="text-slate-700 "> {employee.address}</span></p>
+                <p className="font-medium text-cyan-700">Created at: <span className="text-slate-700"> {employee.createdAt.split('T')[0]}</span></p>
+                </div>
+                
+               
+
+              </div>
           </div>
 
           <div className="flex flex-col gap-3 ">
             <div className="w-full h-[206px] flex flex-col items-center justify-around">
               <div className="flex justify-around gap-4">
-                <div className="w-60 h-24 p-3 rounded-md border border-cyan-600 bg-cyan-600 text-white flex-col justify-start items-center gap-2 inline-flex">
+              <div className="w-48 h-24 p-3 rounded-sm border  bg-white border-cyan-600 hover:bg-cyan-500 hover:text-white hover:border-transparent flex-col justify-start items-center gap-2 inline-flex">
                   <div className="w-[16.41px] h-[30px] flex-col justify-start items-center flex">
                     <div className="self-stretch flex-col justify-start items-center flex">
                       <div className="text-center text-2xl font-bold font-['Plus Jakarta Sans'] leading-[30px]">
@@ -231,14 +248,14 @@ const Userprofile = () => {
                   <div className="w-[55.75px] h-[21px] justify-start items-center gap-2 inline-flex">
                     <div className="w-[55.75px] h-[21px] flex-col justify-start items-center inline-flex">
                       <div className="self-stretch flex-col justify-start items-center flex">
-                        <div className=" truncate text-center  text-sm font-normal font-['Plus Jakarta Sans'] leading-[21px]">
-                          Week's Total
+                        <div className=" truncate text-center  text-sm font-medium font-['Plus Jakarta Sans'] leading-[21px]">
+                        Current week Hours
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="w-60 h-24 p-3 rounded-md border border-cyan-600 bg-cyan-600 text-white flex-col justify-start items-center gap-2 inline-flex">
+                <div className="w-48 h-24 p-3 rounded-sm border  bg-white border-cyan-600 hover:bg-cyan-500 hover:text-white hover:border-transparent flex-col justify-start items-center gap-2 inline-flex">
                   <div className="w-[16.41px] h-[30px] flex-col justify-start items-center flex">
                     <div className="self-stretch flex-col justify-start items-center flex">
                       <div className="text-center  text-2xl font-bold font-['Plus Jakarta Sans'] leading-[30px]">
@@ -255,8 +272,8 @@ const Userprofile = () => {
                   <div className="w-[39.39px] h-[21px] justify-start items-center gap-2 inline-flex">
                     <div className="w-[39.39px] h-[21px] flex-col justify-start items-center inline-flex">
                       <div className="self-stretch flex-col justify-start items-center flex">
-                        <div className="truncate text-center  text-sm font-normal font-['Plus Jakarta Sans'] leading-[21px]">
-                          Total Duration
+                        <div className="truncate text-center  text-sm font-medium font-['Plus Jakarta Sans'] leading-[21px]">
+                        Total Hours Worked
                         </div>
                       </div>
                     </div>
@@ -264,7 +281,7 @@ const Userprofile = () => {
                 </div>
               </div>
               <div className="flex justify-around gap-4">
-                <div className="w-60 h-24 p-3 rounded-md border border-cyan-600 bg-cyan-600 text-white flex-col justify-start items-center gap-2 inline-flex">
+              <div className="w-48 h-24 p-3 rounded-sm border  bg-white border-cyan-600 hover:bg-cyan-500 hover:text-white hover:border-transparent flex-col justify-start items-center gap-2 inline-flex">
                   <div className="w-[16.41px] h-[30px] flex-col justify-start items-center flex">
                     <div className="self-stretch flex-col justify-start items-center flex">
                       <div className="text-center text-2xl font-bold font-['Plus Jakarta Sans'] leading-[30px]">
@@ -281,14 +298,14 @@ const Userprofile = () => {
                   <div className="w-[55.75px] h-[21px] justify-start items-center gap-2 inline-flex">
                     <div className="w-[55.75px] h-[21px] flex-col justify-start items-center inline-flex">
                       <div className="self-stretch flex-col justify-start items-center flex">
-                        <div className=" truncate text-center  text-sm font-normal font-['Plus Jakarta Sans'] leading-[21px]">
-                          Timesheet Count
+                        <div className=" truncate text-center  text-sm font-medium font-['Plus Jakarta Sans'] leading-[21px]">
+                        No. of Timesheets
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="w-60 h-24 p-3 rounded-md border border-cyan-600 bg-cyan-600 text-white flex-col justify-start items-center gap-2 inline-flex">
+                <div className="w-48 h-24 p-3 rounded-sm border  bg-white border-cyan-600 hover:bg-cyan-500 hover:text-white hover:border-transparent flex-col justify-start items-center gap-2 inline-flex">
                   <div className="w-[16.41px] h-[30px] flex-col justify-start items-center flex">
                     <div className="self-stretch flex-col justify-start items-center flex">
                       <div className="text-center text-2xl font-bold font-['Plus Jakarta Sans'] leading-[30px]">
@@ -305,8 +322,8 @@ const Userprofile = () => {
                   <div className="w-[39.39px] h-[21px] justify-start items-center gap-2 inline-flex">
                     <div className="w-[39.39px] h-[21px] flex-col justify-start items-center inline-flex">
                       <div className="self-stretch flex-col justify-start items-center flex">
-                        <div className="truncate text-center  text-sm font-normal font-['Plus Jakarta Sans'] leading-[21px]">
-                          Score
+                        <div className="truncate text-center  text-sm font-medium font-['Plus Jakarta Sans'] leading-[21px]">
+                        Total Score
                         </div>
                       </div>
                     </div>
@@ -318,7 +335,7 @@ const Userprofile = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center my-6 rounded-md cursor-pointer w-2/3 border-slate-400  bg-slate-100 p-4  shadow-md">
+      <div className="flex flex-col justify-center items-center my-6 rounded-md cursor-pointer w-full border-slate-400  bg-slate-100 p-4  shadow-md">
         <div className="flex justify-around items-center font-medium font-['Plus Jakarta Sans'] w-full gap-4 text-lg">
           <div
             className={
@@ -342,10 +359,10 @@ const Userprofile = () => {
                 setviewtime(false);
               }}
             >
-              View ScoreCard
+              View Scorecard
             </p>
           </div>
-          <div
+          {/* <div
             className={
               c == 2
                 ? `border-cyan-500 border-b-4  pb-4  w-1/3 text-center text-cyan-700`
@@ -360,7 +377,7 @@ const Userprofile = () => {
             >
               More Info
             </p>
-          </div>
+          </div> */}
         </div>
         {c === 0 ? (
           <div className="flex flex-col bg-slate-100 rounded-md  w-full max-h-screen pt-5 pb-5">
@@ -371,7 +388,7 @@ const Userprofile = () => {
           </div> */}
             <div className="flex  justify-center items-center gap-4 pt-5 align-center">
               <select
-                className="bg-slate-300 rounded-md outline-1 p-2 border"
+                className="bg-white rounded-md  p-2 py-3 border"
                 name="month"
                 id="month1"
               >
@@ -691,46 +708,83 @@ const Userprofile = () => {
           <></>
         )}
         {c === 2 ? (
-          <div className="font-['Plus Jakarta Sans'] w-4/5 flex flex-col justify-evenly gap-4 pt-5">
-            <div className="flex w-full border-slate-300 border-b-2 justify-around">
-              <div className="flex flex-col justify-evenly p-2">
-                <p className="text-sm font-normal text-slate-600">Name</p>
-                <p className="text-md font-semibold">{employee.name}</p>
-              </div>
-              <div className="flex flex-col justify-evenly p-2">
-                <p className="text-sm font-normal text-slate-600">User ID</p>
-                <p className="text-md font-semibold">{employee.userid}</p>
-              </div>
-              <div className="flex flex-col justify-evenly p-2">
-                <p className="textsmg font-normal text-slate-600">Email</p>
-                <p className="text-md font-semibold">{employee.email}</p>
+          // <div className="font-['Plus Jakarta Sans'] w-4/5 flex flex-col justify-evenly gap-4 pt-5">
+          //   <div className="flex w-full border-slate-300 border-b-2 justify-around">
+          //     <div className="flex flex-col justify-evenly p-2">
+          //       <p className="text-sm font-normal text-slate-600">Name</p>
+          //       <p className="text-md font-semibold">{employee.name}</p>
+          //     </div>
+          //     <div className="flex flex-col justify-evenly p-2">
+          //       <p className="text-sm font-normal text-slate-600">User ID</p>
+          //       <p className="text-md font-semibold">{employee.userid}</p>
+          //     </div>
+          //     <div className="flex flex-col justify-evenly p-2">
+          //       <p className="textsmg font-normal text-slate-600">Email</p>
+          //       <p className="text-md font-semibold">{employee.email}</p>
+          //     </div>
+          //   </div>
+          //   <div className="flex w-full border-slate-300 border-b-2 justify-around">
+          //     <div className="flex flex-col justify-evenly p-2">
+          //       <p className="text-sm font-normal text-slate-600">Age</p>
+          //       <p className="text-md font-semibold">{employee.age}</p>
+          //     </div>
+          //     <div className="flex flex-col justify-evenly p-2">
+          //       <p className="text-sm font-normal text-slate-600">Gender</p>
+          //       <p className="text-md font-semibold">{employee.gender}</p>
+          //     </div>
+          //     <div className="flex flex-col justify-evenly p-2">
+          //       <p className="textsmg font-normal text-slate-600">Phone Number</p>
+          //       <p className="text-md font-semibold">{employee.phone_number}</p>
+          //     </div>
+          //     <div className="flex flex-col justify-evenly p-2">
+          //       <p className="textsmg font-normal text-slate-600">Created At</p>
+          //       <p className="text-md font-semibold">{employee.createdAt.split('T')[0]}</p>
+          //     </div>
+          //   </div>
+          //   <div className="flex w-full border-slate-300 border-b-2 justify-around">
+          //     <div className="flex flex-col justify-evenly p-2">
+          //       <p className="text-sm font-normal text-slate-600">Address</p>
+          //       <p className="text-md font-semibold">{employee.address}</p>
+          //     </div>
+          //   </div>
+          // </div>
+          <div className="w-full flex justify-center gap-8 mt-5">
+            <div className="mt-5">
+            {employee.image ? (
+                <img
+                  src={employee.image}
+                  alt=""
+                  className="w-40 mt-3 rounded-md h-40 "
+                />
+              ) : (
+                <img
+                  src={img}
+                  alt=""
+                  className="w-40 mt-3 rounded-md h-40 "
+                />
+              )}
+            </div>
+            <div className="w-3/5 ml-10">
+              <h1 className="w-full p-2 rounded-sm bg-cyan-600 text-white text-center">User Details</h1>
+              <div className="flex gap-20 justify-center items-center p-3">
+                <div className="flex flex-col gap-3">
+                <p className="font-medium text-cyan-700">Name: <span className="text-slate-700"> {employee.name}</span></p>
+                <p className="font-medium text-cyan-700">User id: <span className="text-slate-700"> {employee.userid}</span></p>
+                <p className="font-medium text-cyan-700">Email: <span className="text-slate-700"> {employee.email}</span></p>
+                <p className="font-medium text-cyan-700">Gender: <span className="text-slate-700"> {employee.gender}</span></p>
+                </div>
+                <div className="flex flex-col gap-3">
+                <p className="font-medium text-cyan-700">Age: <span className="text-slate-700"> {employee.age}</span></p>
+                <p className="font-medium text-cyan-700">Phone: <span className="text-slate-700"> {employee.phone_number}</span></p>
+                <p className="font-medium text-cyan-700">Address: <span className="text-slate-700"> {employee.address}</span></p>
+                <p className="font-medium text-cyan-700">Created at: <span className="text-slate-700"> {employee.createdAt.split('T')[0]}</span></p>
+                </div>
+                
+               
+
               </div>
             </div>
-            <div className="flex w-full border-slate-300 border-b-2 justify-around">
-              <div className="flex flex-col justify-evenly p-2">
-                <p className="text-sm font-normal text-slate-600">Age</p>
-                <p className="text-md font-semibold">{employee.age}</p>
-              </div>
-              <div className="flex flex-col justify-evenly p-2">
-                <p className="text-sm font-normal text-slate-600">Gender</p>
-                <p className="text-md font-semibold">{employee.gender}</p>
-              </div>
-              <div className="flex flex-col justify-evenly p-2">
-                <p className="textsmg font-normal text-slate-600">Phone Number</p>
-                <p className="text-md font-semibold">{employee.phone_number}</p>
-              </div>
-              <div className="flex flex-col justify-evenly p-2">
-                <p className="textsmg font-normal text-slate-600">Created At</p>
-                <p className="text-md font-semibold">{employee.createdAt.split('T')[0]}</p>
-              </div>
             </div>
-            <div className="flex w-full border-slate-300 border-b-2 justify-around">
-              <div className="flex flex-col justify-evenly p-2">
-                <p className="text-sm font-normal text-slate-600">Address</p>
-                <p className="text-md font-semibold">{employee.address}</p>
-              </div>
-            </div>
-          </div>
         ) : (
           <></>
         )}

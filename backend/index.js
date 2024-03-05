@@ -76,7 +76,7 @@ app.post("/userscore",async (req,res)=>{
   timesum=await Timelog.sum('duration', { where: {"userid":req.body.id} }).catch(e=>res.status(500).json({error:e.message}));
   var dt = new Date();
   var date = dt.toLocaleDateString("en-US", { dateStyle: "short" });
-  dt.setDate(dt.getDate() -7);
+  dt.setDate(dt.getDate()-6);
   var stdate = dt.toLocaleDateString("en-US", { dateStyle: "short" });
   console.log(date,stdate)
   timeweeksum=await Timelog.sum('duration', { where: {"userid":req.body.id,date: {[Op.between]: [stdate, date],},} }).catch(e=>res.status(500).json({error:e.message}));

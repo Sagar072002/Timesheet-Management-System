@@ -22,24 +22,83 @@ const Timesheet = () => {
   const currentDate = new Date();
   const currentDay = currentDate.getDay(); // Define currentDay
   useEffect(() => {
-    const filled = timeData.some((row) =>
-      row.some((field, index) => index !== 0 && field !== "")
-    );
+    const filled = timeData.some((row) =>row.some((field, index) => index !== 0 && field !== ""));
     setIsAnyFieldFilled(filled);
+
   }, [timeData]);
+
+  
+    useEffect(()=>{
+      const savedData = JSON.parse(sessionStorage.getItem("timesheetData"));
+      if (savedData) {
+        setTimeData(savedData.timeData);
+        setRowCount(savedData.rowCount);
+        console.log("!!!!!!!!!!",savedData)
+      }
+      
+      const fetchdata=async()=>{
+        const response = await axios.post("http://localhost:3000/gettaskdetails", {
+          userid: sessionStorage.getItem("userName"),
+          startDate: weekDates.monday,
+          endDate: weekDates.friday,
+        }).catch((error) => {
+          toast.error(error.message);
+        });
+        if (response.status === 200) {
+            const d = {};
+      response.data.taskDetails.map((e) => {
+        if (e.task in d) {
+          d[e.task].push([e.date, e.duration]);
+        } else {
+          d[e.task] = [[e.date, e.duration]];
+        }
+      });
+      console.log(d)
+      // sessionStorage.setItem("values", JSON.stringify(Object.keys(d)));
+
+      const f = {};
+      const h = Object.keys(d);
+      console.log("hell1",f)
+
+      for (var val = 0; val < h.length; val++) {
+        f[h[val]] = [];
+        for (var j = 0; j < 5; j++) {
+          
+          const dt = new Date(weekDates.monday);
+          dt.setDate(dt.getDate() + j);
+          const newdt = dt.toLocaleDateString("fr-CA");
+
+          let found = false; // Flag to track if a value is found for the current iteration
+
+          for (var i = 0; i < d[h[val]].length; i++) {
+            if (newdt == d[h[val]][i][0]) {
+              f[h[val]].push(d[h[val]][i][1]);
+              found = true; // Set flag to true if a value is found
+              break; // Exit the inner loop once a value is found
+            }
+          }
+
+          if (!found) {
+            f[h[val]].push(0); // Push default value if no value is found for the current iteration
+          }
+        }
+      }
+      console.log("hell0",f,Object.keys(f).length)
+      // setTimeData(f)
+      // setRowCount(Object.keys(f).length);
+        }
+      }
+        fetchdata()
+    },[]);
+
+
   const handleoldtimesheet = async () => {
-    var e = document.getElementById("month");
-    var value = e.value;
-    if (e.value === "") {
-      toast.error("Select a Week range");
-      return false;
-    }
-    console.log(value.split("-"));
+
     const response = await axios
       .post("http://localhost:3000/gettaskdetails", {
         userid: sessionStorage.getItem("userName"),
-        startDate: value.split("-")[0],
-        endDate: value.split("-")[1],
+        startDate: weekDates.monday,
+        endDate: weekDates.friday
       })
       .catch((error) => {
         toast.error(error.message);
@@ -72,9 +131,8 @@ const Timesheet = () => {
       for (var val = 0; val < h.length; val++) {
         f[h[val]] = [];
         for (var j = 0; j < 5; j++) {
-          var l = document.getElementById("month").value;
-          var value = l.split("-")[0];
-          const dt = new Date(value);
+          
+          const dt = new Date(weekDates.monday);
           dt.setDate(dt.getDate() + j);
           const newdt = dt.toLocaleDateString("fr-CA");
 
@@ -94,7 +152,7 @@ const Timesheet = () => {
         }
       }
       setdate(f);
-      console.log(f);
+      console.log("hello",f);
       setTimeout(() => {
         setviewtime(true);
       }, 700);
@@ -467,6 +525,9 @@ const Timesheet = () => {
 
   const [isFirstEntry, setIsFirstEntry] = useState(true);
   const handleSave = async () => {
+    const dataToSave = { timeData, rowCount };
+    // Save timesheet data to sessionStorage
+    sessionStorage.setItem("timesheetData", JSON.stringify(dataToSave));
     const isAnyTaskFilled = timeData.every((row) => {
       const taskName = row[0];
       const durations = row.slice(1);
@@ -607,7 +668,7 @@ const Timesheet = () => {
     <div className="w-full mt-20">
       <ToastContainer />
 
-      <div className="flex justify-center my-10 mx-5 text-slate-700 font-bold text-2xl">
+      <div className="flex justify-start my-10  text-slate-700 font-bold text-2xl">
         <p>
           {" "}
           Current Week:{" "}
@@ -623,7 +684,7 @@ const Timesheet = () => {
           </span>{" "}
         </p> */}
       </div>
-
+        <p>{}</p>
       <div className="relative  overflow-x-auto shadow-md sm:rounded-md">
         <table className=" bg-white w-full text-sm text-gray-500">
           <thead className="w-full text-white text-center text-base bg-cyan-600 ">
@@ -858,182 +919,7 @@ const Timesheet = () => {
         </button>
       </div> 
     */}
-      {viewtime ? (
-        <div>
-          <div className="relative mt-10  overflow-x-auto shadow-md sm:rounded-md">
-            <table className=" bg-white w-full text-sm text-gray-500">
-              <thead className="w-full text-white text-center text-base bg-cyan-600 ">
-                <tr className="relative ">
-                  <th
-                    scope="col"
-                    className="w-50 py-2  border-white border-r-2 uppercase text-xl "
-                  >
-                    <span className="absolute left-20 top-12"> Task</span>
-                  </th>
-                  <th
-                    colSpan="5"
-                    scope="col"
-                    className="h-15 px-6 py-4 uppercase text-xl"
-                  >
-                    Duration
-                  </th>
-
-                  <th
-                    scope="col"
-                    className="w-40 px-6 py-2 border-white border-l-2 uppercase text-xl"
-                  >
-                    <span className="absolute right-13 top-12"> Total</span>
-                  </th>
-                  <th scope="col" className="px-6 py-3"></th>
-                </tr>
-                <tr>
-                  <th scope="col" className="px-6 py-3 "></th>
-                  {[...Array(5)].map((_, index) => {
-                    var e = document.getElementById("month").value;
-                    var value = e.split("-")[0];
-                    const dt = new Date(value);
-                    dt.setDate(dt.getDate() + index);
-                    const newdt = dt.toLocaleDateString("en-US", {
-                      dateStyle: "short",
-                    });
-                    // console.log(dt.getDate());
-                    const days = [
-                      "Sunday",
-                      "Monday",
-                      "Tuesday",
-                      "Wednesday",
-                      "Thursday",
-                      "Friday",
-                      "Saturday",
-                    ];
-                    // d
-
-                    return (
-                      <th
-                        key={index}
-                        scope="col"
-                        className="px-6 py-3 border-2 border-white"
-                      >
-                        {days[index + 1]} <br /> {newdt}
-                      </th>
-                    );
-                  })}
-                  <th scope="col" className="px-6 py-3"></th>
-                  <th scope="col" className="px-6 py-3"></th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {JSON.parse(sessionStorage.getItem("values")).map((val) => {
-                  console.log(date[val], sessionStorage.getItem("values"));
-                  return (
-                    <tr key={val} className="bg-white">
-                      <th
-                        scope="row"
-                        className="px-3 py-4 font-medium text-gray-900 whitespace-nowrap "
-                      >
-                        <input
-                          type="text"
-                          id={val}
-                          className="mt-4 text-center bg-slate-100 h-12 w-full border border-gray-300"
-                          // value={timeData[index]?.[0] || ""}
-                          disabled={true}
-                          value={val}
-                        />
-                      </th>
-                      
-                        {
-                          
-                          date[val].map(value=>{
-                            // console.log(value)
-                            
-                            return (<td
-                              scope="row"
-                              className="px-3 py-4 font-medium text-gray-900 whitespace-nowrap "
-                            >
-                              <input
-                                type="text"
-                                id={val}
-                                className="mt-4 text-center bg-slate-100 h-12 w-full border border-gray-300"
-                                // value={timeData[index]?.[0] || ""}
-                                disabled={true}
-                                value={(value)}
-                        />
-
-                            </td>)
-                          })
-                        }
-                        <td
-                              scope="row"
-                              className="px-3 py-4 font-medium text-gray-900 whitespace-nowrap "
-                            >
-                              <input
-                                type="text"
-                                id={val}
-                                className="mt-4 text-center bg-slate-100 h-12 w-full border border-gray-300"
-                                // value={timeData[index]?.[0] || ""}
-                                disabled={true}
-                                value={date[val].reduce((c,v)=> {return c+parseFloat(v)},0)}
-                        />
-
-                            </td>
-                        
-                        
-                        
-                      </tr>
-                    
-                  );
-                })}
-                {/* <td className="text-center text-xl">
-                      {calculateTaskTotal(index)}
-                    </td> */}
-                {/* </tr> */}
-                <tr className="">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-bold text-xl text-cyan-700 whitespace-nowrap"
-                  >
-                    Total
-                  </th>
-                  
-                  {
-                  [0,1,2,3,4].map((dayIndex) => {
-                    var c=0
-                    for(var i=0;i<Object.values(date).length;i++){
-                      c+=parseFloat(Object.values(date)[i][dayIndex])
-                    }
-                    count+=c
-                    return (
-                    <td key={dayIndex} className="px-3 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                      <input
-                                type="text"
-                                className="mt-4 text-center bg-slate-100 h-12 w-full border border-gray-300"
-                                // value={timeData[index]?.[0] || ""}
-                                disabled={true}
-                                value={parseFloat(c)}
-                        />
-                      
-                    </td>
-                  )
-                  })}
-                  <td className="px-3 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                  <input
-                                type="text"
-                                className="mt-4 text-center bg-slate-100 h-12 w-full border border-gray-300"
-                                // value={timeData[index]?.[0] || ""}
-                                disabled={true}
-                                value={count}
-                        />
-
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
+      
     </div>
   );
 };

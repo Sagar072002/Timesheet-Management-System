@@ -230,21 +230,21 @@ const NewEmploye = () => {
           
         </div>
         <p className="text-center font-bold text-lg">Hii {JSON.parse(sessionStorage.getItem('data')).name}</p>
-        <div className="mt-16 text-xl  flex flex-col gap-8 justify-center items-center">
-        <div className='w-full'>
-          <Link to='/newemp' ><p className='text-white text-center bg-cyan-600 px-6 py-3 w-full rounded-md font-bold'>Current Timesheet</p></Link>
+        <div className="mt-16 text-xl  flex flex-col gap-8 justify-center items-start">
+          <div className='w-full'>
+          <Link to='/newemp' ><p className='text-white text-left bg-cyan-600  px-3 py-3 w-full rounded-md font-bold'>Current Timesheet</p></Link>
           </div>
           <div>
-          <Link to='/timesheetList'>Timesheet List</Link>
+          <Link to='/timesheetList' className="px-3">Timesheet List</Link>
           </div>
           <div>
-          <Link to='/scorecard' >Score Card</Link>
+          <Link to='/scorecard'  className="px-3">Score Card</Link>
           </div>
           <div>
-          <Link to='/profile'>Edit Profile</Link>
+          <Link to='/profile' className="px-3">Edit Profile</Link>
           </div>
           <button
-            className="px-6 py-3 rounded-sm border font-medium bg-white text-black mt-5  hover:cursor-pointer"
+            className="px-6 py-2 absolute bottom-2 rounded-md border font-medium bg-red-600 text-white hover:cursor-pointer"
             onClick={handleLogout}
           >
             Logout
@@ -268,7 +268,7 @@ const NewEmploye = () => {
                 <CountUp start={0} end={time_count} duration={2} delay={0} />
               )}
             </ScrollTrigger>
-            <p>Timesheets</p>
+            <p>No. of Timesheets</p>
           </div>
           <div className="bg-white border-cyan-600 hover:bg-cyan-500 hover:text-white hover:border-transparent border-2 text-black font-['Plus Jakarta Sans']  rounded-lg w-56 justify-center items-center flex flex-col text-xl font-bold h-32 gap-5">
             <ScrollTrigger
@@ -280,7 +280,19 @@ const NewEmploye = () => {
                 <CountUp start={0} end={duration} duration={2} delay={0} />
               )}
             </ScrollTrigger>
-            <p>Hours Worked</p>
+            <p>Total Hours Worked</p>
+          </div>
+          <div className="bg-white border-cyan-600 hover:bg-cyan-500 hover:text-white hover:border-transparent border-2 text-black font-['Plus Jakarta Sans']  rounded-lg w-56 justify-center items-center flex flex-col text-xl font-bold h-32 gap-5">
+            <ScrollTrigger
+              key={counterResetKey}
+              onEnter={handleScroll}
+              onExit={handleScroll}
+            >
+              {counterOn && (
+                <CountUp start={0} end={week} duration={2} delay={0} />
+              )}
+            </ScrollTrigger>
+            <p>Current week Hours</p>
           </div>
           <div className="bg-white border-cyan-600 hover:bg-cyan-500 hover:text-white hover:border-transparent border-2 text-black font-['Plus Jakarta Sans']  rounded-lg w-56 justify-center items-center flex flex-col text-xl font-bold h-32 gap-5">
             <ScrollTrigger

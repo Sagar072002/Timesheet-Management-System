@@ -451,16 +451,17 @@ if(pass1!==pass2){
               </Link>
             </p>
     </div>
-
+            <div className='flex justify-end'>
             <button
               type="submit"
               onClick={handleregister}
               // className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-md text-sm px-5 py-3 text-center"
-             className="w-full text-white bg-cyan-500 hover:bg-cyan-400 font-medium rounded-md text-sm px-5 py-2.5 text-center me-2 mb-2">
+             className="w-1/3  text-white bg-cyan-500 hover:bg-cyan-400 font-medium rounded-md text-sm px-5 py-2.5 text-center me-2 mb-2">
 
             
               Register
             </button>
+            </div>
           </div>
         </div>
       </div>

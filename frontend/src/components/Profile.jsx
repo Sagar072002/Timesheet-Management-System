@@ -172,15 +172,15 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
           
         </div>
         <p className="text-center font-bold text-lg">Hii {JSON.parse(sessionStorage.getItem('data')).name}</p>
-        <div className="mt-14 text-xl  flex flex-col gap-8 justify-center items-center">
-          <Link to= '/newemp'>Current Timesheet</Link>
-          <Link to='/timesheetList'>Timesheet List</Link>
-          <Link to='/scorecard'>Score Card</Link>
+        <div className="mt-14 text-xl  flex flex-col gap-8 justify-center items-start">
+          <Link to= '/newemp'  className="px-3">Current Timesheet</Link>
+          <Link to='/timesheetList'  className="px-3">Timesheet List</Link>
+          <Link to='/scorecard'  className="px-3">Score Card</Link>
           <div className='w-full'>
-          <Link to='/profile'><p className='text-white text-center bg-cyan-600 px-8 py-3 w-full rounded-md font-bold'>Edit Profile</p></Link>
+          <Link to='/profile'><p className='text-white text-left bg-cyan-600 px-3 py-3 w-full rounded-md font-bold'>Edit Profile</p></Link>
           </div>
           <button
-            className="px-6 py-3 rounded-sm border font-medium bg-white text-black mt-5  hover:cursor-pointer"
+            className="px-6 py-2 absolute bottom-2 rounded-md border font-medium bg-red-600 text-white  hover:cursor-pointer"
             onClick={handleLogout}
           >
             Logout
