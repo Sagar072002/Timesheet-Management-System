@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import Detail from "./Detail";
-import ViewTimesheet from "./ViewScorecard";
 import img from "../assets/altimg.jpg"
 import backg from "../assets/bg.jpg"
 import { Link } from "react-router-dom";

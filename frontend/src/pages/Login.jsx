@@ -69,7 +69,7 @@ const Login = () => {
           if (admin) {
             n("/admin");
           } else {
-            n("/employee");
+            n("/newemp");
           }
         }
         //toast.error(sessionStorage.getItem("userName") !="")
@@ -286,7 +286,7 @@ const Login = () => {
             if (admin) {
               n("/admin");
             } else {
-              n("/employee");
+              n("/newemp");
             }
           }, 4000); // Adjust the delay as needed
         }
