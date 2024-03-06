@@ -1,8 +1,6 @@
 // This is the Admin.jsx which is basically the admin dashboard where the admin can see the total employees.
 // Also he can view their details, scorecards and timesheet
 
-
-
 import React, { useState, useEffect } from "react";
 import Adprofile from './admin_profile'
 import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
@@ -22,28 +20,25 @@ const Admin = () => {
 
   useEffect(() => {
     const fetchedUsername = sessionStorage.getItem("userName");
-    console.log("Fetched username:", fetchedUsername);
     setUsername(fetchedUsername);
     fetchAllEmployees();
     displayData();
-    // console.log("hell",sessionStorage.getItem("auth"))
     if (sessionStorage.getItem("auth") === "false") {
       navigate("/");
     }
     else if(sessionStorage.getItem("auth") === "true" &&sessionStorage.getItem("userName")[0]==='E' ) 
     {
-      console.log("UNauth",sessionStorage.getItem("userName"))
       navigate("/Employee")
     }
   }, []);
 
+  // Display the details of the Admin
   const displayData = async () => {
     try {
       const named = sessionStorage.getItem("userName");
       const url = `http://localhost:3000/users/${named}`;
       const response = await axios.get(url);
       const data = response.data;
-      // console.log(data)
       setProfileValue(data);
     } catch (error) {
       toast.error(error.message);
@@ -55,19 +50,10 @@ const Admin = () => {
       const url = `http://localhost:3000/users`;
       const response = await axios.get(url);
       const data = response.data.users; // Extract the array of users from the object
-   // Filter users where is_admin is true
+   // Filter users where is_admin is false
    const adminUsers = data.filter(user => user.is_admin === false);
-
-   // Assuming age is a property of each user object
-
-   console.log("Fetched admin users:", adminUsers);
-
    setEmployees(adminUsers);
    setFilteredEmployees(adminUsers);
-  // console.log(admin)
-      console.log("Fetched employees:", data);
-  // setEmployees(data);
-  //     setFilteredEmployees(data);
     } catch (error) {
       toast.error(error.message);
     }
@@ -121,11 +107,7 @@ const Admin = () => {
     setFilteredEmployees(filtered);
   };
   
-  
-  
-  
-  
-  
+
   return (
     <div style={{backgroundColor:"#EDF4F2"}} className=" flex min-h-lvh">
       <ToastContainer />
@@ -151,11 +133,9 @@ const Admin = () => {
         {isProfileVisible && (
           <div className=" bg-slate-200 border border-slate-400 rounded absolute right-0 top-19 w-32 p-2 h-28" >
            <div className="border-white flex justify-center">
-           {/* {JSON.parse(sessionStorage.getItem('data')).image!==null?<img onClick={toggleProfileVisibility} src={JSON.parse(sessionStorage.getItem('data')).image} className="w-10 h-10  object-scale-down rounded-full"/>:<FaUser onClick={toggleProfileVisibility}  className="text-2xl text-white"   />} */}
            <div className='absolute top-0 right-0  hover:bg-slate-400 hover:text-white rounded-full p-1'>
             <RxCross2 className='text-xl'onClick={toggleProfileVisibility}/>
           </div>
-                          {/* <FaUser             onClick={toggleProfileVisibility}  className="text-2xl text-white"   /> */}
 </div>
             <div className="editprofilediv mt-6 text-lg">
               <p
@@ -184,12 +164,6 @@ const Admin = () => {
           </div>
         )}
         </div>
-        {/* <div className="flex gap-5 justify-center">
-          <div className="bg-slate-300 text-white rounded-sm w-56 justify-center items-center flex text-lg font-bold h-32">Hey</div>
-          <div className="bg-slate-300 text-white rounded-sm w-56 justify-center items-center flex text-lg font-bold h-32">Hey</div>
-          <div className="bg-slate-300 text-white rounded-sm w-56 justify-center items-center flex text-lg font-bold h-32">Hey</div>
-          
-        </div> */}
        <div className="mt-4 flex justify-center p-4 ">
   <input
     className="bg-white border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-md focus:ring-slate-600 focus:border-slate-600 block w-3/4 p-3.5"

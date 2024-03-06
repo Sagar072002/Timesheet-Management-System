@@ -1,3 +1,5 @@
+// This the page that displays the details of employee to the Admin, whenever the Admin clicks on Details button for a particular employee
+
 import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import img from "../assets/altimg.jpg";
@@ -16,7 +18,6 @@ const Userprofile = () => {
   const location = useLocation();
   const employee = location.state && location.state.employee;
   useEffect(() => {
-    console.log(employee);
     const userscore = async () => {
       const response = await axios.post("http://localhost:3000/userscore", {
         id: employee.userid,
@@ -25,7 +26,6 @@ const Userprofile = () => {
       setWeek(response.data.week);
       setDuration(response.data.totaldur);
       setTimesheet(response.data.timeseet_count);
-      console.log(score, week, duration);
     };
     userscore();
   }, []);
@@ -33,9 +33,9 @@ const Userprofile = () => {
   var count = 0;
   const [viewtime, setviewtime] = useState(false);
   const [viewtimedata, setviewtimedata] = useState([]);
-  // const [d, setd] = useState([]);
   const [date, setdate] = useState([]);
 
+  // To Display the old timesheet of a selected employee to the Admin
   const handleoldtimesheet = async () => {
     var e = document.getElementById("month1");
 
@@ -44,10 +44,7 @@ const Userprofile = () => {
       toast.error("Select a Week range");
       return false;
     }
-    console.log(value.split("-"));
-    // alert(employee.userid);
-    const response = await axios
-      .post("http://localhost:3000/gettaskdetails", {
+    const response = await axios.post("http://localhost:3000/gettaskdetails", {
         userid: employee.userid,
         startDate: value.split("-")[0],
         endDate: value.split("-")[1],
@@ -105,8 +102,6 @@ const Userprofile = () => {
         }
       }
       setdate(f);
-      // alert("fff");
-      console.log(f);
       setTimeout(() => {
         setviewtime(true);
       }, 700);
@@ -120,9 +115,9 @@ const Userprofile = () => {
 
   const handleCrossClick = () => {
     setIsVisible(false);
-    // func();
   };
 
+  // Fetching the score of a Selected user for a given month(4 weeks)
   const handleSubmit = async () => {
     // Check if both fields are filled
     if (!selectedYear || !selectedMonth) {
@@ -132,11 +127,6 @@ const Userprofile = () => {
 
     // Retrieve the employee ID
     const userId = employee.userid;
-
-    // Print user ID, month number, and year to console
-    console.log("User ID:", userId);
-    console.log("Month:", selectedMonth);
-    console.log("Year:", selectedYear);
 
     try {
       // Make the axios POST request with the selected year, month, and employee ID
@@ -192,23 +182,6 @@ const Userprofile = () => {
                 />
               )}
             </div>
-            {/* <div className="ml-10 font-['Plus Jakarta Sans']  ">
-              <div>
-                <p className="capitalize font-bold text-2xl">{employee.name}</p>
-                <p>
-                  User ID:{" "}
-                  <span className="font-medium text-base">
-                    {employee.userid}
-                  </span>
-                </p>
-                <p>
-                  Email:{" "}
-                  <span className="font-medium text-base">
-                    {employee.email}
-                  </span>
-                </p>
-              </div>
-            </div> */}
             <div className="flex gap-6 justify-center items-center p-3 pr-0">
                 <div className="flex flex-col gap-3">
                 <p className="font-medium text-cyan-700">Name: <span className="text-slate-700"> {employee.name}</span></p>
@@ -222,9 +195,6 @@ const Userprofile = () => {
                 <p className="font-medium text-cyan-700">Address: <span className="text-slate-700 "> {employee.address}</span></p>
                 <p className="font-medium text-cyan-700">Created at: <span className="text-slate-700"> {employee.createdAt.split('T')[0]}</span></p>
                 </div>
-                
-               
-
               </div>
           </div>
 
@@ -362,30 +332,9 @@ const Userprofile = () => {
               View Scorecard
             </p>
           </div>
-          {/* <div
-            className={
-              c == 2
-                ? `border-cyan-500 border-b-4  pb-4  w-1/3 text-center text-cyan-700`
-                : `w-1/3 text-center border-transparent border-b-4`
-            }
-          >
-            <p
-              onClick={() => {
-                setc(2);
-                setviewtime(false);
-              }}
-            >
-              More Info
-            </p>
-          </div> */}
         </div>
         {c === 0 ? (
           <div className="flex flex-col bg-slate-100 rounded-md  w-full max-h-screen pt-5 pb-5">
-            {/* <div className="flex items-center justify-between py-5 px-10">
-            <h1 className="flex justify-center p-2 pt-4 text-black font-['Plus Jakarta Sans'] font-semibold  w-full text-2xl">
-              View Timesheets
-            </h1>
-          </div> */}
             <div className="flex  justify-center items-center gap-4 pt-5 align-center">
               <select
                 className="bg-white rounded-md  p-2 py-3 border"
@@ -471,10 +420,6 @@ const Userprofile = () => {
                     <tbody>
                       {JSON.parse(sessionStorage.getItem("values")).map(
                         (val) => {
-                          console.log(
-                            date[val],
-                            sessionStorage.getItem("values")
-                          );
                           return (
                             <tr
                               key={val}
@@ -553,7 +498,6 @@ const Userprofile = () => {
                               <p
                                 type="text"
                                 className="text-center text-base font-bold font-['Plus Jakarta Sans']"
-                                // value={timeData[index]?.[0] || ""}
                                 disabled={true}
                               >
                                 {parseFloat(c)}
@@ -565,7 +509,6 @@ const Userprofile = () => {
                           <p
                             type="text"
                             className="text-center text-base font-semibold font-['Plus Jakarta Sans'] "
-                            // value={timeData[index]?.[0] || ""}
                             disabled={true}
                           >
                             {count}
@@ -588,7 +531,6 @@ const Userprofile = () => {
             <div className="flex flex-col w-2/4 items-center mx-auto">
               <div className="w-2/3 flex flex-col mt-3  gap-2 ">
                 <div className="w-full flex flex-col gap-8">
-                  {/* <h1 className="flex justify-center p-2 text-black font-['Plus Jakarta Sans'] font-semibold   w-full text-2xl">View Score Card</h1> */}
                   <div className="flex flex-row justify-center gap-4 pt-5">
                     <select
                       id="year"
@@ -605,9 +547,6 @@ const Userprofile = () => {
                         );
                       })}
                     </select>
-                    {/* <label htmlFor="month" className="font-bold">
-                  Select Month:
-                </label> */}
                     <select
                       id="month"
                       className="px-6 py-4 w-44 border rounded-m outline-none text-black"
@@ -650,7 +589,6 @@ const Userprofile = () => {
                 {/* Render fetched data */}
                 {fetchedData && fetchedData.length > 0 ? (
                   <div className="text-white rounded-md">
-                    {/* <p className="font-bold mb-3">Weekly Scores:</p> */}
                     <div className="rounded-lg overflow-hidden z-10 shadow-md">
                       <table className=" w-full rounded-lg">
                         <thead className="bg-cyan-600 w-full">
@@ -708,46 +646,6 @@ const Userprofile = () => {
           <></>
         )}
         {c === 2 ? (
-          // <div className="font-['Plus Jakarta Sans'] w-4/5 flex flex-col justify-evenly gap-4 pt-5">
-          //   <div className="flex w-full border-slate-300 border-b-2 justify-around">
-          //     <div className="flex flex-col justify-evenly p-2">
-          //       <p className="text-sm font-normal text-slate-600">Name</p>
-          //       <p className="text-md font-semibold">{employee.name}</p>
-          //     </div>
-          //     <div className="flex flex-col justify-evenly p-2">
-          //       <p className="text-sm font-normal text-slate-600">User ID</p>
-          //       <p className="text-md font-semibold">{employee.userid}</p>
-          //     </div>
-          //     <div className="flex flex-col justify-evenly p-2">
-          //       <p className="textsmg font-normal text-slate-600">Email</p>
-          //       <p className="text-md font-semibold">{employee.email}</p>
-          //     </div>
-          //   </div>
-          //   <div className="flex w-full border-slate-300 border-b-2 justify-around">
-          //     <div className="flex flex-col justify-evenly p-2">
-          //       <p className="text-sm font-normal text-slate-600">Age</p>
-          //       <p className="text-md font-semibold">{employee.age}</p>
-          //     </div>
-          //     <div className="flex flex-col justify-evenly p-2">
-          //       <p className="text-sm font-normal text-slate-600">Gender</p>
-          //       <p className="text-md font-semibold">{employee.gender}</p>
-          //     </div>
-          //     <div className="flex flex-col justify-evenly p-2">
-          //       <p className="textsmg font-normal text-slate-600">Phone Number</p>
-          //       <p className="text-md font-semibold">{employee.phone_number}</p>
-          //     </div>
-          //     <div className="flex flex-col justify-evenly p-2">
-          //       <p className="textsmg font-normal text-slate-600">Created At</p>
-          //       <p className="text-md font-semibold">{employee.createdAt.split('T')[0]}</p>
-          //     </div>
-          //   </div>
-          //   <div className="flex w-full border-slate-300 border-b-2 justify-around">
-          //     <div className="flex flex-col justify-evenly p-2">
-          //       <p className="text-sm font-normal text-slate-600">Address</p>
-          //       <p className="text-md font-semibold">{employee.address}</p>
-          //     </div>
-          //   </div>
-          // </div>
           <div className="w-full flex justify-center gap-8 mt-5">
             <div className="mt-5">
             {employee.image ? (
