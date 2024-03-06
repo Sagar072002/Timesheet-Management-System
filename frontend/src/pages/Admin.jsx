@@ -136,7 +136,8 @@ const Admin = () => {
           <div className="flex items-center">
             <div>
               <span className="text-lg text-slate-700 mr-2 absolute right-20 top-12 font-bold">
-                Hii, {JSON.parse(sessionStorage.getItem("data")).name}
+                <div> ADMIN ID : {JSON.parse(sessionStorage.getItem("data")).userid}</div>
+                <div className="text-center">Hii, {JSON.parse(sessionStorage.getItem("data")).name}</div>
               </span> 
             </div>
           

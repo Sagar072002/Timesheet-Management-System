@@ -1,3 +1,4 @@
+// This code is contributed by Surya
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -11,15 +12,6 @@ const {
   getUserByUserId,
   updateUserDetails,
 } = require("./controllers/UserController");
-// const {
-//   createTimelog,
-//   deleteTimelogs,
-//   updateTimelog,
-// } = require("./controllers/TimelogController");
-// const {
-//   createScorecard,
-//   getScore,
-// } = require("./controllers/ScorecardController");
 const {
   sendmail,
   verifymail,
@@ -71,25 +63,20 @@ app.post('/daterange',getDateRange)
 
 //user Score
 app.post("/userscore",async (req,res)=>{
-  console.log("hell",req.body.id)
   sum=await Scorecard.sum('score', { where: {"userid":req.body.id} }).catch(e=>res.status(500).json({error:e.message}));
   timesum=await Timelog.sum('duration', { where: {"userid":req.body.id} }).catch(e=>res.status(500).json({error:e.message}));
   var dt = new Date();
   var date = dt.toLocaleDateString("en-US", { dateStyle: "short" });
   dt.setDate(dt.getDate()-6);
   var stdate = dt.toLocaleDateString("en-US", { dateStyle: "short" });
-  console.log(date,stdate)
   timeweeksum=await Timelog.sum('duration', { where: {"userid":req.body.id,date: {[Op.between]: [stdate, date],},} }).catch(e=>res.status(500).json({error:e.message}));
   time_count=await Scorecard.count({where: {"userid":req.body.id}}).catch(e=>res.status(500).json({error:e.message}));
   return res.status(200).json({score:sum,totaldur:timesum,week:timeweeksum,timeseet_count:time_count})
 })
 
 app.listen(PORT, async () => {
-  console.log(`Server is running on port ${PORT}`);
-
   // Sync Sequelize models with the database
   await sequelize.sync({ force: false });
-  console.log("Database synced successfully");
   const defaultuser = async () => {
     var dt = new Date();
     dt.setDate(dt.getDate() - dt.getDay() + 1);
@@ -107,17 +94,13 @@ app.listen(PORT, async () => {
       a1.push(score[i].userid);
     }
     var a2 = [];
-    console.log(a1);
     var user = await User.findAll({ where: { is_admin: "false" } });
     for (i = 0; i < user.length; i++) {
       if (a1.indexOf(user[i].userid) === -1) {
-        console.log(user[i].email);
         a2.push(user[i].email);
       }
     }
-    console.log(a2);
     var sub=`Timesheet for week ${range} is overdue`
-    console.log(sub);
     var msg="I hope this message finds you well.This is a friendly reminder that your timesheet for the current period is overdue. Timely submission of your timesheet is crucial for accurate payroll processing and project management.We kindly request that you submit your timesheet as soon as possible."
     var html=  `<body>
     <p>Dear Employee,</p>
@@ -151,7 +134,6 @@ app.listen(PORT, async () => {
     for (i = 0; i < user.length; i++) {
         a2.push(user[i].email);
     }
-    console.log(a2);
     var sub=`Timesheet for week ${range} is overdue`
     var msg="I hope this message finds you well.This is a friendly reminder that your timesheet for the current period is overdue. Timely submission of your timesheet is crucial for accurate payroll processing and project management.We kindly request that you submit your timesheet as soon as possible."
     var html=`<body>
@@ -167,28 +149,12 @@ app.listen(PORT, async () => {
     sendbulkmail(a2,sub,msg,html);
     
   }
-
-
-  // var g=a2.filter(d=>a1.indexOf(d)===-1)
-  // console.log(g)
-
-  // let date = new Date();
-  // let seconds = date.getSeconds();
-  // let minutes = date.getMinutes();
-  // let hours = date.getHours();
-  // const formattedTime = date.toLocaleTimeString('en-US');
-  // console.log(date.getDay(),hours,minutes,seconds,formattedTime)
   schedule.scheduleJob("00 14 * * 5", () => {
     warning();
-    console.log("Warning Mail");
   });
   schedule.scheduleJob("45 18 * * 5", () => {
     // "30 18 * * 5" time -- 18:45  date -- friday(5)
     defaultuser();
-    console.log("Deadline Expired ");
   });
 
-  // schedule.scheduleJob("30 18 * * 4", async () => {
-  //   console.log("Trial");
-  // });
 });
