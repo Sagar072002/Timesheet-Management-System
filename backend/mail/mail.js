@@ -1,4 +1,3 @@
-// This code is done by Rithik
 const nodemailer = require("nodemailer"); // to send mail from node
 const { google } = require("googleapis"); // to get gmail access for sender
 const { User } = require("../db"); //to fetch object pf users db 

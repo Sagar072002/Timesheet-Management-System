@@ -1,4 +1,3 @@
-// This code is done by Surya
 const { Sequelize, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 

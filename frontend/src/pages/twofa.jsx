@@ -1,4 +1,3 @@
-//This page is done by Rithik
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Tb2Fa,TbPasswordMobilePhone  } from "react-icons/tb";

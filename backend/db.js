@@ -1,4 +1,3 @@
-// This code is contributed by Surya
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 //DB connection is established
