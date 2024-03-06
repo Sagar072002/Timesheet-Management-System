@@ -230,6 +230,7 @@ const NewEmploye = () => {
           
         </div>
         <p className="text-center font-bold text-lg">Hii {JSON.parse(sessionStorage.getItem('data')).name}</p>
+        <p className="text-center font-bold text-lg">Employee ID : {JSON.parse(sessionStorage.getItem('data')).userid}</p>
         <div className="mt-16 text-xl  flex flex-col gap-8 justify-center items-start">
           <div className='w-full'>
           <Link to='/newemp' ><p className='text-white text-left bg-cyan-600  px-3 py-3 w-full rounded-md font-bold'>Current Timesheet</p></Link>

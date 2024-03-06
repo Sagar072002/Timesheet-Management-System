@@ -1,7 +1,6 @@
 const { Scorecard,User } = require('../db');
 const { Op } = require('sequelize');
 
-
 const createScorecard = async (req, res) => {
   try {
     const { date_range, userid, week_number, score } = req.body;
@@ -62,10 +61,6 @@ const getScore = async (req, res) => {
     const startweeknumber = getWeekNumber(startOfWeek(startDate, { weekStartsOn: 1 }));
     const endweeknumber = getWeekNumber(endOfWeek(endDate, { weekStartsOn: 1 }));
 
-    console.log("userid", userid);
-    console.log("startweeknumber", startweeknumber);
-    console.log("endweeknumber", endweeknumber);
-
     // Fetch scorecards for the specified user and week range
     const scorecards = await Scorecard.findAll({
       where: {
@@ -94,58 +89,14 @@ const getScore = async (req, res) => {
   }
 };
 
-// const totalScore = async (req, res) => {
-//   try {
-//     const { userid, startDate } = req.body;
-
-//     // Calculate the week number for the provided start date
-//     console.log("start_date", startDate);
-//     const startWeekNumber = getWeekNumber(new Date(startDate));
-
-//     console.log("userid", userid);
-//     console.log("startWeekNumber", startWeekNumber);
-
-//     // Fetch scorecards for the specified user and weeks before the provided start date
-//     const scorecards = await Scorecard.findAll({
-//       where: {
-//         userid,
-//         week_number: {
-//           [Op.lt]: startWeekNumber,
-//         },
-//       },
-//       order: [['week_number', 'ASC']], // Order by week_number in ascending order
-//     });
-
-//     // Calculate the total score from the fetched scorecards
-//     const totalScore = scorecards.reduce((acc, scorecard) => acc + scorecard.score, 0);
-
-//     res.status(200).json({ totalScore });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// };
-
-
 const getDateRange = async (req, res) => {
   try {
     const { userid } = req.body;
-
-    // Calculate the week number for the provided start date
-    //const startWeekNumber = getWeekNumber(new Date(start_date));
-
-    console.log("userid", userid);
-    //console.log("startWeekNumber", startWeekNumber);
-
     // Fetch scorecards for the specified user and weeks before the provided start date
     const scorecards = await Scorecard.findAll({
       where: {
         userid,
-        // week_number: {
-        //   [Op.lt]: startWeekNumber,
-        // },
       },
-      //order: [['week_number', 'ASC']], // Order by week_number in ascending order
     });
 
     // Extract date ranges from the fetched scorecards

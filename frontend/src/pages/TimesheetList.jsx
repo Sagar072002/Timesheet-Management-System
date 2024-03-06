@@ -6,22 +6,22 @@ import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
 import { Link, useNavigate } from 'react-router-dom';
 
 
-const TimesheetList = ({ timesheet }) => {
-  // State to control the visibility of tasks and durations
+const TimesheetList = () => {
+
   var count = 0;
   const [viewtime, setviewtime] = useState(false);
-  const [viewtimedata, setviewtimedata] = useState([]);
-  // const [d, setd] = useState([]);
   const [date, setdate] = useState([]);
 
   const handleoldtimesheet = async () => {
+    //week range is bought from dropdown menu
     var e = document.getElementById("month");
     var value = e.value;
+    //This part is to throw error if the value is empty 
     if (e.value === "") {
       toast.error("Select a Week range");
       return false;
     }
-    console.log(value.split("-"));
+    //This part is to fetch timesheet data from timelog table
     const response = await axios
       .post("http://localhost:3000/gettaskdetails", {
         userid: sessionStorage.getItem("userName"),
@@ -32,17 +32,9 @@ const TimesheetList = ({ timesheet }) => {
         toast.error(error.message);
       });
     if (response.status === 200) {
-      const g = {};
-
-      response.data.taskDetails.map((e) => {
-        if (e.date in g) {
-          g[e.date].push([e.task, e.duration]);
-        } else {
-          g[e.date] = [[e.task, e.duration]];
-        }
-      });
-      setviewtimedata(JSON.stringify(g));
-
+      // Response data is Array of object 
+      //Response format [{date: '2024-02-22', task: 'asdf', duration: '3.00'},{date: '2024-02-23', task: 'asdf', duration: '5.00'}]
+      // The task is fetched from each object of the array and stored in an object in order to find unique task
       const d = {};
       response.data.taskDetails.map((e) => {
         if (e.task in d) {
@@ -51,8 +43,13 @@ const TimesheetList = ({ timesheet }) => {
           d[e.task] = [[e.date, e.duration]];
         }
       });
+      //then object of taks is converted to array of unique task 
+      //{"asdf":1,"java":2,"cpp":3,"py":3,"go":1} --> ["asdf","java","cpp","py","go"]
       sessionStorage.setItem("values", JSON.stringify(Object.keys(d)));
-
+      // In this part [{date: '2024-02-22', task: 'asdf', duration: '3.00'},{date: '2024-02-23', task: 'asdf', duration: '5.00'}] 
+      // is converted to Object of Array {"asdf":[0,5,6,3,2],"java":[0,5,6,3,2]} 
+      // key of depends on number of unique task,Values of object is of same length 5 
+      // 5 index has the duration of tasks on each week day
       const f = {};
       const h = Object.keys(d);
 
@@ -65,45 +62,47 @@ const TimesheetList = ({ timesheet }) => {
           dt.setDate(dt.getDate() + j);
           const newdt = dt.toLocaleDateString("fr-CA");
 
-          let found = false; // Flag to track if a value is found for the current iteration
+          let found = false; 
 
           for (var i = 0; i < d[h[val]].length; i++) {
             if (newdt == d[h[val]][i][0]) {
               f[h[val]].push(d[h[val]][i][1]);
-              found = true; // Set flag to true if a value is found
-              break; // Exit the inner loop once a value is found
+              found = true; 
+              break;
             }
           }
 
           if (!found) {
-            f[h[val]].push(0); // Push default value if no value is found for the current iteration
+            f[h[val]].push(0);
           }
         }
       }
+      // converted Object of Array {"asdf":[0,5,6,3,2],"java":[0,5,6,3,2]} is stored in udestate
       setdate(f);
-      console.log(f);
+      // Delay is added to ensure that data is converted to proper format
       setTimeout(() => {
         setviewtime(true);
       }, 700);
     }
   };
   const n = useNavigate();
+  //This function is to handle logout
   const handleLogout = () => {
     toast.success("Log out successfully");
     sessionStorage.setItem("auth", "false");
-    // sessionStorage.setItem("accessToken", "");
-    //   sessionStorage.setItem("refreshToken", "");
     sessionStorage.setItem("userName", "");
     sessionStorage.setItem("password", "");
     setTimeout(() => {
       n("/");
-    }, 4000); // Adjust the delay as needed
+    }, 4000);
   };
+  //this is to handle side bar display
   const [ham,setHam]=useState(true)
   
   return (
     <div className='flex'>
       <ToastContainer />
+      {/* This div is for side bar */}
     <div className={ham?`w-1/6 flex flex-col p-3 bg-cyan-600 bg-opacity-35   h-lvh`:`hidden`}>
       {ham?<RxCross2 className="absolute top-2 left-52 text-3xl" onClick={()=>{setHam(false)}}/>:<></>}
         <div className=" justify-center relative mt-10 mb-4 rounded-full flex">
@@ -125,17 +124,15 @@ const TimesheetList = ({ timesheet }) => {
             Logout
           </button>
         </div>
-        {/* <div className="-ml-10 mt-24 font-bold text-xl ">
-          <p className="text-center">©2023-2024</p>
-          <p className="text-center">All rights reserved</p>
-        </div> */}
       </div>
+      {/* This div is for Timesheet list component */}
       <div className={ham?"bg-transparent  w-5/6 z-10":'bg-transparent  w-full z-10'}>
         {ham?<></>:<RxHamburgerMenu className="ml-4 mt-4 text-3xl" onClick={()=>{setHam(true)}}/>}
               <div className="flex flex-col justify-center items-center w-full  p-10 ">
               <h1 className=" text-slate-700 font-bold text-3xl mb-2">
                 View Timesheet
               </h1>
+              {/* this  div if for week range drop down and submit button */}
               <div className="flex flex-row w-2/4 items-center justify-center my-5 gap-3">
                 <select
                   className="bg-slate-300 rounded-md outline-1 p-3 w-2/5 border"
@@ -162,6 +159,7 @@ const TimesheetList = ({ timesheet }) => {
                   Submit
                 </button>
               </div>
+              {/* this div is to display old timesheet */}
               {viewtime ? (
 
                   <div className="flex relative mt-5 overflow-y-auto shadow-md sm:rounded-md">
@@ -198,6 +196,7 @@ const TimesheetList = ({ timesheet }) => {
                         </tr>
                         <tr>
                           <th scope="col" className="px-6 py-3 "></th>
+                          {/* this map function if for displaying week day's date */}
                           {[...Array(5)].map((_, index) => {
                             var e = document.getElementById("month").value;
                             var value = e.split("-")[0];
@@ -206,7 +205,6 @@ const TimesheetList = ({ timesheet }) => {
                             const newdt = dt.toLocaleDateString("en-US", {
                               dateStyle: "short",
                             });
-                            // console.log(dt.getDate());
                             const days = [
                               "Sunday",
                               "Monday",
@@ -216,8 +214,6 @@ const TimesheetList = ({ timesheet }) => {
                               "Friday",
                               "Saturday",
                             ];
-                            // d
-
                             return (
                               <th
                                 key={index}
@@ -232,14 +228,10 @@ const TimesheetList = ({ timesheet }) => {
                           <th scope="col" className="px-6 py-3"></th>
                         </tr>
                       </thead>
-
+                        {/* This is for displaying the task done in that week */}
                       <tbody>
                         {JSON.parse(sessionStorage.getItem("values")).map(
                           (val) => {
-                            console.log(
-                              date[val],
-                              sessionStorage.getItem("values")
-                            );
                             return (
                               <tr key={val} className="bg-white">
                                 <th
@@ -250,15 +242,12 @@ const TimesheetList = ({ timesheet }) => {
                                     type="text"
                                     id={val}
                                     className="mt-4 text-center bg-slate-100 h-12 w-full border border-gray-300"
-                                    // value={timeData[index]?.[0] || ""}
                                     disabled={true}
                                     value={val}
                                   />
                                 </th>
-
+                              {/* this map function is to fetch date based on task and display it in rows */}
                                 {date[val].map((value) => {
-                                  // console.log(value)
-
                                   return (
                                     <td
                                       scope="row"
@@ -268,13 +257,13 @@ const TimesheetList = ({ timesheet }) => {
                                         type="text"
                                         id={val}
                                         className="mt-4 text-center bg-slate-100 h-12 w-full border border-gray-300"
-                                        // value={timeData[index]?.[0] || ""}
                                         disabled={true}
                                         value={value}
                                       />
                                     </td>
                                   );
                                 })}
+                                {/* this one is to calculate the total duration wrt to task */}
                                 <td
                                   scope="row"
                                   className="px-3 py-4 font-medium text-gray-900 whitespace-nowrap "
@@ -283,7 +272,6 @@ const TimesheetList = ({ timesheet }) => {
                                     type="text"
                                     id={val}
                                     className="mt-4 text-center bg-slate-100 h-12 w-full border border-gray-300"
-                                    // value={timeData[index]?.[0] || ""}
                                     disabled={true}
                                     value={date[val].reduce((c, v) => {
                                       return c + parseFloat(v);
@@ -294,10 +282,7 @@ const TimesheetList = ({ timesheet }) => {
                             );
                           }
                         )}
-                        {/* <td className="text-center text-xl">
-                      {calculateTaskTotal(index)}
-                    </td> */}
-                        {/* </tr> */}
+                        {/* this on is to calculate total duration wrt each days */}
                         <tr className="">
                           <th
                             scope="row"
@@ -324,7 +309,6 @@ const TimesheetList = ({ timesheet }) => {
                                 <input
                                   type="text"
                                   className="mt-4 text-center bg-slate-100 h-12 w-full border border-gray-300"
-                                  // value={timeData[index]?.[0] || ""}
                                   disabled={true}
                                   value={parseFloat(c)}
                                 />
@@ -335,7 +319,6 @@ const TimesheetList = ({ timesheet }) => {
                             <input
                               type="text"
                               className="mt-4 text-center bg-slate-100 h-12 w-full border border-gray-300"
-                              // value={timeData[index]?.[0] || ""}
                               disabled={true}
                               value={count}
                             />
