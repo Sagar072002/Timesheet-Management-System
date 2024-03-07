@@ -24,10 +24,10 @@ const createScorecard = async (req, res) => {
     }
     else
     {
-        if(date.getDay()===4){
+        if(date.getDay()===5){
         score=10
       }
-      else if(date.getDay()===5){
+      else if(date.getDay()===6){
         score=5
       }
       else{
