@@ -103,22 +103,24 @@ const TimesheetList = () => {
     <div className='flex'>
       <ToastContainer />
       {/* This div is for side bar */}
-    <div className={ham?`w-1/6 flex flex-col p-3 bg-cyan-600 bg-opacity-35   h-lvh`:`hidden`}>
-      {ham?<RxCross2 className="absolute top-2 left-52 text-3xl" onClick={()=>{setHam(false)}}/>:<></>}
+    <div className={ham?`w-1/6 fixed flex flex-col p-3 bg-cyan-600 bg-opacity-35   h-lvh`:`hidden`}>
+      {ham?<RxCross2 className="absolute hover:cursor-pointer top-2 left-48 text-3xl" onClick={()=>{setHam(false)}}/>:<></>}
         <div className=" justify-center relative mt-10 mb-4 rounded-full flex">
-        {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-32 object-scale-down mt-2 rounded-full"/>:<FaUser className="ml-5 mt-5 w-14 h-14" />}
+        {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-30 object-scale-down mt-2 rounded-full"/>:<FaUser className="ml-5 mt-5 w-14 h-14" />}
           
         </div>
         <p className="text-center font-bold text-lg">Hii {JSON.parse(sessionStorage.getItem('data')).name}</p>
+        <p className="text-center font-bold text-lg">Employee ID : {JSON.parse(sessionStorage.getItem('data')).userid}</p>
+
         <div className="mt-16 text-xl  flex flex-col gap-8  text-center w-full justify-center items-start">
-          <Link  to= '/newemp'  className="px-3">Current Timesheet</Link>
+          <Link  to= '/newemp'  className="px-3 hover:font-semibold">Current Timesheet</Link>
           <div className='w-full'>
           <Link to='/timesheetList'><p className='text-white text-left bg-cyan-600 px-3 py-3 w-full rounded-md font-bold'>Timesheet List</p></Link>
           </div>
-          <Link to='/scorecard'  className="px-3">Score Card</Link>
-          <Link to='/profile'  className="px-3">Edit Profile</Link>
+          <Link to='/scorecard'  className="px-3 hover:font-semibold">Score Card</Link>
+          <Link to='/profile'  className="px-3 hover:font-semibold">Edit Profile</Link>
           <button
-            className="px-6 py-2   absolute bottom-2 rounded-md border font-medium bg-red-600 text-white   hover:cursor-pointer"
+            className="px-6 py-2   absolute bottom-2 rounded-md border font-medium bg-red-600 hover:bg-red-700 text-white   hover:cursor-pointer"
             onClick={handleLogout}
           >
             Logout
@@ -126,8 +128,8 @@ const TimesheetList = () => {
         </div>
       </div>
       {/* This div is for Timesheet list component */}
-      <div className={ham?"bg-transparent  w-5/6 z-10":'bg-transparent  w-full z-10'}>
-        {ham?<></>:<RxHamburgerMenu className="ml-4 mt-4 text-3xl" onClick={()=>{setHam(true)}}/>}
+      <div className={ham?"bg-transparent sticky left-60  w-5/6 z-10":'bg-transparent  w-full z-10'}>
+        {ham?<></>:<RxHamburgerMenu className="ml-4 mt-4 hover:cursor-pointer text-3xl" onClick={()=>{setHam(true)}}/>}
               <div className="flex flex-col justify-center items-center w-full  p-10 ">
               <h1 className=" text-slate-700 font-bold text-3xl mb-2">
                 View Timesheet
@@ -135,7 +137,7 @@ const TimesheetList = () => {
               {/* this  div if for week range drop down and submit button */}
               <div className="flex flex-row w-2/4 items-center justify-center my-5 gap-3">
                 <select
-                  className="bg-slate-300 rounded-md outline-1 p-3 w-2/5 border"
+                  className="bg-slate-300 rounded-md  p-3 w-64 outline:none"
                   name="month"
                   id="month"
                 >

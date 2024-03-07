@@ -188,7 +188,7 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
           </div>
           <div className='flex justify-center pt-4'>
             {image!==null?
-            <div className='relative '>
+            <div className='relative p-0'>
             <img src={image} className="w-32 h-32 object-scale-down shadow-lg rounded-full" onClick={() => { const inputElement = document.getElementById('image1');if (inputElement) {   inputElement.click();  }}}/>
             <input
                 type="file"

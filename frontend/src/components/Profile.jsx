@@ -138,22 +138,24 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
 
     <div className="w-full h-screen flex">
       <ToastContainer />
-      <div className={ham?`w-1/6 flex flex-col p-3 relative bg-cyan-600 bg-opacity-35 `:`hidden`}>
-      {ham?<RxCross2 className="absolute top-2 right-4 text-3xl" onClick={()=>{setHam(false)}}/>:<></>}
+      <div className={ham?`w-1/6 flex flex-col p-3 relative  bg-cyan-600 bg-opacity-35 `:`hidden`}>
+      {ham?<RxCross2 className="absolute top-2 hover:cursor-pointer right-4 text-3xl" onClick={()=>{setHam(false)}}/>:<></>}
         <div className=" justify-center relative mt-10 mb-4 rounded-full flex">
-        {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-32 object-scale-down mt-2 rounded-full"/>:<FaUser className="ml-5 mt-5 w-14 h-14" />}
+        {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-30 object-scale-down mt-2 rounded-full"/>:<FaUser className="ml-5 mt-5 w-14 h-14" />}
           
         </div>
         <p className="text-center font-bold text-lg">Hii {JSON.parse(sessionStorage.getItem('data')).name}</p>
+        <p className="text-center font-bold text-lg">Employee ID : {JSON.parse(sessionStorage.getItem('data')).userid}</p>
+
         <div className="mt-14 text-xl  flex flex-col gap-8 justify-center items-start">
-          <Link to= '/newemp'  className="px-3">Current Timesheet</Link>
-          <Link to='/timesheetList'  className="px-3">Timesheet List</Link>
-          <Link to='/scorecard'  className="px-3">Score Card</Link>
+          <Link to= '/newemp'  className="px-3 hover:font-semibold">Current Timesheet</Link>
+          <Link to='/timesheetList'  className="px-3 hover:font-semibold">Timesheet List</Link>
+          <Link to='/scorecard'  className="px-3 hover:font-semibold">Score Card</Link>
           <div className='w-full'>
           <Link to='/profile'><p className='text-white text-left bg-cyan-600 px-3 py-3 w-full rounded-md font-bold'>Edit Profile</p></Link>
           </div>
           <button
-            className="px-6 py-2 absolute bottom-2 rounded-md border font-medium bg-red-600 text-white  hover:cursor-pointer"
+            className="px-6 py-2 absolute bottom-2 rounded-md border font-medium bg-red-600 hover:bg-red-700 text-white  hover:cursor-pointer"
             onClick={handleLogout}
           >
             Logout
@@ -161,10 +163,10 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
         </div>
       </div>
       <div className={ham?"w-5/6  ":'w-full'}>
-        {ham?<></>:<RxHamburgerMenu className="ml-4 mt-4 text-3xl" onClick={()=>{setHam(true)}}/>}
-        <div className="flex flex-col items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0">
-        <div className="w-full flex flex-col items-center rounded-md  min-h-[420px] min-w-[550px]  md:mt-0 sm:max-w-md xl:p-0 relative">
-          <div>
+        {ham?<></>:<RxHamburgerMenu className="ml-4 hover:cursor-pointer mt-4 text-3xl" onClick={()=>{setHam(true)}}/>}
+        <div className="flex flex-col  items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0">
+        <div className="w-full flex border-slate-400 border-2 flex-col items-center rounded-md  min-h-[420px] min-w-[550px]  md:mt-0 sm:max-w-md xl:p-0 relative">
+          <div className='mt-4'>
             {image!==null?
             <div className='relative'>
             <img src={image} className="w-32 h-32 object-scale-down shadow-lg rounded-full" onClick={() => { const inputElement = document.getElementById('image1');if (inputElement) {   inputElement.click();  }}}/>
@@ -193,7 +195,7 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
 
                 required=""
               />
-          {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-32 object-scale-down shadow-lg rounded-full" onClick={() => { const inputElement = document.getElementById('image');if (inputElement) {   inputElement.click();  }}} ></img>:<FaUser className="w-32 h-32 object-scale-down shadow-lg rounded-full border-black border-2" onClick={() => { const inputElement = document.getElementById('image');if (inputElement) {   inputElement.click();  }}}/>}
+          {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-30 shadow-lg rounded-full" onClick={() => { const inputElement = document.getElementById('image');if (inputElement) {   inputElement.click();  }}} ></img>:<FaUser className="w-28 h-28 object-scale-down shadow-lg rounded-full border-black border-2" onClick={() => { const inputElement = document.getElementById('image');if (inputElement) {   inputElement.click();  }}}/>}
           </>
         }
           </div>

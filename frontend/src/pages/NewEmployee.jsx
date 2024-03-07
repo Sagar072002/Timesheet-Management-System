@@ -126,18 +126,18 @@ const NewEmployee = () => {
         className="w-full bg-white"
         visible={sessionStorage.getItem("2fa")}
       />
-      <div className={ham?`w-1/6 bg-cyan-600 bg-opacity-35 flex flex-col p-3`:`hidden`}>
-      {ham?<RxCross2 className="absolute top-2 left-52 text-3xl" onClick={()=>{setHam(false)}}/>:<></>}
+      <div className={ham?`w-1/6 fixed bg-cyan-600 bg-opacity-35 h-screen flex flex-col p-3 `:`hidden `}>
+      {ham?<RxCross2 className="absolute top-2 left-48 hover:cursor-pointer text-3xl" onClick={()=>{setHam(false)}}/>:<></>}
         <div className=" justify-center relative mt-10 mb-4 rounded-full flex">
 
        {/* Displaying the employee's image otherwise displaying an alternative image */}
 
-        {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-32 object-scale-down mt-2 rounded-full"/>:<FaUser className="ml-5 mt-5 w-14 h-14" />}
+        {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-30 object-scale-down mt-2 rounded-full"/>:<FaUser className="ml-5 mt-5 w-14 h-14" />}
           
         </div>
         <p className="text-center font-bold text-lg">Hii {JSON.parse(sessionStorage.getItem('data')).name}</p>
         <p className="text-center font-bold text-lg">Employee ID : {JSON.parse(sessionStorage.getItem('data')).userid}</p>
-        <div className="mt-16 text-xl  flex flex-col gap-8 justify-center items-start">
+        <div className="mt-10 text-xl  flex flex-col gap-6 justify-center items-start">
           <div className='w-full'>
 
 {/* Link to current timesheet module */}
@@ -148,26 +148,26 @@ const NewEmployee = () => {
           {/* Link to timesheet list module */}
 
           <div>
-          <Link to='/timesheetList' className="px-3">Timesheet List</Link>
+          <Link to='/timesheetList' className="px-3 hover:font-semibold">Timesheet List</Link>
           </div>
 
           {/* Link to scorecard module */}
 
           <div>
-          <Link to='/scorecard'  className="px-3">Score Card</Link>
+          <Link to='/scorecard'  className="px-3 hover:font-semibold">Score Card</Link>
           </div>
 
 {/* Link to edit profile module */}
 
 
           <div>
-          <Link to='/profile' className="px-3">Edit Profile</Link>
+          <Link to='/profile' className="px-3 hover:font-semibold">Edit Profile</Link>
           </div>
 
 {/* logout button  */}
 
           <button
-            className="px-6 py-2 absolute bottom-2 rounded-md border font-medium bg-red-600 text-white hover:cursor-pointer"
+            className="px-6 py-2 absolute bottom-2 rounded-md border font-medium bg-red-600 hover:bg-red-700 text-white hover:cursor-pointer"
             onClick={handleLogout}
           >
             Logout
@@ -175,8 +175,8 @@ const NewEmployee = () => {
         </div>
         
       </div>
-      <div className={ham?"w-5/6  pt-5 ":'w-full'}>
-        {ham?<></>:<RxHamburgerMenu className="ml-4 mt-4 text-3xl" onClick={()=>{setHam(true)}}/>}
+      <div className={ham?"w-5/6 sticky left-60 pt-5 ":'w-full'}>
+        {ham?<></>:<RxHamburgerMenu className="ml-4 mt-4 text-3xl hover:cursor-pointer" onClick={()=>{setHam(true)}}/>}
 
 {/* stats div to display the number of timesheets */}
 

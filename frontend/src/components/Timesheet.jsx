@@ -47,56 +47,56 @@ const Timesheet = () => {
 
 // function for displaying the task details by api calling
 
-      const fetchdata=async()=>{
-        const response = await axios.post("http://localhost:3000/gettaskdetails", {
-          userid: sessionStorage.getItem("userName"),
-          startDate: weekDates.monday,
-          endDate: weekDates.friday,
-        }).catch((error) => {
-          toast.error(error.message);
-        });
-        if (response.status === 200) {
-            const d = {};
-      response.data.taskDetails.map((e) => {
-        if (e.task in d) {
-          d[e.task].push([e.date, e.duration]);
-        } else {
-          d[e.task] = [[e.date, e.duration]];
-        }
-      });
+const fetchdata = async () => {
+  const response = await axios.post("http://localhost:3000/gettaskdetails", {
+    userid: sessionStorage.getItem("userName"),
+    startDate: weekDates.monday,
+    endDate: weekDates.friday,
+  }).catch((error) => {
+    toast.error(error.message);
+  });
+  
+  if (response.status === 200) {
+    const d = {};
+    response.data.taskDetails.forEach((e) => {
+      if (e.task in d) {
+        d[e.task].push([e.date, e.duration]);
+      } else {
+        d[e.task] = [[e.date, e.duration]];
+      }
+    });
 
-      const f = {};
-      const h = Object.keys(d);
-      console.log("hell1",f)
+    const f = {};
+    const h = Object.keys(d);
 
-      for (var val = 0; val < h.length; val++) {
-        f[h[val]] = [];
-        for (var j = 0; j < 5; j++) {
-          
-          const dt = new Date(weekDates.monday);
-          dt.setDate(dt.getDate() + j);
-          const newdt = dt.toLocaleDateString("fr-CA");
+    for (let val = 0; val < h.length; val++) {
+      f[h[val]] = [];
+      for (let j = 0; j < 5; j++) {
+        const dt = new Date(weekDates.monday);
+        dt.setDate(dt.getDate() + j);
+        const newdt = dt.toLocaleDateString("fr-CA");
 
-          let found = false; // Flag to track if a value is found for the current iteration
+        let found = false;
+        let durationValue = ''; // Initialize durationValue as empty string
 
-          for (var i = 0; i < d[h[val]].length; i++) {
-            if (newdt == d[h[val]][i][0]) {
-              f[h[val]].push(d[h[val]][i][1]);
-              found = true; // Set flag to true if a value is found
-              break; // Exit the inner loop once a value is found
-            }
-          }
-
-          if (!found) {
-            f[h[val]].push(0); // Push default value if no value is found for the current iteration
+        for (let i = 0; i < d[h[val]].length; i++) {
+          if (newdt === d[h[val]][i][0]) {
+            durationValue = d[h[val]][i][1]; // Assign duration value if found
+            found = true;
+            break;
           }
         }
+
+        f[h[val]].push(durationValue !== '0.00' ? durationValue : '');
+
       }
-      console.log("hell0",f,Object.keys(f).length)
-      // setTimeData(f)
-      // setRowCount(Object.keys(f).length);
-        }
-      }
+    }
+
+    setTimeData(Object.entries(f).map(([task, durations]) => [task, ...durations]));
+    setRowCount(Object.keys(f).length);
+  }
+}
+
         fetchdata()
     },[]);
 
@@ -158,7 +158,7 @@ const Timesheet = () => {
       setTimesheets(updatedTimesheets);
       setRowCount(rowCount - 1);
 
-      console.log("task", timeData[index][0]);
+      // console.log("task", timeData[index][0]);
       var inputDate = new Date(weekDates.monday);
       console.log("inputDate1", inputDate);
       // Format the Date object to "YYYY-MM-DD" format
@@ -204,7 +204,7 @@ const Timesheet = () => {
           toast.success("Deleted successfully");
         }
       } catch (error) {
-        toast.error("Error in deleting");
+        // toast.error("Error in deleting");
       }
     }
   };
@@ -268,7 +268,7 @@ const Timesheet = () => {
         currentDate.getHours() * 60 + currentDate.getMinutes(); // Convert current time to minutes
 
       // Check if submission time is before 8:50 AM (530 minutes)
-      const bonusPoints = submissionTime < 11 * 60 + 45 ? 10 : 0;
+      const bonusPoints = submissionTime < 18 * 60 + 30 ? 10 : 0;
 
       const isAnyTaskFilled = timeData.every((row) => {
         const taskName = row[0];

@@ -112,24 +112,21 @@ const Admin = () => {
     <div style={{backgroundColor:"#EDF4F2"}} className=" flex min-h-lvh">
       <ToastContainer />
       <div className=" p-4 pt-6 bg-blue-gray-200 w-full relative">
-        <div className="flex justify-between px-5">
-          <p></p>
-          <h1 style={{color:"#66A5AD"}} className="uppercase text-center pt-4 text-3xl font-extrabold text-gray-900  md:text-5xl lg:text-5xl"> Admin Dashboard </h1>
-          <div className="flex items-center">
-            <div>
-              <span className="text-lg text-slate-700 mr-2 absolute right-20 top-12 font-bold">
-                <div> ADMIN ID : {JSON.parse(sessionStorage.getItem("data")).userid}</div>
-                <div className="text-center">Hii, {JSON.parse(sessionStorage.getItem("data")).name}</div>
-              </span> 
-            </div>
-          
-            <div className="border-white  rounded-full items-center">
-            {JSON.parse(sessionStorage.getItem('data')).image!==null?<img onClick={toggleProfileVisibility} src={JSON.parse(sessionStorage.getItem('data')).image} className="w-10 h-10  object-scale-down  rounded-full border-2"/>:<FaUser onClick={toggleProfileVisibility} className="text-2xl absolute top-12 right-12 text-slate-700" />}
-            </div>
+          <div className="flex justify-between">
+          <p className="mt-4 text-lg text-slate-700 font-bold"> ADMIN ID : {JSON.parse(sessionStorage.getItem("data")).userid}</p>
+
+          <h1 style={{color:"#66A5AD"}} className="uppercase text-center text-3xl font-extrabold text-gray-900  md:text-5xl lg:text-5xl"> Admin Dashboard </h1>
+            <div className="flex gap-5 mt-3">
+              <p className="text-lg text-slate-700 font-bold">
+                Hii, {JSON.parse(sessionStorage.getItem("data")).name}   
+              </p> 
+          <p>
+                         {JSON.parse(sessionStorage.getItem('data')).image!==null?<img onClick={toggleProfileVisibility} src={JSON.parse(sessionStorage.getItem('data')).image} className="w-10 h-10  object-scale-down  rounded-full border-2"/>:<FaUser onClick={toggleProfileVisibility} className="text-2xl  text-slate-700" />}
+            </p>
           </div>
 
         </div>
-        <div className={ isProfileVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:isProfileDivVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:"bg-transparent fixed flex"}>
+        <div className={ isProfileVisible?`bg-transparent fixed right-0 top-20 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:isProfileDivVisible?`bg-transparent fixed right-0 top-24 inset-0 flex z-50 backdrop-filter backdrop-blur-sm`:"bg-transparent fixed flex"}>
         {isProfileVisible && (
           <div className=" bg-slate-200 border border-slate-400 rounded absolute right-0 top-19 w-32 p-2 h-28" >
            <div className="border-white flex justify-center">
@@ -155,7 +152,7 @@ const Admin = () => {
         )}
         
         {isProfileDivVisible && (
-          <div className=" bg-transparent absolute left-1/2 -top-14 w-20 z-10">
+          <div className=" bg-transparent absolute left-1/2 -top-10 w-20 z-10">
             <Adprofile 
              profilevalue={profilevalue.user}
              onUpdateProfile={updateProfileValue} // Pass the function to update profile value

@@ -92,20 +92,22 @@ const Scorecard = () => {
     <div className='flex'>
       <ToastContainer/>
       <div className={ham?`w-1/6 flex flex-col p-3 bg-cyan-600 bg-opacity-35   h-lvh`:`hidden`}>
-        {ham?<RxCross2 className="absolute top-2 left-52 text-3xl" onClick={()=>{setHam(false)}}/>:<></>}
+        {ham?<RxCross2 className="absolute top-2 left-48 hover:cursor-pointer text-3xl" onClick={()=>{setHam(false)}}/>:<></>}
         <div className=" justify-center relative mt-10 mb-4 rounded-full flex">
-          {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-32 object-scale-down mt-2 rounded-full"/>:<FaUser className="ml-5 mt-5 w-14 h-14" />}          
+          {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-30 object-scale-down mt-2 rounded-full"/>:<FaUser className="ml-5 mt-5 w-14 h-14" />}          
         </div>
         <p className="text-center font-bold text-lg">Hii {JSON.parse(sessionStorage.getItem('data')).name}</p>
+        <p className="text-center font-bold text-lg">Employee ID : {JSON.parse(sessionStorage.getItem('data')).userid}</p>
+
         <div className="mt-16 text-xl  flex flex-col gap-8  text-center w-full justify-center items-start">
-          <Link  to= '/newemp'  className="px-3">Current Timesheet</Link>
-          <Link to='/timesheetList'  className="px-3">Timesheet List</Link>
+          <Link  to= '/newemp'  className="px-3 hover:font-semibold">Current Timesheet</Link>
+          <Link to='/timesheetList'  className="px-3 hover:font-semibold">Timesheet List</Link>
           <div className='w-full'>
             <Link to='/scorecard'><p className='text-white text-left bg-cyan-600 px-3 py-3 w-full rounded-md font-bold'>Score Card</p></Link>
           </div>
-          <Link to='/profile'  className="px-3">Edit Profile</Link>
+          <Link to='/profile'  className="px-3 hover:font-semibold">Edit Profile</Link>
           <button
-            className="px-6 py-2  absolute bottom-2 rounded-md border font-medium bg-red-600 text-white  hover:cursor-pointer"
+            className="px-6 py-2  absolute bottom-2 rounded-md border font-medium bg-red-600 hover:bg-red-700 text-white  hover:cursor-pointer"
             onClick={handleLogout}
           >
             Logout
@@ -113,8 +115,8 @@ const Scorecard = () => {
         </div>
       </div>
       <div className={ham?"w-5/6":'w-full'}>
-        {ham?<></>:<RxHamburgerMenu className="ml-4 mt-4 text-3xl" onClick={()=>{setHam(true)}}/>}
-        <div className='flex flex-col w-2/4 items-center mx-auto'>
+        {ham?<></>:<RxHamburgerMenu className="ml-4 hover:cursor-pointer mt-4 text-3xl" onClick={()=>{setHam(true)}}/>}
+        <div className='flex flex-col w-2/4 mt-10 rounded-md px-5 items-center border-2 border-slate-400 mx-auto'>
           <div className="w-2/3 flex flex-col mt-3  gap-2 ">
             <div className="w-full flex flex-col gap-8">
               <h1 className="flex justify-center p-2 text-black font-['Plus Jakarta Sans'] font-semibold   w-full text-2xl">View Score Card</h1>
@@ -177,9 +179,9 @@ const Scorecard = () => {
             </p>
             {/* Render fetched data */}
             {fetchedData && fetchedData.length > 0 ? (
-              <div className="text-white rounded-md">
-                <div className="rounded-lg overflow-hidden z-10 shadow-md">
-                  <table className=" w-full rounded-lg">
+              <div className="text-white rounded-md mb-6">
+                <div className="rounded-md overflow-hidden z-10 shadow-md">
+                  <table className=" w-full rounded-md border-2 border-cyan-600">
                     {/* Table header */}
                     <thead className="bg-cyan-600 w-full">
                       <tr>
@@ -227,7 +229,7 @@ const Scorecard = () => {
               </div>
             ) : (
               // Display a message if no data is available
-              <div className="min-w-full flex justify-center text-center text-2xl font-semibold font-['Plus Jakarta Sans'] ">
+              <div className="min-w-full mb-4 flex justify-center text-center text-2xl font-semibold font-['Plus Jakarta Sans'] ">
                 No data available
               </div>
             )}

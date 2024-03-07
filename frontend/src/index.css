@@ -23,6 +23,7 @@ html, body {
   background-size: cover; /* Ensures the image covers the entire background */
   background-position: center; /* Centers the image */
   backdrop-filter: blur(5px);
+  overflow: hidden;
 }
 
 .logindiv::after {
