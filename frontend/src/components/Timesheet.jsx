@@ -1,41 +1,52 @@
+// This is the Timesheet module where the user can access the current timesheet
+
+
+// Here we are importing the necessary libraries and files
 import React, { useState, useEffect } from "react";
 import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
-import TimesheetList from "../pages/TimesheetList";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Timesheet = () => {
   var count = 0;
+
+
+  // These are the usestate hooks where we initialise the initial and the updates values
   const [rowCount, setRowCount] = useState(1);
   const [timeData, setTimeData] = useState([]);
   const [weekOffset, setWeekOffset] = useState(0);
   const [timesheets, setTimesheets] = useState([]);
   const [isAnyFieldFilled, setIsAnyFieldFilled] = useState(false);
-  const [userScore, setUserScore] = useState(0); // Initialize user score with base value
+  const [userScore, setUserScore] = useState(0); 
   const [viewtime, setviewtime] = useState(false);
   const [viewtimedata, setviewtimedata] = useState([]);
-  // const [d, setd] = useState([]);
   const [date, setdate] = useState([]);
 
-  const navigate = useNavigate();
-  const currentDate = new Date();
-  const currentDay = currentDate.getDay(); // Define currentDay
+
+  const navigate = useNavigate(); // usenavigate hook to navigate to another page
+  const currentDate = new Date();//Define current date
+  const currentDay = currentDate.getDay(); // Define current day
+
+
+  // This useEffect hook ensures that isAnyFieldFilled is updated whenever timeData changes, reflecting whether any field in timeData is filled or not.
   useEffect(() => {
     const filled = timeData.some((row) =>row.some((field, index) => index !== 0 && field !== ""));
     setIsAnyFieldFilled(filled);
 
   }, [timeData]);
 
-  
+  //  This useEffect hook retrieves saved data from the sessionStorage and updates the component's state with that data if it exists
     useEffect(()=>{
       const savedData = JSON.parse(sessionStorage.getItem("timesheetData"));
       if (savedData) {
         setTimeData(savedData.timeData);
         setRowCount(savedData.rowCount);
-        console.log("!!!!!!!!!!",savedData)
       }
       
+
+// function for displaying the task details by api calling
+
       const fetchdata=async()=>{
         const response = await axios.post("http://localhost:3000/gettaskdetails", {
           userid: sessionStorage.getItem("userName"),
@@ -53,8 +64,6 @@ const Timesheet = () => {
           d[e.task] = [[e.date, e.duration]];
         }
       });
-      console.log(d)
-      // sessionStorage.setItem("values", JSON.stringify(Object.keys(d)));
 
       const f = {};
       const h = Object.keys(d);
@@ -92,73 +101,7 @@ const Timesheet = () => {
     },[]);
 
 
-  const handleoldtimesheet = async () => {
-
-    const response = await axios
-      .post("http://localhost:3000/gettaskdetails", {
-        userid: sessionStorage.getItem("userName"),
-        startDate: weekDates.monday,
-        endDate: weekDates.friday
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-    if (response.status === 200) {
-      const g = {};
-
-      response.data.taskDetails.map((e) => {
-        if (e.date in g) {
-          g[e.date].push([e.task, e.duration]);
-        } else {
-          g[e.date] = [[e.task, e.duration]];
-        }
-      });
-      setviewtimedata(JSON.stringify(g));
-
-      const d = {};
-      response.data.taskDetails.map((e) => {
-        if (e.task in d) {
-          d[e.task].push([e.date, e.duration]);
-        } else {
-          d[e.task] = [[e.date, e.duration]];
-        }
-      });
-      sessionStorage.setItem("values", JSON.stringify(Object.keys(d)));
-
-      const f = {};
-      const h = Object.keys(d);
-
-      for (var val = 0; val < h.length; val++) {
-        f[h[val]] = [];
-        for (var j = 0; j < 5; j++) {
-          
-          const dt = new Date(weekDates.monday);
-          dt.setDate(dt.getDate() + j);
-          const newdt = dt.toLocaleDateString("fr-CA");
-
-          let found = false; // Flag to track if a value is found for the current iteration
-
-          for (var i = 0; i < d[h[val]].length; i++) {
-            if (newdt == d[h[val]][i][0]) {
-              f[h[val]].push(d[h[val]][i][1]);
-              found = true; // Set flag to true if a value is found
-              break; // Exit the inner loop once a value is found
-            }
-          }
-
-          if (!found) {
-            f[h[val]].push(0); // Push default value if no value is found for the current iteration
-          }
-        }
-      }
-      setdate(f);
-      console.log("hello",f);
-      setTimeout(() => {
-        setviewtime(true);
-      }, 700);
-    }
-
-  };
+ // function for getting the week dates
   const getWeekDates = (offset = 0) => {
     const today = new Date();
     const dayOfWeek = today.getDay();
@@ -191,127 +134,15 @@ const Timesheet = () => {
     setTimeData(newData);
   };
 
-  //get total score of the user
-  // const fetchTotalScore = async () => {
-  //   var inputDate = new Date(weekDates.monday);
-  //   console.log("inputDatescore",inputDate)
-  //   // Format the Date object to "YYYY-MM-DD" format
-  //   const sdate = `${inputDate.getFullYear()}-${(inputDate.getMonth() + 1)
-  //     .toString()
-  //     .padStart(2, '0')}-${inputDate.getDate().toString().padStart(2, '0')}`;
-  //   console.log("sdate",sdate)
-  //   try{
-  //     const response = await axios.post('http://localhost:3000/totalscore',
-  //       {
-  //         "userid": sessionStorage.getItem("userName"),
-  //         "startDate": sdate,
-  //       }
+  
 
-  //     );
-
-  //     const totalscore= response.data;
-  //     console.log("total score",totalscore)
-  //     setUserScore(totalscore.totalScore)
-  //     console.log("score",totalscore.totalScore)
-  //     if(response.status!==200){
-  //       // response.status
-  //       // console.log("*********",response.status,response.statusText,data.message,data.errors)
-  //       console.log(
-  //         `${response.status}\n${response.statusText}\n${totalscore.message}`
-  //      )
-  //     }
-
-  //       // response.status
-  //     //   toast.success(
-  //     //     `${response.status}\n${response.statusText}\n${data.message}`
-  //     //  )
-  //     if(response.status===200){
-
-  //      toast.success("fetch score successfully");
-  //    }
-
-  //   }
-  //     catch(error){
-  //       toast.error("Error in fetching score")
-  //     }
-  // }
-
-  //get week range(submitted timesheet) of the user
-  const fetchWeekRange = async () => {
-    // var inputDate = new Date(weekDates.monday);
-    // console.log("inputDatescore",inputDate)
-    // // Format the Date object to "YYYY-MM-DD" format
-    // const sdate = `${inputDate.getFullYear()}-${(inputDate.getMonth() + 1)
-    //   .toString()
-    //   .padStart(2, '0')}-${inputDate.getDate().toString().padStart(2, '0')}`;
-    // console.log("sdate",sdate)
-    try {
-      const response = await axios.post("http://localhost:3000/daterange", {
-        userid: sessionStorage.getItem("userName"),
-        //"start_date": sdate,
-      });
-
-      const data = response.data;
-      console.log("week_ranges", data);
-
-      if (response.status !== 200) {
-        // response.status
-        // console.log("*********",response.status,response.statusText,data.message,data.errors)
-        console.log(
-          `${response.status}\n${response.statusText}\n${data.message}`
-        );
-      }
-
-      // response.status
-      //   toast.success(
-      //     `${response.status}\n${response.statusText}\n${data.message}`
-      //  )
-      if (response.status === 200) {
-        toast.success("fetch week range successfully");
-      }
-    } catch (error) {
-      toast.error("Error in fetching week range");
-    }
-  };
-
-  //get taskdetails of the user
-  const fetchTaskDetails = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/gettaskdetails",
-        {
-          // "userid": sessionStorage.getItem("userName"),
-          // "startDate": sdate,
-          // "endDate": edate
-        }
-      );
-
-      const data = response.data;
-      console.log("task details", data);
-
-      if (response.status !== 200) {
-        // response.status
-        // console.log("*********",response.status,response.statusText,data.message,data.errors)
-        console.log(
-          `${response.status}\n${response.statusText}\n${data.message}`
-        );
-      }
-
-      // response.status
-      //   toast.success(
-      //     `${response.status}\n${response.statusText}\n${data.message}`
-      //  )
-      if (response.status === 200) {
-        toast.success("fetch task details successfully");
-      }
-    } catch (error) {
-      toast.error("Error in fetching task details");
-    }
-  };
+// function to add rows on clicking + sign
 
   const addRow = () => {
     setRowCount(rowCount + 1);
   };
+
+  // function to add rows on clicking - sign
 
   const removeRow = async (index) => {
     if (rowCount > 1) {
@@ -378,6 +209,8 @@ const Timesheet = () => {
     }
   };
 
+    // function calculate total
+
   const calculateTotal = (dayIndex) => {
     let total = 0;
     timeData.forEach((rowData) => {
@@ -387,6 +220,7 @@ const Timesheet = () => {
     });
     return total;
   };
+    // function calculate task total
 
   const calculateTaskTotal = (taskIndex) => {
     let total = 0;
@@ -399,6 +233,8 @@ const Timesheet = () => {
     }
     return total;
   };
+
+      // function calculate week number
 
   const calculateWeekNumber = (mondayDate) => {
     mondayDate = new Date(
@@ -443,6 +279,8 @@ const Timesheet = () => {
         );
       });
 
+
+      // function to check if duration is filled without task
       const isAnyDurationFilledWithoutTaskName = timeData.some((row) => {
         const taskName = row[0];
         const durations = row.slice(1);
@@ -602,17 +440,12 @@ const Timesheet = () => {
             const data = response.data;
             console.log(data);
             if (response.status !== 200) {
-              // response.status
-              // console.log("*********",response.status,response.statusText,data.message,data.errors)
               console.log(
                 `${response.status}\n${response.statusText}\n${data.message}`
               );
             }
 
-            // response.status
-            //   toast.success(
-            //     `${response.status}\n${response.statusText}\n${data.message}`
-            //  )
+            
             if (response.status === 200) {
               toast.success("database row created successful!");
             }
@@ -646,7 +479,6 @@ const Timesheet = () => {
         toast.success("Timesheet saved successfully");
         if (isFirstEntry) {
           setIsFirstEntry(false);
-          // toast.info("New entry added to timesheet");
         }
       }
     } else if (!isAnyTaskFilled && isAnyDurationFilledWithoutTaskName) {
@@ -658,43 +490,40 @@ const Timesheet = () => {
     }
   };
 
-  const handletimesheetlist = () => {
-    // alert("hello")
-    navigate("/timesheetlist");
-    console.log(weekDates.monday, weekDates.friday);
-  };
+ 
 
   return (
     <div className="w-full mt-20">
+      {/* toast container for displaying toast messages */}
       <ToastContainer />
-
+{/* displaying current week */}
       <div className="flex justify-start my-10  text-slate-700 font-bold text-2xl">
         <p>
-          {" "}
-          Current Week:{" "}
+         
+          Current Week:
           <span className="font-medium text-xl text-cyan-400">
             {weekDates.monday} - {weekDates.friday}
           </span>
         </p>
-        {/* <p>
-          {" "}
-          Total score:{" "}
-          <span className="font-medium text-lg text-cyan-400">
-            {sessionStorage.getItem("score")==='null'?0:sessionStorage.getItem("score")}
-          </span>{" "}
-        </p> */}
+       
       </div>
         <p>{}</p>
       <div className="relative  overflow-x-auto shadow-md sm:rounded-md">
         <table className=" bg-white w-full text-sm text-gray-500">
           <thead className="w-full text-white text-center text-base bg-cyan-600 ">
+
+
             <tr className="relative ">
+                            {/* defining table heading for task name */}
+
               <th
                 scope="col"
                 className="w-50 py-2  border-white border-r-2 uppercase text-xl "
               >
                 <span className="absolute left-20 top-12"> Task</span>
               </th>
+
+              {/* defining table heading for duration(of hours) */}
               <th
                 colSpan="5"
                 scope="col"
@@ -702,6 +531,7 @@ const Timesheet = () => {
               >
                 Duration
               </th>
+              {/* defining table heading for total hours */}
 
               <th
                 scope="col"
@@ -754,12 +584,7 @@ const Timesheet = () => {
                   scope="row"
                   className="px-3 py-4 font-medium text-gray-900 whitespace-nowrap "
                 >
-                  {/* <input
-  type="text"
-  className="mt-4 text-center bg-slate-100 h-12 w-full border border-gray-300"
-  value={timeData[index] ? timeData[index][0] : ''} 
-  onChange={(e) => updateTimeData(index, 0, e.target.value)}
-/> */}
+                 {/* input field for task name */}
                   <input
                     type="text"
                     className="mt-4 text-center bg-slate-100 h-12 w-full border border-gray-300"
@@ -769,13 +594,8 @@ const Timesheet = () => {
                 </th>
                 {[0, 1, 2, 3, 4].map((dayIndex) => (
                   <td key={dayIndex} className="">
-                    {/* <input
-  type="number"
-  className="mt-4 ml-8 w-3/4 h-12 text-center bg-slate-100 border border-gray-300"
-  value={timeData[index] ? timeData[index][dayIndex + 1] : ''} 
-  onChange={(e) => updateTimeData(index, dayIndex + 1, e.target.value)}
-  disabled={dayIndex >= currentDay}
-/> */}
+                     {/* input field for task duration */}
+
                     <input
                       type="number"
                       className="mt-4 ml-8 w-3/4 h-12 text-center bg-slate-100 border border-gray-300"
@@ -790,6 +610,10 @@ const Timesheet = () => {
                 <td className="text-center text-xl">
                   {calculateTaskTotal(index)}
                 </td>
+
+        {/* implementing add and remove row icons */}
+
+
                 <td className="flex pt-9 ">
                   {index === 0 ? (
                     <FiPlusCircle
@@ -811,6 +635,10 @@ const Timesheet = () => {
                 </td>
               </tr>
             ))}
+
+
+{/* calculating total from that particular row */}
+
             <tr className="">
               <th
                 scope="row"
@@ -829,6 +657,10 @@ const Timesheet = () => {
         </table>
       </div>
       <div className="w-full flex justify-end p-4 gap-4">
+
+
+{/* save button to save the task related details in the database */}
+
         <button
           type="button"
           className="bg-cyan-500 hover:bg-cyan-400 px-8 py-3 text-white rounded-sm"
@@ -836,89 +668,29 @@ const Timesheet = () => {
         >
           Save
         </button>
+
+{/* submit button to submit the timesheet */}
+
         <button
           type="submit"
           className={`px-8 py-3 rounded-sm ${
-            currentDay !== 5
+                        // applying design changes according to button being disabled or not 
+
+            currentDay !== 5       
               ? "bg-gray-200 text-slate-700 cursor-not-allowed"
               : "bg-cyan-500 text-white hover:bg-cyan-400"
           }`}
           onClick={handleSubmit}
-          disabled={currentDay !== 5} // Disabling the button programmatically as well
+
+            // disabling if current day is not friday
+          disabled={currentDay !== 5} 
         >
           Submit
         </button>
-        {/* <button className='bg-white' onClick={fetchWeekRange}>range</button> */}
-        {/* <button  className='bg-white' onClick={fetchTotalScore}>totscore</button> */}
+       
       </div>
-      {/* <button  className='text-black border-2 px-5 py-2 rounded-md' >View Previous Timesheet List</button> */}
-      {/* <div >
-  <p  className='text-white font-bold text-2xl my-12 text-center uppercase' >View Previous Timesheet List</p>
-  {timesheets.map(timesheet => (
-    
-  <div key={timesheet.timesheetNumber} className="mb-4 bg-white pt-2">
-    <p className="text-black font-bold text-lg my-2 text-center">Timesheet for {timesheet.weekRange}</p>
-    <div className=' flex gap-3 '>
-    {timesheet.tasks.map((task, index) => (
-  <div key={index} className="mb-4 rounded-md p-4">
-    {task.durations.some(duration => parseFloat(duration) !== 0) && ( // Check if any duration is not zero
-      <div className="flex flex-col bg-gray-800 p-3 rounded-md mb-2">
-        <p className="text-white mb-1 font-bold">Task Name: <span className='font-medium'>{task.task}</span> </p>
-        {task.durations.map((duration, dayIndex) => {
-          if (parseFloat(duration) !== 0) { // Only render if duration is not zero
-            const currentDate = new Date(weekDates.monday);
-            currentDate.setDate(currentDate.getDate() + dayIndex);
-            const year = currentDate.getFullYear();
-            const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-            const day = currentDate.getDate().toString().padStart(2, '0');
-            const formattedDate = `${day}-${month}-${year}`;
-            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            const dayName = days[currentDate.getDay()];
-            return (
-              <div key={dayIndex} className="flex gap-5 justify-between text-white">
-                <p>{dayName}</p>
-                <p> {formattedDate}</p>
-                <p>{duration} hr</p>
-              </div>
-            );
-          } else {
-            return null;
-          }
-        })}
-      </div>
-    )}
-  </div>
-))}
-</div>
-  </div>
-))}
-*/}
-{/* <h1 className=" text-slate-700 font-bold text-xl">View Old Timesheet</h1> */}
-      {/* <div className="flex flex-row w-2/4 items-center justify-around mt-10 align-center">
-        <select
-          className="bg-slate-300 rounded-md outline-1 p-3 w-2/5 border"
-          name="month"
-          id="month"
-        >
-          <option value="">Select week range</option>
-          {JSON.parse(sessionStorage.getItem("date_ranges")).map((val) => {
-            return (
-              <option key={val} value={val}>
-                {val}
-              </option>
-            );
-          })}
+     
 
-        </select>
-
-        <button
-          onClick={handleoldtimesheet}
-          className="bg-cyan-600 hover:bg-cyan-500 px-8 py-3 text-white rounded-md"
-        >
-          Submit
-        </button>
-      </div> 
-    */}
       
     </div>
   );

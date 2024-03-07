@@ -57,10 +57,7 @@ const Register = () => {
     const admin=document.getElementById('isAdmin').checked
     const im=document.getElementById('photo').value
      console.log("123",add)
-     if(im===""){
-      toast.error("Upload your image");
-      return false
-     }
+     
     if(name===""){
 toast.error("Name cannot be empty")
 return false
@@ -201,12 +198,24 @@ if(pass1!==pass2){
 
      toast.success("Registration successful!");
     
-    
-
-    // Delay redirect to ensure success message is shown
-    setTimeout(() => {
+     setTimeout(() => {
       n('/');
+
+      // Clear form fields here
+      document.getElementById('name').value = '';
+      document.getElementById('gender').value = '';
+      document.getElementById('password').value = '';
+      document.getElementById('confirm-password').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('phone').value = '';
+      document.getElementById('age').value = '';
+      document.getElementById('address').value = '';
+      document.getElementById('isAdmin').checked = false;
+      document.getElementById('photo').value = '';
     }, 4000); // Adjust the delay as needed
+  
+
+   
   }
     
     }
