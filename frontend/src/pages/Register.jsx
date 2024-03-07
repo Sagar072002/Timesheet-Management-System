@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import {FaUser,FaPhoneAlt,FaBabyCarriage,FaLock,FaSearchLocation} from "react-icons/fa"
-import {MdEmail} from "react-icons/md"
+import {MdEmail, MdVisibility, MdVisibilityOff} from "react-icons/md"
 import {CgGenderMale} from "react-icons/cg"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,7 +11,19 @@ const Register = () => {
 
   const n=useNavigate()
   const [image, setImage] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+ 
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+ 
   // Function to handle image change
   const handleImageChange = (e) => {
     try
@@ -160,10 +172,10 @@ const Register = () => {
 
   // JSX structure for the Register component
   return (
-    <section className=" " >
+    <section className="" >
       <ToastContainer/>
-      <div className=" flex flex-col items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0">
-        <div className="w-full border-2 rounded-md shadow min-w-[730px]  md:mt-0 sm:max-w-md xl:p-0 ">
+      <div className=" flex flex-col items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0 ">
+        <div className="w-full border-2 rounded-md shadow min-w-[730px]  md:mt-0 sm:max-w-md xl:p-0">
           <div className="px-2 space-y-4 md:space-y-4 sm:p-8" style={{backgroundColor:"#1995AD"}}>
             <h1 className="text-xl -mt-5 font-bold leading-tight tracking-tight text-center text-white md:text-2xl ">
               Create an account
@@ -218,39 +230,47 @@ const Register = () => {
                       Password<span className="text-white font-medium"> (Min. 8 characters and Alphanumeric)</span>
                     </label>
                     <div className="flex bg-slate-50 border p-3 rounded">
-                      <FaLock className='mr-3' />
-
-                      <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="••••••••"
-                        className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full "
-                        required
-                      />
-                    </div>
+                  <FaLock className="mr-3" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    id="password"
+                    placeholder="••••••••"
+                    className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full "
+                    required
+                  />
+                  {/* Eye icon to toggle password visibility */}
+                  {showPassword ? (
+                    <MdVisibilityOff onClick={togglePasswordVisibility} className="cursor-pointer mt-1" />
+                  ) : (
+                    <MdVisibility onClick={togglePasswordVisibility} className="cursor-pointer mt-1" />
+                  )}
+                  </div>
                   </div>
 
-                  <div >
-                    <label
-                      htmlFor="confirm-password"
-                      className="block mb-2 text-sm font-bold text-white "
-                    >
-                      Confirm password
-                    </label>
-                    <div className="flex bg-slate-50 border p-3 rounded">
-                      <FaLock className='mr-3' />
-                      <input
-                        type="password"
-                        name="confirm-password"
-                        id="confirm-password"
-                        placeholder="••••••••"
-                        className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full "
-                        required
-                      />
-                    </div>
+                  <div>
+  <label htmlFor="confirm-password" className="block mb-2 text-sm font-bold text-white ">
+    Confirm password
+  </label>
+  <div className="flex bg-slate-50 border p-3 rounded">
+    <FaLock className='mr-3' />
+    <input
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    name="confirm-password"
+      id="confirm-password"
+      placeholder="••••••••"
+      className="bg-transparent border-none border-b-gray-300 text-slate-600 sm:text-sm -md outline-none block w-full "
+      required
+    />
+    {/* Eye icon to toggle confirm password visibility */}
+    {showConfirmPassword ? (
+      <MdVisibilityOff onClick={toggleConfirmPasswordVisibility} className="cursor-pointer mt-1" />
+    ) : (
+      <MdVisibility onClick={toggleConfirmPasswordVisibility} className="cursor-pointer mt-1" />
+    )}
+  </div>
+</div>
 
-                  </div>
 
                   <div>
                     <label htmlFor="photo" className="block mb-2 text-sm font-bold text-white">
@@ -344,12 +364,12 @@ const Register = () => {
               </div>
               
               {/* Admin checkbox and Login link */}
-              <div className="flex pt-4 justify-between">
+              <div className="flex  justify-between">
                 <div>
                   <input type="checkbox" name="isAdmin" id="isAdmin" />
-                  <span className="text-md font-bold text-white pl-2 pb-3">Register as Admin</span>
+                  <span className="text-md font-bold text-white pl-2 pb-1">Register as Admin</span>
                 </div>
-                <p className="text-md font-bold text-white pb-3">
+                <p className="text-md font-bold text-white pb-1">
                   Already have an account?
                   <Link
                   to="/"
@@ -366,7 +386,7 @@ const Register = () => {
                   type="submit"
                   onClick={handleregister}
                   // className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-md text-sm px-5 py-3 text-center"
-                  className="w-1/3  text-white bg-cyan-500 hover:bg-cyan-400 font-medium rounded-md text-sm px-5 py-2.5 text-center me-2 mb-2">
+                  className="w-1/3  text-white bg-cyan-500 hover:bg-cyan-400 font-medium rounded-md text-sm px-5 py-2.5 text-center me-2 ">
                     Register
                 </button>
               </div>
@@ -380,3 +400,7 @@ const Register = () => {
 }
 
 export default Register
+
+
+
+
