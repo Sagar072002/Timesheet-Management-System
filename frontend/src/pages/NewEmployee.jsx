@@ -135,9 +135,8 @@ const NewEmployee = () => {
         {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-32 object-scale-down mt-2 rounded-full"/>:<FaUser className="ml-5 mt-5 w-14 h-14" />}
           
         </div>
-
-
-        <p className="text-center font-bold text-lg">Hii {JSON.parse(sessionStorage.getItem('data')).name}</p>   {/* getting the employee's name */}
+        <p className="text-center font-bold text-lg">Hii {JSON.parse(sessionStorage.getItem('data')).name}</p>
+        <p className="text-center font-bold text-lg">Employee ID : {JSON.parse(sessionStorage.getItem('data')).userid}</p>
         <div className="mt-16 text-xl  flex flex-col gap-8 justify-center items-start">
           <div className='w-full'>
 

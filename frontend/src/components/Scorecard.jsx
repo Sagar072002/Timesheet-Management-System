@@ -9,96 +9,99 @@ import { Link, useNavigate } from "react-router-dom";
 const Scorecard = () => {
   const [ham,setHam]=useState(true)
   const n=useNavigate();
+
+  //to check if the user is authenticated
   useEffect(
     ()=>{
       if(sessionStorage.getItem('auth')==="false"){
         n('/')
       }
-
     },[]
   )
+
+  // Function to handle user logout
   const handleLogout = () => {
     toast.success("Log out successfully");
     sessionStorage.setItem("auth", "false");
-    // sessionStorage.setItem("accessToken", "");
-    //   sessionStorage.setItem("refreshToken", "");
     sessionStorage.setItem("userName", "");
     sessionStorage.setItem("password", "");
     setTimeout(() => {
       n("/");
     }, 4000); // Adjust the delay as needed
   };
+
   const [isVisible, setIsVisible] = useState(true);
-    const [selectedYear, setSelectedYear] = useState('');
-    const [selectedMonth, setSelectedMonth] = useState('');
-    const [fetchedData, setFetchedData] = useState(null); // State to store fetched data
-
-    
-
-    const handleSubmit = async () => {
-        // Check if both fields are filled
-        if (!selectedYear || !selectedMonth) {
-            toast.error("Please select both year and month.");
-            return;
-        }
-
-        // Retrieve the employee ID
-        const userId = sessionStorage.getItem('userName');
-    
-        // Print user ID, month number, and year to console
-        console.log("User ID:", userId);
-        console.log("Month:", selectedMonth);
-        console.log("Year:", selectedYear);
-    
-        try {
-            // Make the axios POST request with the selected year, month, and employee ID
-            const response = await axios.post('http://localhost:3000/getscore', {
-                "userid": userId,
-                "year": selectedYear,
-                "month": selectedMonth
-            });
-    
-            // Handle the response data
-            const data = response.data;
-            if (response.status === 200) {
-                setFetchedData(data);
-                toast.success("Fetch successful!");
-            } else {
-                toast.error("Error: " + data.message);
-            }
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            toast.error("Error in fetching");
-        }
-    };
-
-    // Function to handle year selection
-    const handleYearChange = (event) => {
-        setSelectedYear(event.target.value);
-    };
-
-    // Function to handle month selection
-    const handleMonthChange = (event) => {
-        setSelectedMonth(event.target.value);
-    };
-    if (!isVisible) {
-        return null; // If isVisible is false, return null to render nothing
+  const [selectedYear, setSelectedYear] = useState(''); // Selected year for scorecard
+  const [selectedMonth, setSelectedMonth] = useState(''); // Selected month for scorecard
+  const [fetchedData, setFetchedData] = useState(null); // State to store fetched data
+  
+  // Function to handle scorecard form submission  
+  const handleSubmit = async () => {
+    // Check if both fields are filled
+    if (!selectedYear || !selectedMonth) {
+        toast.error("Please select both year and month.");
+        return;
     }
+    // Retrieve the employee ID
+    const userId = sessionStorage.getItem('userName');
+
+    try 
+    {
+      // Make the axios POST request with the selected year, month, and employee ID
+      const response = await axios.post('http://localhost:3000/getscore', {
+        "userid": userId,
+        "year": selectedYear,
+        "month": selectedMonth
+      });
+
+      // Handle the response data
+      const data = response.data;
+      if (response.status === 200) 
+      {
+        setFetchedData(data);
+        toast.success("Fetch successful!");
+      } 
+      else 
+      {
+        toast.error("Error: " + data.message);
+      }
+    } 
+    catch (error) 
+    {
+      toast.error("Error in fetching");
+    }
+  };
+
+  // Function to handle year selection
+  const handleYearChange = (event) => {
+    setSelectedYear(event.target.value);
+  };
+
+  // Function to handle month selection
+  const handleMonthChange = (event) => {
+    setSelectedMonth(event.target.value);
+  };
+
+  if (!isVisible) 
+  {
+    return null; // If isVisible is false, return null to render nothing
+  }
+  
+  // JSX structure for the Scorecard component
   return (
     <div className='flex'>
       <ToastContainer/>
       <div className={ham?`w-1/6 flex flex-col p-3 bg-cyan-600 bg-opacity-35   h-lvh`:`hidden`}>
-      {ham?<RxCross2 className="absolute top-2 left-52 text-3xl" onClick={()=>{setHam(false)}}/>:<></>}
+        {ham?<RxCross2 className="absolute top-2 left-52 text-3xl" onClick={()=>{setHam(false)}}/>:<></>}
         <div className=" justify-center relative mt-10 mb-4 rounded-full flex">
-        {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-32 object-scale-down mt-2 rounded-full"/>:<FaUser className="ml-5 mt-5 w-14 h-14" />}
-          
+          {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-32 object-scale-down mt-2 rounded-full"/>:<FaUser className="ml-5 mt-5 w-14 h-14" />}          
         </div>
         <p className="text-center font-bold text-lg">Hii {JSON.parse(sessionStorage.getItem('data')).name}</p>
         <div className="mt-16 text-xl  flex flex-col gap-8  text-center w-full justify-center items-start">
           <Link  to= '/newemp'  className="px-3">Current Timesheet</Link>
           <Link to='/timesheetList'  className="px-3">Timesheet List</Link>
           <div className='w-full'>
-          <Link to='/scorecard'><p className='text-white text-left bg-cyan-600 px-3 py-3 w-full rounded-md font-bold'>Score Card</p></Link>
+            <Link to='/scorecard'><p className='text-white text-left bg-cyan-600 px-3 py-3 w-full rounded-md font-bold'>Score Card</p></Link>
           </div>
           <Link to='/profile'  className="px-3">Edit Profile</Link>
           <button
@@ -108,7 +111,6 @@ const Scorecard = () => {
             Logout
           </button>
         </div>
-
       </div>
       <div className={ham?"w-5/6":'w-full'}>
         {ham?<></>:<RxHamburgerMenu className="ml-4 mt-4 text-3xl" onClick={()=>{setHam(true)}}/>}
@@ -133,9 +135,6 @@ const Scorecard = () => {
                     );
                   })}
                 </select>
-                {/* <label htmlFor="month" className="font-bold">
-                  Select Month:
-                </label> */}
                 <select
                   id="month"
                   className="py-2  w-3/5 border rounded-sm outline-none text-black"
@@ -171,6 +170,7 @@ const Scorecard = () => {
               </button>
             </div>
           </div>
+          {/* Display fetched scorecard data */}
           <div className="w-full mt-5">
             <p className="text-center text-2xl font-semibold font-['Plus Jakarta Sans']  pb-5">
               Result:
@@ -178,9 +178,9 @@ const Scorecard = () => {
             {/* Render fetched data */}
             {fetchedData && fetchedData.length > 0 ? (
               <div className="text-white rounded-md">
-                {/* <p className="font-bold mb-3">Weekly Scores:</p> */}
                 <div className="rounded-lg overflow-hidden z-10 shadow-md">
                   <table className=" w-full rounded-lg">
+                    {/* Table header */}
                     <thead className="bg-cyan-600 w-full">
                       <tr>
                         <th
@@ -203,6 +203,7 @@ const Scorecard = () => {
                         </th>
                       </tr>
                     </thead>
+                    {/* Table body */}
                     <tbody>
                       {fetchedData.map((item, index) => (
                         <tr
@@ -225,6 +226,7 @@ const Scorecard = () => {
                 </div>
               </div>
             ) : (
+              // Display a message if no data is available
               <div className="min-w-full flex justify-center text-center text-2xl font-semibold font-['Plus Jakarta Sans'] ">
                 No data available
               </div>

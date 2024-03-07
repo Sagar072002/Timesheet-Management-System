@@ -1,17 +1,18 @@
 const { Timelog, User } = require('../db');
 const { Op } = require('sequelize');
 
-
+// Function to create or update a timelog
 const createTimelog = async (req, res) => {
-  try {
+  try 
+  {
     const { userid, date, task, duration, status } = req.body;
 
     // Check if a user with the specified userid exists
     const existingUser = await User.findOne({
       where: { userid },
     });
-
-    if (!existingUser) {
+    if (!existingUser) 
+    {
       return res.status(400).json({ error: 'User not found.' });
     }
 
@@ -24,13 +25,14 @@ const createTimelog = async (req, res) => {
       },
     });
 
-    if (existingTimelog) {
+    if (existingTimelog) 
+    {
       // If timelog exists, update the duration and status
       existingTimelog.duration = parseFloat(duration);
       existingTimelog.status = status;
       await existingTimelog.save();
 
-      return res.status(200).json({ timelog: existingTimelog, message: 'Timelog updated successfully.' });
+      return res.status(200).json({existingTimelog});
     }    
 
     // Create a new timelog if no duplicate entry found and user exists
@@ -38,21 +40,24 @@ const createTimelog = async (req, res) => {
       userid,
       date,
       task,
-      duration: parseFloat(duration), // Convert to decimal before saving
+      duration: parseFloat(duration), // Convert to decimal
       status,
     });
 
     res.status(200).json({ timelog });
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
+// Function to delete timelogs within a specified date range
 const deleteTimelogs = async (req, res) => {
-  try {
+  try 
+  {
     const { userid, task, startDate, endDate } = req.body;
-
 
     // Delete all timelogs with the specified task, startDate, and endDate
     const deletedTimelogs = await Timelog.destroy({
@@ -67,14 +72,18 @@ const deleteTimelogs = async (req, res) => {
     });
 
     res.status(200).json({ deletedTimelogs });
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
+// Function to retrieve task details within a specified date range
 const getTaskDetails = async (req, res) => {
-  try {
+  try 
+  {
     const { userid, startDate, endDate } = req.body;
 
     // Retrieve task details between startDate and endDate
@@ -90,7 +99,9 @@ const getTaskDetails = async (req, res) => {
     });
 
     res.status(200).json({ taskDetails });
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { MdEmail } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import loaderGif from "../assets/loading.gif"; // Adjust the path as per your project structure
+import ReactLoading from 'react-loading'
 
 const Forgotpassmail = ({ func, mail }) => {
   const [loading, setLoading] = useState(false);
@@ -42,7 +43,8 @@ const Forgotpassmail = ({ func, mail }) => {
         <div className="mt-5 rounded-md shadow min-h-[200px] min-w-[380px] relative ">
          {loading && (
   <div className="fixed top-0 left-0 z-50 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-50">
-    <img src={loaderGif} alt="Loading..." />
+    {/* <img src={loaderGif} alt="Loading..." /> */}
+    <ReactLoading type={"spinningBubbles"} color={"#6d28d9"} height={100} width={100} />
   </div>
 )}
 

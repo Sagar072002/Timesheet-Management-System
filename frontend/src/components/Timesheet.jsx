@@ -339,9 +339,9 @@ const Timesheet = () => {
             //   toast.success(
             //     `${response.status}\n${response.statusText}\n${data.message}`
             //  )
-            if (response.status === 200) {
-              toast.success("database row created successful!");
-            }
+            // if (response.status === 200) {
+            //   toast.success("database row created successful!");
+            // }
           } catch (error) {
             toast.error("Error in creating database row!");
           }
@@ -445,10 +445,13 @@ const Timesheet = () => {
               );
             }
 
-            
-            if (response.status === 200) {
-              toast.success("database row created successful!");
-            }
+            // response.status
+            //   toast.success(
+            //     `${response.status}\n${response.statusText}\n${data.message}`
+            //  )
+            // if (response.status === 200) {
+            //   toast.success("database row created successful!");
+            // }
           } catch (error) {
             toast.error("Error in creating database row!");
           }
