@@ -3,7 +3,7 @@ const { Op } = require('sequelize');
 
 const createScorecard = async (req, res) => {
   try {
-    const { date_range, userid, week_number, score } = req.body;
+    var { date_range, userid, week_number, score } = req.body;
 
     // Check if a scorecard with the same combination already exists
     const existingScorecard = await Scorecard.findOne({
@@ -17,7 +17,23 @@ const createScorecard = async (req, res) => {
     if (existingScorecard) {
       return res.status(400).json({ error: 'Duplicate entry. This combination already exists.' });
     }
-
+    var date=new Date();
+    console.log(getISOWeek(date),)
+    if(getISOWeek(date)!=week_number){
+      score=0
+    }
+    else
+    {
+        if(date.getDay()===5){
+        score=10
+      }
+      else if(date.getDay()===6){
+        score=5
+      }
+      else{
+        score=0
+      }
+    }
     // Check if a user with the specified userid exists
     const existingUser = await User.findOne({
         where: { userid },
