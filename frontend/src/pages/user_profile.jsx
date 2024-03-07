@@ -1,3 +1,4 @@
+// This part is contributed by Rishitha
 // This the page that displays the details of employee to the Admin, whenever the Admin clicks on Details button for a particular employee
 
 import React, { useState } from "react";

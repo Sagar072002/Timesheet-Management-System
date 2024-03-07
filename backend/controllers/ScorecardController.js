@@ -1,3 +1,4 @@
+// This part is contributed by Rishitha
 const { Scorecard,User } = require('../db');
 const { Op } = require('sequelize');
 
