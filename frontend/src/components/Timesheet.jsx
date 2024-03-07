@@ -1,16 +1,15 @@
 // This is the Timesheet module where the user can access the current timesheet
 
+// This code is contributed by Sagar
 
 // Here we are importing the necessary libraries and files
 import React, { useState, useEffect } from "react";
 import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 
 const Timesheet = () => {
-  var count = 0;
-
 
   // These are the usestate hooks where we initialise the initial and the updates values
   const [rowCount, setRowCount] = useState(1);
@@ -19,12 +18,8 @@ const Timesheet = () => {
   const [timesheets, setTimesheets] = useState([]);
   const [isAnyFieldFilled, setIsAnyFieldFilled] = useState(false);
   const [userScore, setUserScore] = useState(0); 
-  const [viewtime, setviewtime] = useState(false);
-  const [viewtimedata, setviewtimedata] = useState([]);
-  const [date, setdate] = useState([]);
 
 
-  const navigate = useNavigate(); // usenavigate hook to navigate to another page
   const currentDate = new Date();//Define current date
   const currentDay = currentDate.getDay(); // Define current day
 
@@ -158,22 +153,18 @@ const fetchdata = async () => {
       setTimesheets(updatedTimesheets);
       setRowCount(rowCount - 1);
 
-      // console.log("task", timeData[index][0]);
       var inputDate = new Date(weekDates.monday);
-      console.log("inputDate1", inputDate);
       // Format the Date object to "YYYY-MM-DD" format
       const sdate = `${inputDate.getFullYear()}-${(inputDate.getMonth() + 1)
         .toString()
         .padStart(2, "0")}-${inputDate.getDate().toString().padStart(2, "0")}`;
 
       inputDate = new Date(weekDates.friday);
-      console.log("inputDate2", inputDate);
       // Format the Date object to "YYYY-MM-DD" format
       const edate = `${inputDate.getFullYear()}-${(inputDate.getMonth() + 1)
         .toString()
         .padStart(2, "0")}-${inputDate.getDate().toString().padStart(2, "0")}`;
 
-      console.log(sdate, edate);
 
       try {
         const response = await axios.post(
@@ -186,20 +177,9 @@ const fetchdata = async () => {
           }
         );
 
-        const data = response.data;
-        console.log("del", data);
-        if (response.status !== 200) {
-          // response.status
-          // console.log("*********",response.status,response.statusText,data.message,data.errors)
-          console.log(
-            `${response.status}\n${response.statusText}\n${data.message}`
-          );
-        }
+        
 
-        // response.status
-        //   toast.success(
-        //     `${response.status}\n${response.statusText}\n${data.message}`
-        //  )
+        
         if (response.status === 200) {
           toast.success("Deleted successfully");
         }
@@ -307,13 +287,7 @@ const fetchdata = async () => {
           const updatedUserScore = userScore + bonusPoints;
           setUserScore(updatedUserScore);
 
-          // Print bonus points in the console
-          //console.log(`Bonus Points: ${bonusPoints}`);
-
-          // Print current week and week number in the console
-          //console.log(`Week Number: ${weekNumber}, Current Week: ${weekDates.monday} - ${weekDates.friday}`);
-          //console.log(bonusPoints,weekNumber,weekDates.monday,weekDates.friday,sessionStorage.getItem("userName"))
-
+         
           try {
             const response = await axios.post(
               "http://localhost:3000/scorecard",
@@ -326,22 +300,9 @@ const fetchdata = async () => {
             );
 
             const data = response.data;
-            console.log(data);
-            if (response.status !== 200) {
-              // response.status
-              // console.log("*********",response.status,response.statusText,data.message,data.errors)
-              console.log(
-                `${response.status}\n${response.statusText}\n${data.message}`
-              );
-            }
+           
 
-            // response.status
-            //   toast.success(
-            //     `${response.status}\n${response.statusText}\n${data.message}`
-            //  )
-            // if (response.status === 200) {
-            //   toast.success("database row created successful!");
-            // }
+           
           } catch (error) {
             toast.error("Error in creating database row!");
           }
@@ -413,19 +374,15 @@ const fetchdata = async () => {
           })
           .filter((date) => date !== undefined),
       }));
-      console.log("updatedTaskData", updatedTaskData);
       for (const task of updatedTaskData) {
         const { day, durations, task: taskName } = task;
-        //console.log("taskName",taskName)
         for (let i = 0; i < day.length; i++) {
           const duration = durations[i];
           var date = day[i];
           var parts = date.split("/");
           var date = `${parts[2]}-${parts[1]}-${parts[0]}`;
 
-          console.log("date", date);
-          console.log("duration", duration);
-          console.log("taskName", taskName);
+          
           //api calling
 
           try {
@@ -438,20 +395,9 @@ const fetchdata = async () => {
             });
 
             const data = response.data;
-            console.log(data);
-            if (response.status !== 200) {
-              console.log(
-                `${response.status}\n${response.statusText}\n${data.message}`
-              );
-            }
+           
 
-            // response.status
-            //   toast.success(
-            //     `${response.status}\n${response.statusText}\n${data.message}`
-            //  )
-            // if (response.status === 200) {
-            //   toast.success("database row created successful!");
-            // }
+            
           } catch (error) {
             toast.error("Error in creating database row!");
           }

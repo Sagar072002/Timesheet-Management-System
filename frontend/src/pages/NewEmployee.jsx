@@ -1,10 +1,11 @@
 // This is the employee module which is basically the employee dashboard where he can access different modules
 
+// This code is contributed by Sagar
 
 // Here we are importing the necessary libraries and files
 
 import React, { useState,useEffect, useCallback } from "react";
-import { FaCamera, FaUser } from "react-icons/fa";
+import {  FaUser } from "react-icons/fa";
 import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
 import Timesheet from "../components/Timesheet";
 import CountUp from "react-countup";
@@ -57,7 +58,6 @@ const NewEmployee = () => {
 // useeffect hook to navigate to respective dashboard
   useEffect(() => {
     const fetchedUsername = sessionStorage.getItem("userName");
-    console.log("Fetched username:", fetchedUsername);
     setUsername(fetchedUsername);
     displayData();
     if (
@@ -87,7 +87,6 @@ const NewEmployee = () => {
       setWeek(response.data.week)
       setDuration(response.data.totaldur)
       setTimeCount(response.data.timeseet_count)
-      console.log(score,week,duration)
       
     }
     userscore();
@@ -100,11 +99,9 @@ const NewEmployee = () => {
     try {
       const named = sessionStorage.getItem("userName");
       const url = `http://localhost:3000/users/${named}`;
-      console.log("userid:", named);
       const response = await axios.get(url, {});
 
       const data = response.data;
-      console.log(data);
       setProfileValue(data);
      
     } catch (error) {

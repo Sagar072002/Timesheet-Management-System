@@ -1,8 +1,8 @@
 // This is admin_profile where the admin can edit  his details
 
+// This code is contributed by Sagar
+
 // Here we have imported the necessary libraries and files
-
-
 import React,{useEffect,useState} from 'react';
 import axios from "axios";
 import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
@@ -79,12 +79,10 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
         }
         var val=JSON.parse(sessionStorage.getItem('data'))
         val['image']=image
-        console.log(val)
         sessionStorage.setItem('data',JSON.stringify(val))
         const named = sessionStorage.getItem("userName");
         const url = `http://localhost:3000/users/${named}`;
-        console.log("userid:",named)
-        console.log("edit", d);
+       
         const response = await axios.put(url,
           {
              "name": d.name,
@@ -118,7 +116,6 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
       if (e && e.target) {
         const { name, value } = e.target;
        
-        console.log(name,value)
         setd({
           ...d,
           [name]: value,
@@ -128,7 +125,6 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
           [name]: value,
         }))
         JSON.parse(sessionStorage.getItem("data"));
-        console.log(d)
 
       }
     };
@@ -140,7 +136,6 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
       var reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       var size = e.target.files[0].size;
-      console.log(size/1000)
       if(size/1000>52){
         toast.error("Upload an image with file size less than 50kb");
         return false
@@ -157,7 +152,6 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
         }))
       };
      reader.onerror = error => {
-        console.log("error ",error);
       }}catch{
   
       }

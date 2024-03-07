@@ -1,4 +1,5 @@
 // This is employee card where the admin can view all the employees 
+// This code is contributed by Sagar
 
 // Here we have imported the necessary libraries and files
 import React, { useState } from "react";
@@ -16,7 +17,6 @@ const EmployeeCard = ({ employeeData }) => {
 
     // Defining the function to fetch the week range
     const fetchWeekRange = async () => {
-      console.log(employeeData)
      
       try{
         const response = await axios.post('http://localhost:3000/daterange',
@@ -27,18 +27,11 @@ const EmployeeCard = ({ employeeData }) => {
         );
      
         const data= response.data;
-        console.log("week_ranges",data)
   
-        if(response.status!==200){
-          console.log(
-            `${response.status}\n${response.statusText}\n${data.message}`
-         )
-        }
-   
+       
       
         if(response.status===200){
           sessionStorage.setItem(`${employeeData.userid}ranges`,JSON.stringify(data.dateRanges)) 
-          console.log(JSON.parse(sessionStorage.getItem(`${employeeData.userid}ranges`)) )   
        }
      
       }
