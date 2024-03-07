@@ -1,3 +1,4 @@
+// This code is contributed by Rithik
 const qrcode=require('qrcode')
 const {authenticator}=require('otplib')
 const { User } = require("../db");
