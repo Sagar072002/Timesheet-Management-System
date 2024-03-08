@@ -19,7 +19,6 @@ const createScorecard = async (req, res) => {
       return res.status(400).json({ error: 'Duplicate entry. This combination already exists.' });
     }
     var date=new Date();
-    console.log(getISOWeek(date),)
     if(getISOWeek(date)!=week_number){
       score=0
     }
