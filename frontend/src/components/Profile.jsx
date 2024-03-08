@@ -1,3 +1,4 @@
+// This part is contributed by Rishitha
 // This is the page is used for employee dashboard where the employee can edit current timesheet, view the previous timesheets and scorecard 
 // and can edit their profile
 

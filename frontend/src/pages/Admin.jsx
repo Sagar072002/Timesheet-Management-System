@@ -1,3 +1,4 @@
+// This part is contributed by Rishitha
 // This is the Admin.jsx which is basically the admin dashboard where the admin can see the total employees.
 // Also he can view their details, scorecards and timesheet
 
