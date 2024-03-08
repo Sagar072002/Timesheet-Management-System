@@ -60,13 +60,8 @@ const Register = () => {
     const age=document.getElementById('age').value
     const add=document.getElementById('address').value
     const admin=document.getElementById('isAdmin').checked
-    const im=document.getElementById('photo').value
 
     // Validation checks
-    if(im===""){
-    toast.error("Upload your image");
-    return false
-    }
     if(name===""){
       toast.error("Name cannot be empty")
       return false
