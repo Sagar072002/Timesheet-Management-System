@@ -1,3 +1,4 @@
+// This part is contributed by Akanksha
 const { Timelog, User } = require('../db');
 const { Op } = require('sequelize');
 
