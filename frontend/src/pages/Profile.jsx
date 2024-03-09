@@ -145,14 +145,14 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
     <div className="w-full h-screen flex">
       <ToastContainer />
       <Sidebar ham={ham} setHam={close}/>
-      <div className={ham?"w-5/6  ":'w-full'}>
+      <div className={ham?"bg-transparent sticky left-64  w-5/6 z-10":'bg-transparent  w-full z-10'}>
         {ham?<></>:<RxHamburgerMenu className="ml-4 hover:cursor-pointer mt-4 text-3xl" onClick={()=>{setHam(true)}}/>}
         <div className="flex flex-col  items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0">
         <div className="w-full flex border-slate-400 border-2 flex-col items-center rounded-md  min-h-[420px] min-w-[550px]  md:mt-0 sm:max-w-md xl:p-0 relative">
           <div className='mt-4'>
             {image!==null?
             <div className='relative'>
-            <img src={image} className="w-32 h-32 object-scale-down shadow-lg rounded-full" onClick={() => { const inputElement = document.getElementById('image1');if (inputElement) {   inputElement.click();  }}}/>
+            <img src={image} className="w-32 h-32 object-scale-down rounded-full" onClick={() => { const inputElement = document.getElementById('image1');if (inputElement) {   inputElement.click();  }}}/>
             <input
                 type="file"
                 name="image1"
@@ -178,7 +178,7 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
 
                 required=""
               />
-          {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-30 shadow-lg rounded-full" onClick={() => { const inputElement = document.getElementById('image');if (inputElement) {   inputElement.click();  }}} ></img>:<FaUser className="w-28 h-28 object-scale-down shadow-lg rounded-full border-black border-2" onClick={() => { const inputElement = document.getElementById('image');if (inputElement) {   inputElement.click();  }}}/>}
+          {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-30  rounded-full" onClick={() => { const inputElement = document.getElementById('image');if (inputElement) {   inputElement.click();  }}} ></img>:<FaUser className="w-28 h-28 object-scale-down  rounded-full border-black border-2" onClick={() => { const inputElement = document.getElementById('image');if (inputElement) {   inputElement.click();  }}}/>}
           </>
         }
           </div>

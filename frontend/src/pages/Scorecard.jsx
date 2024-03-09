@@ -95,7 +95,7 @@ const Scorecard = () => {
     <div className='flex'>
       <ToastContainer/>
       <Sidebar ham={ham} setHam={close}/>
-      <div className={ham?"w-5/6":'w-full'}>
+      <div className={ham?"bg-transparent sticky left-64  w-5/6 z-10":'bg-transparent  w-full z-10'}>
         {ham?<></>:<RxHamburgerMenu className="ml-4 hover:cursor-pointer mt-4 text-3xl" onClick={()=>{setHam(true)}}/>}
         <div className='flex flex-col w-2/4 mt-10 rounded-md px-5 items-center border-2 border-slate-400 mx-auto'>
           <div className="w-2/3 flex flex-col mt-3  gap-2 ">

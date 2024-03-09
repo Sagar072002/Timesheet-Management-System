@@ -107,7 +107,7 @@ const TimesheetList = () => {
       {/* This div is for side bar */}
       <Sidebar ham={ham} setHam={close}/>
       {/* This div is for Timesheet list component */}
-      <div className={ham?"bg-transparent sticky left-60  w-5/6 z-10":'bg-transparent  w-full z-10'}>
+      <div className={ham?"bg-transparent sticky left-64  w-5/6 z-10":'bg-transparent  w-full z-10'}>
         {ham?<></>:<RxHamburgerMenu className="ml-4 mt-4 hover:cursor-pointer text-3xl" onClick={()=>{setHam(true)}}/>}
               <div className="flex flex-col justify-center items-center w-full  p-10 ">
               <h1 className=" text-slate-700 font-bold text-3xl mb-2">

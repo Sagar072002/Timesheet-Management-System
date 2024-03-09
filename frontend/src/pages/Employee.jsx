@@ -127,7 +127,7 @@ const Employee = () => {
         visible={sessionStorage.getItem("2fa")}
       />
      <Sidebar ham={ham} setHam={close}/>
-      <div className={ham?"w-5/6 sticky left-60 pt-5 ":'w-full'}>
+      <div className={ham?"w-5/6 sticky left-64 pt-5 ":'w-full'}>
         {ham?<></>:<RxHamburgerMenu className="ml-4 mt-4 text-3xl hover:cursor-pointer" onClick={()=>{setHam(true)}}/>}
 
 {/* stats div to display the number of timesheets */}
