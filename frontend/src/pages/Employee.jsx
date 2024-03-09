@@ -14,6 +14,7 @@ import { toast,ToastContainer } from "react-toastify";
 import Twofa from "../components/Authentication";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Sidebar from "../components/Sidebar.jsx"
 
 
 // Component to display an employee dashboard
@@ -110,7 +111,9 @@ const Employee = () => {
   };
 
   const [ham,setHam]=useState(true)
-  return (
+  const close=()=>{setHam(false)}
+  const open=()=>{setHam(true)}
+   return (
     <div className="w-full h-screen flex">
 
        {/* enabling the toast container to display the toast messages */}
@@ -123,55 +126,7 @@ const Employee = () => {
         className="w-full bg-white"
         visible={sessionStorage.getItem("2fa")}
       />
-      <div className={ham?`w-1/6 fixed bg-cyan-600 bg-opacity-35 h-screen flex flex-col p-3 `:`hidden `}>
-      {ham?<RxCross2 className="absolute top-2 left-48 hover:cursor-pointer text-3xl" onClick={()=>{setHam(false)}}/>:<></>}
-        <div className=" justify-center relative mt-10 mb-4 rounded-full flex">
-
-       {/* Displaying the employee's image otherwise displaying an alternative image */}
-
-        {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-30 object-scale-down mt-2 rounded-full"/>:<FaUser className="ml-5 mt-5 w-14 h-14" />}
-          
-        </div>
-        <p className="text-center font-bold text-lg">Hii {JSON.parse(sessionStorage.getItem('data')).name}</p>
-        <p className="text-center font-bold text-lg">Employee ID : {JSON.parse(sessionStorage.getItem('data')).userid}</p>
-        <div className="mt-10 text-xl  flex flex-col gap-6 justify-center items-start">
-          <div className='w-full'>
-
-{/* Link to current timesheet module */}
-
-          <Link to='/employee' ><p className='text-white text-left bg-cyan-600  px-3 py-3 w-full rounded-md font-bold'>Current Timesheet</p></Link>
-          </div>
-
-          {/* Link to timesheet list module */}
-
-          <div>
-          <Link to='/timesheetList' className="px-3 hover:font-semibold">Timesheet List</Link>
-          </div>
-
-          {/* Link to scorecard module */}
-
-          <div>
-          <Link to='/scorecard'  className="px-3 hover:font-semibold">Score Card</Link>
-          </div>
-
-{/* Link to edit profile module */}
-
-
-          <div>
-          <Link to='/profile' className="px-3 hover:font-semibold">Edit Profile</Link>
-          </div>
-
-{/* logout button  */}
-
-          <button
-            className="px-6 py-2 absolute bottom-2 rounded-md border font-medium bg-red-600 hover:bg-red-700 text-white hover:cursor-pointer"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
-        </div>
-        
-      </div>
+     <Sidebar ham={ham} setHam={close}/>
       <div className={ham?"w-5/6 sticky left-60 pt-5 ":'w-full'}>
         {ham?<></>:<RxHamburgerMenu className="ml-4 mt-4 text-3xl hover:cursor-pointer" onClick={()=>{setHam(true)}}/>}
 

@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
 import { FaCamera, FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import Sidebar from "../components/Sidebar.jsx"
 
 
 const Scorecard = () => {
@@ -87,34 +88,13 @@ const Scorecard = () => {
   {
     return null; // If isVisible is false, return null to render nothing
   }
-  
+  const close=()=>{setHam(false)}
+  const open=()=>{setHam(true)}
   // JSX structure for the Scorecard component
   return (
     <div className='flex'>
       <ToastContainer/>
-      <div className={ham?`w-1/6 flex flex-col p-3 bg-cyan-600 bg-opacity-35   h-lvh`:`hidden`}>
-        {ham?<RxCross2 className="absolute top-2 left-48 hover:cursor-pointer text-3xl" onClick={()=>{setHam(false)}}/>:<></>}
-        <div className=" justify-center relative mt-10 mb-4 rounded-full flex">
-          {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-30 object-scale-down mt-2 rounded-full"/>:<FaUser className="ml-5 mt-5 w-14 h-14" />}          
-        </div>
-        <p className="text-center font-bold text-lg">Hii {JSON.parse(sessionStorage.getItem('data')).name}</p>
-        <p className="text-center font-bold text-lg">Employee ID : {JSON.parse(sessionStorage.getItem('data')).userid}</p>
-
-        <div className="mt-16 text-xl  flex flex-col gap-8  text-center w-full justify-center items-start">
-          <Link  to= '/employee'  className="px-3 hover:font-semibold">Current Timesheet</Link>
-          <Link to='/timesheetList'  className="px-3 hover:font-semibold">Timesheet List</Link>
-          <div className='w-full'>
-            <Link to='/scorecard'><p className='text-white text-left bg-cyan-600 px-3 py-3 w-full rounded-md font-bold'>Score Card</p></Link>
-          </div>
-          <Link to='/profile'  className="px-3 hover:font-semibold">Edit Profile</Link>
-          <button
-            className="px-6 py-2  absolute bottom-2 rounded-md border font-medium bg-red-600 hover:bg-red-700 text-white  hover:cursor-pointer"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
-        </div>
-      </div>
+      <Sidebar ham={ham} setHam={close}/>
       <div className={ham?"w-5/6":'w-full'}>
         {ham?<></>:<RxHamburgerMenu className="ml-4 hover:cursor-pointer mt-4 text-3xl" onClick={()=>{setHam(true)}}/>}
         <div className='flex flex-col w-2/4 mt-10 rounded-md px-5 items-center border-2 border-slate-400 mx-auto'>

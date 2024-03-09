@@ -5,7 +5,7 @@ import { toast,ToastContainer } from 'react-toastify';
 import { FaCamera, FaUser } from "react-icons/fa";
 import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
 import { Link, useNavigate } from 'react-router-dom';
-
+import Sidebar from "../components/Sidebar.jsx"
 
 const TimesheetList = () => {
 
@@ -99,35 +99,13 @@ const TimesheetList = () => {
   };
   //this is to handle side bar display
   const [ham,setHam]=useState(true)
-  
+  const close=()=>{setHam(false)}
+  const open=()=>{setHam(true)}
   return (
     <div className='flex'>
       <ToastContainer />
       {/* This div is for side bar */}
-    <div className={ham?`w-1/6 fixed flex flex-col p-3 bg-cyan-600 bg-opacity-35   h-lvh`:`hidden`}>
-      {ham?<RxCross2 className="absolute hover:cursor-pointer top-2 left-48 text-3xl" onClick={()=>{setHam(false)}}/>:<></>}
-        <div className=" justify-center relative mt-10 mb-4 rounded-full flex">
-        {JSON.parse(sessionStorage.getItem('data')).image!==null?<img src={JSON.parse(sessionStorage.getItem('data')).image} className="w-32 h-30 object-scale-down mt-2 rounded-full"/>:<FaUser className="ml-5 mt-5 w-14 h-14" />}
-          
-        </div>
-        <p className="text-center font-bold text-lg">Hii {JSON.parse(sessionStorage.getItem('data')).name}</p>
-        <p className="text-center font-bold text-lg">Employee ID : {JSON.parse(sessionStorage.getItem('data')).userid}</p>
-
-        <div className="mt-16 text-xl  flex flex-col gap-8  text-center w-full justify-center items-start">
-          <Link  to= '/employee'  className="px-3 hover:font-semibold">Current Timesheet</Link>
-          <div className='w-full'>
-          <Link to='/timesheetList'><p className='text-white text-left bg-cyan-600 px-3 py-3 w-full rounded-md font-bold'>Timesheet List</p></Link>
-          </div>
-          <Link to='/scorecard'  className="px-3 hover:font-semibold">Score Card</Link>
-          <Link to='/profile'  className="px-3 hover:font-semibold">Edit Profile</Link>
-          <button
-            className="px-6 py-2   absolute bottom-2 rounded-md border font-medium bg-red-600 hover:bg-red-700 text-white   hover:cursor-pointer"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
-        </div>
-      </div>
+      <Sidebar ham={ham} setHam={close}/>
       {/* This div is for Timesheet list component */}
       <div className={ham?"bg-transparent sticky left-60  w-5/6 z-10":'bg-transparent  w-full z-10'}>
         {ham?<></>:<RxHamburgerMenu className="ml-4 mt-4 hover:cursor-pointer text-3xl" onClick={()=>{setHam(true)}}/>}

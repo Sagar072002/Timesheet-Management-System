@@ -88,8 +88,7 @@ const fetchdata = async () => {
     }
 
     setTimeData(Object.entries(f).map(([task, durations]) => [task, ...durations]));
-    setRowCount(Object.keys(f).length);
-  }
+    setRowCount(Object.keys(f).length===0?1:Object.keys(f).length);  }
 }
 
         fetchdata()

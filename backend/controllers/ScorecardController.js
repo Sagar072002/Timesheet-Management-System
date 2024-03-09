@@ -25,15 +25,13 @@ const createScorecard = async (req, res) => {
     else
     {
         if(date.getDay()===5){
-        score=10
-      }
-      else if(date.getDay()===6){
-        score=5
+          score=date.getHours()>18 &&date.getMinutes()>45?5:10;
       }
       else{
         score=0
       }
     }
+    return false
     // Check if a user with the specified userid exists
     const existingUser = await User.findOne({
         where: { userid },
