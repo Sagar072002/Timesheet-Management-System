@@ -50,7 +50,7 @@ const Login = () => {
             n("/admin");
           } 
           else {
-            n("/newemp");
+            n("/employee");
           }
         }
         
@@ -170,7 +170,7 @@ const Login = () => {
             if (admin) {
               n("/admin");
             } else {
-              n("/newemp");
+              n("/employee");
             }
           }, 4000); // Adjust the delay as needed
         }

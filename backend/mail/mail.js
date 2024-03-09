@@ -87,7 +87,7 @@ async function sendmail(req, res) {
       to: `${email}`,
       subject: "Test mail Gmail",
       text: "Example mail sending testing",
-      html: `<a href="http://localhost:3001/forgotpass/?mail=${email}&key=${key}&expiry=${duration}">ClickHere</a>`,
+      html: `<a href="http://localhost:3001/forgotpassword/?mail=${email}&key=${key}&expiry=${duration}">ClickHere</a>`,
     };
 
     const info = await transporter.sendMail(mailopt);

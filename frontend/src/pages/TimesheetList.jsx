@@ -114,7 +114,7 @@ const TimesheetList = () => {
         <p className="text-center font-bold text-lg">Employee ID : {JSON.parse(sessionStorage.getItem('data')).userid}</p>
 
         <div className="mt-16 text-xl  flex flex-col gap-8  text-center w-full justify-center items-start">
-          <Link  to= '/newemp'  className="px-3 hover:font-semibold">Current Timesheet</Link>
+          <Link  to= '/employee'  className="px-3 hover:font-semibold">Current Timesheet</Link>
           <div className='w-full'>
           <Link to='/timesheetList'><p className='text-white text-left bg-cyan-600 px-3 py-3 w-full rounded-md font-bold'>Timesheet List</p></Link>
           </div>

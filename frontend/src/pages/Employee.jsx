@@ -11,14 +11,14 @@ import Timesheet from "../components/Timesheet";
 import CountUp from "react-countup";
 import ScrollTrigger from "react-scroll-trigger";
 import { toast,ToastContainer } from "react-toastify";
-import Twofa from "./twofa";
+import Twofa from "../components/Authentication";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
 // Component to display an employee dashboard
 
-const NewEmployee = () => {
+const Employee = () => {
 
 
     // These are the usestate hooks where we initialise the initial and the updates values
@@ -70,7 +70,7 @@ const NewEmployee = () => {
       sessionStorage.getItem("auth") === "true" &&
       sessionStorage.getItem("userName") !== ""
     ) {
-      n("/newemp");
+      n("/employee");
     } else {
       n("/");
       alert('logout')
@@ -139,7 +139,7 @@ const NewEmployee = () => {
 
 {/* Link to current timesheet module */}
 
-          <Link to='/newemp' ><p className='text-white text-left bg-cyan-600  px-3 py-3 w-full rounded-md font-bold'>Current Timesheet</p></Link>
+          <Link to='/employee' ><p className='text-white text-left bg-cyan-600  px-3 py-3 w-full rounded-md font-bold'>Current Timesheet</p></Link>
           </div>
 
           {/* Link to timesheet list module */}
@@ -257,4 +257,4 @@ const NewEmployee = () => {
   );
 };
 
-export default NewEmployee;
+export default Employee;

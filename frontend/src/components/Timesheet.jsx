@@ -137,7 +137,7 @@ const fetchdata = async () => {
     setRowCount(rowCount + 1);
   };
 
-  // function to add rows on clicking - sign
+  // function to remove rows on clicking - sign
 
   const removeRow = async (index) => {
     if (rowCount > 1) {

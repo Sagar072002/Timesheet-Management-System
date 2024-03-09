@@ -101,7 +101,7 @@ const Scorecard = () => {
         <p className="text-center font-bold text-lg">Employee ID : {JSON.parse(sessionStorage.getItem('data')).userid}</p>
 
         <div className="mt-16 text-xl  flex flex-col gap-8  text-center w-full justify-center items-start">
-          <Link  to= '/newemp'  className="px-3 hover:font-semibold">Current Timesheet</Link>
+          <Link  to= '/employee'  className="px-3 hover:font-semibold">Current Timesheet</Link>
           <Link to='/timesheetList'  className="px-3 hover:font-semibold">Timesheet List</Link>
           <div className='w-full'>
             <Link to='/scorecard'><p className='text-white text-left bg-cyan-600 px-3 py-3 w-full rounded-md font-bold'>Score Card</p></Link>

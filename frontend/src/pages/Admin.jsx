@@ -3,7 +3,7 @@
 // Also he can view their details, scorecards and timesheet
 
 import React, { useState, useEffect } from "react";
-import Adprofile from './admin_profile'
+import Adprofile from '../components/admin_profile'
 import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
 import EmployeeCard from "../components/EmployeeCard";
 import { useNavigate } from "react-router-dom";

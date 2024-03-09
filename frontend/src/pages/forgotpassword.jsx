@@ -6,7 +6,7 @@ import axios from "axios";
 import { Tb2Fa,TbPasswordMobilePhone  } from "react-icons/tb";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const Forgotpass = () => {
+const Forgotpassword = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [twofa, settwofa] = useState(false);
   const [temp, settemp] = useState("");
@@ -252,4 +252,4 @@ const Forgotpass = () => {
   );
 };
 
-export default Forgotpass;
+export default Forgotpassword;

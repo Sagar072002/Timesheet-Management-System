@@ -5,7 +5,7 @@ import { Tb2Fa,TbPasswordMobilePhone  } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
-const Twofa = ({ visible }) => {
+const Authentication = ({ visible }) => {
   const [image, setimg] = useState("");
   const [temp, settemp] = useState("");
   const [twofa, settwofa] = useState("");
@@ -16,12 +16,12 @@ const Twofa = ({ visible }) => {
     async function fd() {
       settwofa(sessionStorage.getItem("2fa"));
       //This part is to block url access for twofactor authentication enable user
-      if (sessionStorage.getItem("2fa") != "false") {
+      if (sessionStorage.getItem("2fa") !== "false") {
         // this block is to redirect user to their respective dashboard based on their roles
-        if (sessionStorage.getItem("userType")=="true") {
+        if (sessionStorage.getItem("userType")==="true") {
           n("/admin");
         } else {
-          n("/newemp");
+          n("/employee");
         }
       } else {
         //This part is to fetch QR code
@@ -54,16 +54,16 @@ const Twofa = ({ visible }) => {
       toast.success("done");
       settwofa(sessionStorage.setItem("2fa", response.data.twofa));
       setTimeout(() => {
-        if (sessionStorage.getItem("userType")=="true") {
+        if (sessionStorage.getItem("userType")==="true") {
           n("/admin");
         } else {
-          n("/newemp");
+          n("/employee");
         }
       }, 4500);
     }
   };
   //This part is displayed when authenticted user uses dashboard aso QR code won't pop up
-  if (visible != "false") {
+  if (visible !== "false") {
     return <></>;
   }
   //This part is for dispalying QR Code
@@ -119,4 +119,4 @@ const Twofa = ({ visible }) => {
   );
 };
 
-export default Twofa;
+export default Authentication;

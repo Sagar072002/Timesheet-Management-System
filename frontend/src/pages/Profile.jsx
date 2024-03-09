@@ -149,7 +149,7 @@ const Profile = ({profilevalue,onUpdateProfile,func}) => {
         <p className="text-center font-bold text-lg">Employee ID : {JSON.parse(sessionStorage.getItem('data')).userid}</p>
 
         <div className="mt-14 text-xl  flex flex-col gap-8 justify-center items-start">
-          <Link to= '/newemp'  className="px-3 hover:font-semibold">Current Timesheet</Link>
+          <Link to= '/employee'  className="px-3 hover:font-semibold">Current Timesheet</Link>
           <Link to='/timesheetList'  className="px-3 hover:font-semibold">Timesheet List</Link>
           <Link to='/scorecard'  className="px-3 hover:font-semibold">Score Card</Link>
           <div className='w-full'>
