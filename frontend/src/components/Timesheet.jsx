@@ -18,6 +18,7 @@ const Timesheet = () => {
   const [timesheets, setTimesheets] = useState([]);
   const [isAnyFieldFilled, setIsAnyFieldFilled] = useState(false);
   const [userScore, setUserScore] = useState(0); 
+  var sum =0;
 
 
   const currentDate = new Date();//Define current date
@@ -201,7 +202,7 @@ const fetchdata = async () => {
   };
     // function calculate task total
 
-  const calculateTaskTotal = (taskIndex) => {
+    const calculateTaskTotal = (taskIndex) => {
     let total = 0;
     if (timeData[taskIndex]) {
       timeData[taskIndex].slice(1).forEach((value) => {
@@ -594,12 +595,14 @@ const fetchdata = async () => {
               >
                 Total
               </th>
-              {[0, 1, 2, 3, 4].map((dayIndex) => (
+              {[0, 1, 2, 3, 4].map((dayIndex) => {
+                sum+=calculateTotal(dayIndex)
+                return (
                 <td key={dayIndex} className="text-center text-lg">
                   {calculateTotal(dayIndex)}
                 </td>
-              ))}
-              <td></td>
+              )})}
+              <td className="text-center text-lg">{sum}</td>
             </tr>
           </tbody>
         </table>
