@@ -1,6 +1,7 @@
 // This part is contributed by Rishitha
 const { Scorecard,User } = require('../db');
 const { Op } = require('sequelize');
+const { startOfWeek, endOfWeek, getISOWeek, startOfMonth, endOfMonth } = require('date-fns');
 
 const createScorecard = async (req, res) => {
   try {
@@ -31,7 +32,7 @@ const createScorecard = async (req, res) => {
         score=0
       }
     }
-    return false
+    //return false
     // Check if a user with the specified userid exists
     const existingUser = await User.findOne({
         where: { userid },
@@ -55,9 +56,6 @@ const createScorecard = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
-
-const { startOfWeek, endOfWeek, getISOWeek, startOfMonth, endOfMonth } = require('date-fns');
 
 const getWeekNumber = (date) => {
   return getISOWeek(date);

@@ -3,6 +3,7 @@
 const { User } = require('../db');
 const bcrypt = require('bcrypt');
 
+// Creating a new user with the required details
 const createUser = async (req, res) => {
   try {
     var {
@@ -21,13 +22,13 @@ const createUser = async (req, res) => {
     const twofa=false;
     var rowCount = await User.count();
     rowCount+=100;
+    // Generating random userid for each user
     if(is_admin){
       userid='A'+rowCount.toString();
     }
     else{
       userid='E'+rowCount.toString();
     }
-    console.log(userid)
     const user = await User.create({
       name,
       userid, 
@@ -49,21 +50,11 @@ const createUser = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-// app.post('/login', (req, res) => {
-//   const { userId, password } = req.body;
-  
-//   // In a real scenario, you should validate the user against your database here
-//   if (userId === user.userId && password === user.password) {
-//       res.json({ success: true, message: 'Login successful' });
-//   } else {
-//       res.status(401).json({ success: false, message: 'Invalid credentials' });
-//   }
-// });
+
+// Logging in the existing user with email and password
 const loginUser = async (req, res) => {
-  //console.log("in");
   try {
     const { email, password } = req.body; 
-    console.log("request",req.body);
     const user = await User.findOne({ where: { email } }); 
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -77,7 +68,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-// New functions
+// Fetching the details of all the users
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.findAll();
@@ -89,6 +80,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+// Fetching the details of all the users with respect to userid
 const getUserByUserId = async (req, res) => {
   try {
     const { userid } = req.params;
@@ -105,6 +97,7 @@ const getUserByUserId = async (req, res) => {
   }
 };
 
+// Updating the user details
 const updateUserDetails = async (req, res) => {
   try {
     const { userid } = req.params;
