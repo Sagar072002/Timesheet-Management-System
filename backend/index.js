@@ -65,10 +65,13 @@ app.post("/userscore",async (req,res)=>{
   sum=await Scorecard.sum('score', { where: {"userid":req.body.id} }).catch(e=>res.status(500).json({error:e.message}));
   timesum=await Timelog.sum('duration', { where: {"userid":req.body.id} }).catch(e=>res.status(500).json({error:e.message}));
   var dt = new Date();
+  dt.setDate(dt.getDate()-dt.getDay()+1);
   var date = dt.toLocaleDateString("en-US", { dateStyle: "short" });
-  dt.setDate(dt.getDate()-6);
-  var stdate = dt.toLocaleDateString("en-US", { dateStyle: "short" });
-  timeweeksum=await Timelog.sum('duration', { where: {"userid":req.body.id,date: {[Op.between]: [stdate, date],},} }).catch(e=>res.status(500).json({error:e.message}));
+  console.log(date)
+  dt.setDate(dt.getDate()-dt.getDay()+5);
+  var enddate = dt.toLocaleDateString("en-US", { dateStyle: "short" });
+  console.log(enddate,date)
+  timeweeksum=await Timelog.sum('duration', { where: {"userid":req.body.id,date: {[Op.between]: [date,enddate],},} }).catch(e=>res.status(500).json({error:e.message}));
   time_count=await Scorecard.count({where: {"userid":req.body.id}}).catch(e=>res.status(500).json({error:e.message}));
   return res.status(200).json({score:sum,totaldur:timesum,week:timeweeksum,timeseet_count:time_count})
 })
