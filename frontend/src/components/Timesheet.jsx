@@ -96,6 +96,33 @@ const fetchdata = async () => {
     },[]);
 
 
+  const fetchWeekRange = async () => {
+    try
+    {
+      const response = await axios.post('http://localhost:3000/daterange',
+        {
+          "userid": sessionStorage.getItem("userName"),
+        }         
+      );   
+      const data= response.data;
+      console.log("week_ranges",data)
+      if(response.status!==200)
+      {
+        console.log(
+          `${response.status}\n${response.statusText}\n${data.message}`
+       )
+      }
+      if(response.status===200)
+      {
+        sessionStorage.setItem("date_ranges",JSON.stringify(data.dateRanges))  
+      }   
+    }
+    catch(error)
+    {
+      toast.error("Error in fetching week range")
+    }
+  }  
+
  // function for getting the week dates
   const getWeekDates = (offset = 0) => {
     const today = new Date();
@@ -300,7 +327,7 @@ const fetchdata = async () => {
             );
 
             const data = response.data;
-           
+            fetchWeekRange();
 
            
           } catch (error) {
